@@ -1,0 +1,50 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  line-height: 1.6;
+  color: #e0e0e0;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+.coming-soon {
+  color: #ff6600;
+  font-size: 3em;
+  margin-bottom: 50px;
+}
+
+/* Guide Buttons */
+.buttons-container {
+  display: flex;
+  gap: 25px;
+}
+
+.guide-button {
+  padding: 12px 25px;
+  background-color: #333;
+  color: #ff6600;
+  border: 2px solid #ff6600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 16px;
+}
+
+.guide-button:hover {
+  background-color: #ff6600;
+  color: #1a1a1a;
+  transform: translateY(-2px);
+}
