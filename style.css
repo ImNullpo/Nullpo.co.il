@@ -17,7 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
- font-family:"geoform";
+
 }
 
 .container {
@@ -28,6 +28,7 @@ body {
   color: #ff6600;
   font-size: 3em;
   margin-bottom: 50px;
+ font-family:"geoform";
 }
 
 /* Guide Buttons */
