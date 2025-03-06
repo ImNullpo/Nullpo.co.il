@@ -5,7 +5,10 @@
   box-sizing: border-box;
   font-family: 'Arial', sans-serif;
 }
-
+@font-face {
+  font-family: HandmadeChristmas;
+  src: url(Handmade Christmas.otf);
+}
 body {
   line-height: 1.6;
   color: #e0e0e0;
@@ -14,6 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+ font-family:HandmadeChristmas;
 }
 
 .container {
