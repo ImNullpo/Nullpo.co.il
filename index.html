@@ -1722,6 +1722,124 @@ trellix-verify --check-all</code></pre>
   </footer>
 
   <script src="script.js"></script>
+
+  <!-- Add before closing body tag -->
+  <div id="notification-container"></div>
+
+  <!-- Add fallback if JavaScript is disabled -->
+  <noscript>
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #ff3860; color: white; text-align: center; padding: 10px; z-index: 9999;">
+      For the best experience, please enable JavaScript in your browser.
+    </div>
+  </noscript>
+
+  <!-- Fallback for older browsers -->
+  <script>
+    // Feature detection
+    var browserSupport = {
+      cssAnimations: false,
+      cssTransforms: false,
+      flexbox: false,
+      customProperties: false
+    };
+    
+    // Check CSS animation support
+    (function() {
+      var elm = document.createElement('div');
+      
+      if ('animation' in elm.style || 'webkitAnimation' in elm.style) {
+        browserSupport.cssAnimations = true;
+      }
+      
+      if ('transform' in elm.style || 'webkitTransform' in elm.style || 'msTransform' in elm.style) {
+        browserSupport.cssTransforms = true;
+      }
+      
+      if ('flexBasis' in elm.style || 'webkitFlexBasis' in elm.style || 'msFlexBasis' in elm.style) {
+        browserSupport.flexbox = true;
+      }
+      
+      // Test CSS variables support
+      var style = document.createElement('style');
+      style.textContent = ':root { --test-var: 1; }';
+      document.head.appendChild(style);
+      
+      var div = document.createElement('div');
+      div.style.setProperty('--test-var', 0);
+      document.body.appendChild(div);
+      
+      var computedStyle = getComputedStyle(div);
+      var supports = computedStyle.getPropertyValue('--test-var') === '0';
+      
+      document.body.removeChild(div);
+      document.head.removeChild(style);
+      
+      browserSupport.customProperties = supports;
+    })();
+    
+    // Apply fallback styles for older browsers
+    if (!browserSupport.customProperties) {
+      // Add fallback colors
+      var fallbackStyles = document.createElement('style');
+      fallbackStyles.textContent = `
+        .sidebar-item.active { color: #8A2BE2 !important; }
+        .primary-button, .search-button { background-color: #8A2BE2 !important; }
+        .secondary-button, .product-link { color: #8A2BE2 !important; }
+        .feature-icon, .sidebar-item.active i { color: #8A2BE2 !important; }
+        .step::before { background-color: #8A2BE2 !important; }
+        .guide-section.active { display: block !important; }
+      `;
+      document.head.appendChild(fallbackStyles);
+    }
+    
+    // Apply fallback for flex layouts in older browsers
+    if (!browserSupport.flexbox) {
+      var flexFallbacks = document.createElement('style');
+      flexFallbacks.textContent = `
+        .feature-grid { display: block !important; }
+        .feature-card { display: block !important; width: 100%; max-width: 350px; margin: 30px auto; }
+        .decision-options { display: block !important; }
+        .decision-option { width: 100%; max-width: 350px; margin: 15px auto; }
+      `;
+      document.head.appendChild(flexFallbacks);
+    }
+  </script>
+
+  <!-- Add this near the top of body -->
+  <div id="browser-warning" style="display: none; padding: 15px; background-color: #ff3860; color: white; text-align: center; position: relative;">
+    You're using an outdated browser. Some interactive features may not work correctly. 
+    <a href="https://browsehappy.com/" style="color: white; text-decoration: underline; font-weight: bold;">Update your browser</a>
+    <button style="position: absolute; right: 15px; top: 15px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;" onclick="this.parentNode.style.display='none'">×</button>
+  </div>
+
+  <script>
+    // Detect very old browsers
+    var isOldBrowser = false;
+    
+    // Check for very old IE
+    if (/MSIE [6-8]\./.test(navigator.userAgent)) {
+      isOldBrowser = true;
+    }
+    
+    // Check for other features
+    try {
+      // Test for ES5 features
+      if (!Object.keys || !Array.prototype.forEach) {
+        isOldBrowser = true;
+      }
+      
+      // Test for querySelector
+      if (!document.querySelector) {
+        isOldBrowser = true;
+      }
+    } catch(e) {
+      isOldBrowser = true;
+    }
+    
+    if (isOldBrowser) {
+      document.getElementById('browser-warning').style.display = 'block';
+    }
+  </script>
 </body>
 
 </html>
