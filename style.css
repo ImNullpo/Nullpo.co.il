@@ -113,25 +113,6 @@ body::before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-title::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transform: skewX(-20deg);
-  animation: shimmer 6s infinite;
-}
-
-@keyframes shimmer {
-  0% { left: -150%; }
-  100% { left: 150%; }
 }
 
 .hero-subtitle {
@@ -1310,191 +1291,152 @@ footer {
   background-color: #0078d4;
 }
 
-/* Animated Icons */
+/* Cross-Browser Animation Keyframes with Vendor Prefixes */
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
+@-webkit-keyframes pulse {
+  0% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+  50% { -webkit-transform: scale(1.1); transform: scale(1.1); opacity: 0.9; }
+  100% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+}
 @keyframes pulse {
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.9; }
   100% { transform: scale(1); opacity: 1; }
 }
 
+@-webkit-keyframes float {
+  0% { -webkit-transform: translateY(0px); transform: translateY(0px); }
+  50% { -webkit-transform: translateY(-5px); transform: translateY(-5px); }
+  100% { -webkit-transform: translateY(0px); transform: translateY(0px); }
+}
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-5px); }
   100% { transform: translateY(0px); }
 }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.2); }
-  50% { box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
-  100% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.2); }
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Browser-Compatible Animation Classes */
+.spin-animation {
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
 
-/* Sidebar Icon Animations */
+.pulse-animation {
+  -webkit-animation: pulse 1.5s ease-in-out infinite;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.float-animation {
+  -webkit-animation: float 2s ease-in-out infinite;
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Sidebar Icon Animations - Browser Compatible */
 .sidebar-item i {
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .sidebar-item:hover i,
 .sidebar-item.active i {
+  -webkit-transform: scale(1.2);
   transform: scale(1.2);
 }
 
-/* Specific icon animations */
+/* ePO Cog Animation */
 .sidebar-item[data-section="epo"]:hover i,
 .sidebar-item[data-section="epo"].active i {
+  -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
 
-.sidebar-item[data-section="tie"]:hover i,
-.sidebar-item[data-section="tie"].active i {
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-.sidebar-item[data-section="db"] i {
+/* Interactive Steps */
+.step {
+  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 
-.sidebar-item[data-section="db"]:hover i,
-.sidebar-item[data-section="db"].active i {
-  color: #0078d4; /* Microsoft blue for database icon */
-  transform: translateY(-3px);
+.step::before {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.sidebar-item[data-section="ivx"]:hover i,
-.sidebar-item[data-section="ivx"].active i {
-  animation: float 2s ease-in-out infinite;
+.step:hover::before {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 6px rgba(138, 43, 226, 0.2);
 }
 
-.sidebar-item[data-section="cmd"]:hover i,
-.sidebar-item[data-section="cmd"].active i {
-  transform: translateX(5px);
+/* Completed Step Styling */
+.step.completed::before {
+  background-color: #2ecc71;
 }
 
-/* Interactive product banner */
+/* Product Info Banner Interactive Effects */
 .product-info-banner {
+  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
 .product-info-banner:hover {
+  -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-logo {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .product-info-banner:hover .product-logo {
-  animation: pulse 1.5s ease-in-out infinite;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
-.product-info-banner::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
-  z-index: 1;
-  transition: all 0.8s ease;
-}
-
-.product-info-banner:hover::after {
-  left: 100%;
-}
-
-/* Step animation enhancements */
-.step {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: reveal 0.4s forwards;
-}
-
-.steps-container .step:nth-child(1) { animation-delay: 0.1s; }
-.steps-container .step:nth-child(2) { animation-delay: 0.2s; }
-.steps-container .step:nth-child(3) { animation-delay: 0.3s; }
-.steps-container .step:nth-child(4) { animation-delay: 0.4s; }
-.steps-container .step:nth-child(5) { animation-delay: 0.5s; }
-.steps-container .step:nth-child(6) { animation-delay: 0.6s; }
-
-.step::before {
-  transition: all 0.3s ease;
-}
-
-.step.completed::before {
-  background-color: #2ecc71;
-  box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
-}
-
-/* Progress indicator for steps */
-.steps-container {
-  counter-reset: step-counter;
-}
-
-.steps-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--primary) 0%, var(--primary) var(--progress, 0%), rgba(138, 43, 226, 0.3) var(--progress, 0%), rgba(138, 43, 226, 0.3) 100%);
-  z-index: 1;
-  transition: all 0.5s ease;
-}
-
-/* Interactive decision options */
-.decision-option {
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.decision-option.selected {
-  transform: scale(1.03);
-}
-
-.decision-option .option-icon {
-  transition: all 0.5s ease;
-}
-
-.decision-option:hover .option-icon {
-  transform: scale(1.1) rotate(10deg);
-}
-
-.decision-option.selected .option-icon {
-  animation: float 2s ease-in-out infinite;
-}
-
-/* Command box copy animations */
+/* Command Box Hover Effects */
 .command-box {
-  position: relative;
+  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .command-box:hover {
   border-left-width: 5px;
 }
 
+/* Copy Button Animation */
 .copy-btn {
-  opacity: 0;
-  transform: translateX(10px);
+  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  opacity: 0.5;
 }
 
 .solution-command:hover .copy-btn,
 .command-box:hover + .copy-btn {
   opacity: 1;
-  transform: translateX(0);
 }
 
+/* Progressive Enhancement for Interactive Elements */
 .copy-success {
   position: absolute;
   top: 8px;
@@ -1505,287 +1447,414 @@ footer {
   font-size: 12px;
   border-radius: 4px;
   opacity: 0;
+  -webkit-transform: translateY(-10px);
   transform: translateY(-10px);
+  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 
 .copy-success.show {
   opacity: 1;
+  -webkit-transform: translateY(0);
   transform: translateY(0);
 }
 
-/* Feature item animations */
+/* Feature Items Animation */
 .feature-item {
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.feature-item:hover .feature-icon {
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-/* Table row highlight animation */
-.config-table tr, .comparison-table tr {
+  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 
-.config-table tr:hover td, .comparison-table tr:hover td {
-  background-color: rgba(138, 43, 226, 0.1);
+.feature-item:hover {
+  -webkit-transform: translateY(-3px);
+  transform: translateY(-3px);
 }
 
-/* Section transition animations */
+.feature-icon {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+/* Section Transition Animations */
 .guide-section {
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease;
+  -webkit-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .guide-section.active {
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* Navbar active indicator animation */
-.sidebar-item.active::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--primary);
-  animation: pulse 1.5s ease-in-out infinite;
+/* Loading Indicator Animation */
+@-webkit-keyframes loadingBar {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+@keyframes loadingBar {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
-/* Mobile-friendly animations */
-@media (max-width: 768px) {
-  .product-info-banner:hover {
-    transform: none;
-  }
-  
-  .sidebar-item.active::after {
-    display: none;
-  }
-  
-  .step {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-  
-  .steps-container .step:nth-child(n) {
-    animation-delay: 0s;
-  }
-}
-
-/* Additional Animation Effects */
-
-/* Loading state for content transitions */
-.guide-content-area.loading {
-  position: relative;
-}
-
-.guide-content-area.loading::before {
-  content: '';
+.loading-bar {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: -100%;
+  width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--primary), transparent);
-  z-index: 100;
-  animation: loading 1.5s infinite ease-in-out;
+  background-color: var(--primary);
+  -webkit-animation: loadingBar 1.5s infinite ease-in-out;
+  animation: loadingBar 1.5s infinite ease-in-out;
 }
 
-@keyframes loading {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .product-info-banner:hover {
+    -webkit-transform: none;
+    transform: none;
+  }
+  
+  .sidebar-item:hover i,
+  .sidebar-item.active i {
+    -webkit-animation: none;
+    animation: none;
+  }
+  
+  .feature-item:hover {
+    -webkit-transform: none;
+    transform: none;
+  }
+  
+  /* Enhanced touch feedback */
+  .sidebar-item:active,
+  .command-box:active,
+  .feature-item:active,
+  .decision-option:active {
+    background-color: rgba(138, 43, 226, 0.2);
+  }
 }
 
-/* Ripple effect for buttons */
+/* Touch-friendly Button Ripple Effect */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
 .ripple {
   position: absolute;
   border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  -webkit-transform: scale(0);
   transform: scale(0);
-  background-color: rgba(255, 255, 255, 0.3);
-  animation: ripple 0.6s linear;
+  opacity: 1;
   pointer-events: none;
 }
 
-@keyframes ripple {
+.animate-ripple {
+  -webkit-animation: ripple-animation 0.6s linear;
+  animation: ripple-animation 0.6s linear;
+}
+
+@-webkit-keyframes ripple-animation {
   to {
-    transform: scale(4);
+    -webkit-transform: scale(2.5);
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+@keyframes ripple-animation {
+  to {
+    transform: scale(2.5);
     opacity: 0;
   }
 }
 
-/* Animated option selection */
-.option-ripple {
-  position: absolute;
-  border-radius: 50%;
-  background-color: rgba(138, 43, 226, 0.1);
-  transition: all 0.6s ease-out;
-  z-index: -1;
-  opacity: 0.5;
-}
-
-/* Particles for product banner interaction */
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.8;
-  z-index: 10;
-  animation: particle 1s ease-out;
-}
-
-@keyframes particle {
-  0% { 
-    transform: translate(0, 0) scale(1); 
-    opacity: 0.8; 
-  }
-  100% { 
-    transform: translate(var(--x, 0), var(--y, -50px)) scale(0); 
-    opacity: 0; 
-  }
-}
-
-/* Progress indicator animation */
-@keyframes progress {
-  0% { width: 0%; }
-  100% { width: var(--progress, 0%); }
-}
-
-/* Animate steps when they become active */
-.step-content {
-  transition: all 0.3s ease;
-}
-
-.step.active .step-content {
-  transform: translateX(5px);
-}
-
-/* Feature icon pulse effect */
-.feature-section:hover .feature-item:not(:hover) {
-  opacity: 0.7;
-}
-
-.feature-item {
-  overflow: hidden;
-}
-
-.feature-item::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--primary), transparent);
-  transform: translateX(-100%);
-  transition: all 0.6s ease;
-}
-
-.feature-item:hover::after {
-  transform: translateX(100%);
-}
-
-/* Banner glint effect */
-.product-info-banner.active {
-  animation: glow 0.8s ease-in-out;
-}
-
-/* Visual checkmark for completed steps */
-.step.completed::after {
-  content: '✓';
-  position: absolute;
-  left: -7px;
-  top: 9px;
-  width: 12px;
-  height: 12px;
-  text-align: center;
-  line-height: 12px;
-  color: white;
-  font-size: 8px;
-  z-index: 3;
-  opacity: 0;
-  animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* Mobile-friendly animation adjustments */
-@media (max-width: 768px) {
-  .guide-content-area.loading::before {
-    height: 2px;
-  }
-  
-  .feature-section:hover .feature-item:not(:hover) {
-    opacity: 1; /* Don't dim other items on mobile */
-  }
-  
-  /* Simplify animations for better performance */
-  .product-info-banner::after,
-  .feature-item::after {
-    display: none;
-  }
-  
-  .ripple, .option-ripple, .particle {
-    display: none;
-  }
-  
-  /* Make tap targets more obvious */
-  .sidebar-item:active,
-  .decision-option:active,
-  .command-box:active,
-  .copy-btn:active {
-    opacity: 0.8;
-    transform: scale(0.98);
-  }
-}
-
-/* Add subtle animations to the hero section */
-.hero-title {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-title::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transform: skewX(-20deg);
-  animation: shimmer 6s infinite;
-}
-
-@keyframes shimmer {
-  0% { left: -150%; }
-  100% { left: 150%; }
-}
-
-/* Loading indicator for installation options */
-.installation-flow.active {
+/* Cross-Browser Compatible Step Progress Indicator */
+.steps-container {
   position: relative;
 }
 
-.installation-flow.active::before {
-  content: '';
+.progress-line {
   position: absolute;
-  top: -5px;
+  top: 0;
   left: 0;
-  width: 20%;
-  height: 2px;
+  width: 2px;
+  height: 0;
   background-color: var(--primary);
-  animation: loadFlow 0.8s forwards ease-out;
+  -webkit-transition: height 0.5s ease;
+  transition: height 0.5s ease;
+  z-index: 2;
 }
 
-@keyframes loadFlow {
-  to { width: 100%; }
+/* Notification Styling */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  background-color: var(--bg-sidebar);
+  border-left: 4px solid var(--primary);
+  border-radius: 4px;
+  color: var(--text-light);
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateX(120%);
+  transform: translateX(120%);
+  opacity: 0;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.notification.show {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification i {
+  margin-right: 10px;
+  color: var(--primary);
+}
+
+@media (max-width: 480px) {
+  .notification {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    text-align: center;
+  }
+}
+
+/* Mobile Responsiveness with Broad Browser Support */
+@media (max-width: 1024px) {
+  /* General layout adjustments */
+  .guide-container {
+    display: block;
+  }
+  
+  .guide-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+  }
+  
+  .sidebar-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  
+  .sidebar-item {
+    padding: 10px 15px;
+    margin: 5px;
+    border-left: none;
+    border-radius: 6px;
+  }
+  
+  .sidebar-item.active {
+    border-left: none;
+    border-bottom: 3px solid var(--primary);
+  }
+  
+  /* Content cards adjustments */
+  .content-card {
+    padding: 15px;
+  }
+  
+  /* Feature grid adjustments for non-flexbox browsers */
+  .feature-grid {
+    display: block;
+  }
+  
+  .feature-grid::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .feature-card {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Product info banner adjustment */
+  .product-info-banner {
+    display: block;
+  }
+  
+  .product-logo {
+    margin: 0 auto 15px auto;
+  }
+  
+  .product-meta {
+    display: block;
+    margin-bottom: 15px;
+  }
+  
+  .product-meta span {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+/* Fallback for older browsers that don't support CSS Grid */
+@supports not (display: grid) {
+  .feature-grid, .feature-section {
+    display: block;
+  }
+  
+  .feature-card, .feature-item {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 20px;
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) {
+  /* Make buttons larger for touch */
+  .sidebar-item, 
+  .primary-button, 
+  .secondary-button, 
+  .guide-button, 
+  .option-select-btn {
+    min-height: 44px; /* Apple recommended minimum touch target */
+    padding: 12px 20px;
+  }
+  
+  /* Show copy button by default on touch devices */
+  .copy-btn {
+    opacity: 1;
+    position: relative;
+    display: block;
+    margin-top: 5px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgba(138, 43, 226, 0.1);
+    color: var(--primary);
+  }
+  
+  /* Add clear tap indication */
+  .sidebar-item:active, 
+  .command-box:active, 
+  .copy-btn:active,
+  .feature-item:active,
+  .decision-option:active {
+    background-color: rgba(138, 43, 226, 0.2);
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .sidebar-item.active,
+  .primary-button,
+  .secondary-button,
+  .guide-button,
+  .search-button,
+  .copy-btn {
+    border: 2px solid ButtonText;
+  }
+  
+  .step::before {
+    background-color: CanvasText;
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Print-friendly styling */
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+  
+  .guide-sidebar,
+  .search-container,
+  .header-logo,
+  .pixel-overlay,
+  footer,
+  .copy-btn,
+  .notification,
+  #notification-container {
+    display: none !important;
+  }
+  
+  .guide-container {
+    display: block;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .guide-content-area {
+    padding: 0;
+  }
+  
+  .guide-section {
+    display: block !important;
+    page-break-after: always;
+  }
+  
+  .content-card {
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+    background: white;
+    color: black;
+  }
+  
+  .content-card h4 {
+    color: black;
+  }
+  
+  .content-card p {
+    color: black;
+  }
+  
+  .step::before {
+    background-color: black !important;
+    print-color-adjust: exact;
+  }
+  
+  .command-box {
+    border: 1px solid #ccc;
+    color: black;
+    background: #f5f5f5;
+    page-break-inside: avoid;
+  }
+  
+  /* Expanded content for print */
+  .installation-flow {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+  
+  .tab-content {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+  
+  .comparison-table-container {
+    display: block !important;
+  }
+  
+  /* URLs in links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+  }
 }
