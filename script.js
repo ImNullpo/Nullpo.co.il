@@ -1,0 +1,914 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Guide Buttons
+    const guideButtons = document.querySelectorAll('.guide-button');
+    const landingSection = document.querySelector('.landing-section');
+    const guidesSection = document.querySelector('.guides-section');
+    const guideContents = document.querySelectorAll('.guide-content');
+  
+    guideButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const guideId = this.getAttribute('data-guide');
+  
+        // Start transition - fade out landing section
+        landingSection.classList.add('hidden');
+  
+        // After landing section fades out, show guides section
+        setTimeout(() => {
+          landingSection.style.display = 'none';
+          guidesSection.style.display = 'block';
+  
+          // Start fade in for guides section
+          setTimeout(() => {
+            guidesSection.classList.add('visible');
+  
+            // Hide all guides, then show the selected one
+            guideContents.forEach(content => {
+              content.classList.remove('active');
+            });
+            document.getElementById(guideId).classList.add('active');
+  
+            // Scroll to top of guides section
+            window.scrollTo(0, 0);
+          }, 50); // Small delay to ensure display change is processed
+        }, 400); // Match the CSS transition time
+      });
+    });
+  
+    // Navigation Dots
+    const navDots = document.querySelectorAll('.nav-dot');
+  
+    // Add section names to dots
+    const sectionNames = {
+      'epo': 'ePO Setup',
+      'db': 'Database Configuration',
+      'tie': 'TIE Setup',
+      'ivx': 'IVX Configuration',
+      'whoami': 'About Me'
+    };
+  
+    navDots.forEach(dot => {
+      const sectionId = dot.getAttribute('data-section');
+      if (sectionId && sectionNames[sectionId]) {
+        dot.setAttribute('data-section-name', sectionNames[sectionId]);
+      }
+    });
+  
+    // Adjust spacing based on number of dots
+    document.querySelectorAll('.guide-navigation').forEach(nav => {
+      const dotCount = nav.querySelectorAll('.nav-dot').length;
+      if (dotCount > 4) {
+        // For more dots, decrease the margin
+        nav.querySelectorAll('.nav-dot').forEach(dot => {
+          dot.style.margin = '0 10px';
+        });
+      } else if (dotCount <= 2) {
+        // For fewer dots, increase the margin
+        nav.querySelectorAll('.nav-dot').forEach(dot => {
+          dot.style.margin = '0 40px';
+        });
+      }
+      // Update the line width
+      const lineWidth = (dotCount - 1) * (dotCount > 4 ? 40 : (dotCount <= 2 ? 100 : 60));
+      nav.style.setProperty('--line-width', lineWidth + 'px');
+    });
+  
+    navDots.forEach(dot => {
+      dot.addEventListener('click', function() {
+        const sectionId = this.getAttribute('data-section');
+        const parentGuide = this.closest('.guide-content');
+  
+        // Update active dot
+        parentGuide.querySelectorAll('.nav-dot').forEach(d => {
+          d.classList.remove('active');
+        });
+        this.classList.add('active');
+  
+        // Show corresponding section
+        parentGuide.querySelectorAll('.guide-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        parentGuide.querySelector(`#${sectionId}`).classList.add('active');
+      });
+    });
+  
+    // Header logo navigation
+    const headerLogo = document.querySelector('.header-logo');
+    if (headerLogo) {
+      headerLogo.addEventListener('click', function() {
+        // Start transition - fade out guides section
+        guidesSection.classList.remove('visible');
+  
+        // After guides section fades out, show landing section
+        setTimeout(() => {
+          guidesSection.style.display = 'none';
+          landingSection.style.display = 'flex';
+          landingSection.classList.remove('hidden');
+  
+          // Scroll to top of landing section
+          window.scrollTo(0, 0);
+        }, 400); // Match the CSS transition time
+      });
+    }
+  
+    // Discord tooltip functionality
+    const discordButton = document.querySelector('.social-button.discord');
+    const tooltip = document.querySelector('.tooltip');
+  
+    if (discordButton && tooltip) {
+      discordButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Toggle tooltip visibility on click as well
+        tooltip.style.opacity = tooltip.style.opacity === '1' ? '0' : '1';
+        tooltip.style.visibility = tooltip.style.visibility === 'visible' ? 'hidden' : 'visible';
+      });
+    }
+  
+    // ===== ENHANCED SEARCH FUNCTIONALITY =====
+    const searchInput = document.querySelector('.search-input');
+    const searchButton = document.querySelector('.search-button');
+    const searchResults = document.getElementById('searchResults');
+    
+    if (searchInput && searchButton && searchResults) {
+      // Create a comprehensive search index
+      function createSearchIndex() {
+        const searchItems = [];
+        
+        // Process guides
+        document.querySelectorAll('.guide-content').forEach(guide => {
+          const guideId = guide.id;
+          const guideName = guide.querySelector('h2')?.textContent || 'Guide';
+          
+          // Process sections within each guide
+          guide.querySelectorAll('.guide-section').forEach(section => {
+            const sectionId = section.id;
+            const sectionName = section.querySelector('h3')?.textContent || 'Section';
+            
+            // Main section content
+            const sectionDescription = section.querySelector('.section-header + .content-card p')?.textContent || '';
+            searchItems.push({
+              title: sectionName,
+              path: `${guideName} > ${sectionName}`,
+              content: sectionDescription,
+              guide: guideId,
+              section: sectionId,
+              element: section,
+              type: 'section'
+            });
+            
+            // Process content cards (excluding the first description card)
+            section.querySelectorAll('.content-card').forEach((card, cardIndex) => {
+              if (cardIndex === 0 && card.querySelector('p')?.textContent === sectionDescription) {
+                return; // Skip the first card if it's just the section description
+              }
+              
+              const cardTitle = card.querySelector('h4')?.textContent || 'Content';
+              const cardContent = card.textContent.replace(cardTitle, '').trim().substring(0, 200);
+              
+              searchItems.push({
+                title: `${cardTitle} (${sectionName})`,
+                path: `${guideName} > ${sectionName} > ${cardTitle}`,
+                content: cardContent,
+                guide: guideId,
+                section: sectionId,
+                element: card,
+                type: 'card'
+              });
+            });
+            
+            // Process steps
+            section.querySelectorAll('.step').forEach((step, index) => {
+              const stepHeading = step.querySelector('h5');
+              const stepNumber = stepHeading?.getAttribute('data-step') || (index + 1);
+              const stepTitle = stepHeading?.textContent || `Step ${stepNumber}`;
+              const stepContent = step.querySelector('p')?.textContent || '';
+              
+              searchItems.push({
+                title: `Step ${stepNumber}: ${stepTitle} (${sectionName})`,
+                path: `${guideName} > ${sectionName} > Step ${stepNumber}`,
+                content: stepContent,
+                guide: guideId,
+                section: sectionId,
+                element: step,
+                type: 'step'
+              });
+            });
+            
+            // Process commands
+            section.querySelectorAll('.command-box').forEach((cmd, index) => {
+              const parentStep = cmd.closest('.step');
+              let contextPath = `${guideName} > ${sectionName}`;
+              
+              if (parentStep) {
+                const stepHeading = parentStep.querySelector('h5');
+                const stepNumber = stepHeading?.getAttribute('data-step') || '';
+                contextPath += ` > Step ${stepNumber}`;
+              }
+              
+              searchItems.push({
+                title: `Command (${sectionName})`,
+                path: `${contextPath} > Command`,
+                content: cmd.textContent,
+                guide: guideId,
+                section: sectionId,
+                element: cmd,
+                type: 'command'
+              });
+            });
+            
+            // Process lists and tables
+            section.querySelectorAll('.requirement-list, .component-list').forEach((list) => {
+              const listItems = Array.from(list.querySelectorAll('li')).map(li => li.textContent).join(' | ');
+              const contextCard = list.closest('.content-card');
+              const cardTitle = contextCard?.querySelector('h4')?.textContent || 'List';
+              
+              searchItems.push({
+                title: `${cardTitle} (${sectionName})`,
+                path: `${guideName} > ${sectionName} > ${cardTitle}`,
+                content: listItems,
+                guide: guideId,
+                section: sectionId,
+                element: list.closest('.content-card'),
+                type: 'list'
+              });
+            });
+            
+            // Process tables
+            section.querySelectorAll('table').forEach((table) => {
+              const tableData = [];
+              table.querySelectorAll('tr').forEach(row => {
+                tableData.push(row.textContent.trim().replace(/\s+/g, ' '));
+              });
+              
+              const contextCard = table.closest('.content-card');
+              const cardTitle = contextCard?.querySelector('h4')?.textContent || 'Table';
+              
+              searchItems.push({
+                title: `${cardTitle} (${sectionName})`,
+                path: `${guideName} > ${sectionName} > ${cardTitle}`,
+                content: tableData.join(' | '),
+                guide: guideId,
+                section: sectionId,
+                element: table.closest('.content-card'),
+                type: 'table'
+              });
+            });
+            
+            // Process code blocks
+            section.querySelectorAll('.code-container').forEach((codeBlock) => {
+              const contextCard = codeBlock.closest('.content-card');
+              const cardTitle = contextCard?.querySelector('h4')?.textContent || 'Code';
+              
+              searchItems.push({
+                title: `${cardTitle} Code (${sectionName})`,
+                path: `${guideName} > ${sectionName} > ${cardTitle}`,
+                content: codeBlock.textContent,
+                guide: guideId,
+                section: sectionId,
+                element: codeBlock,
+                type: 'code'
+              });
+            });
+          });
+        });
+        
+        return searchItems;
+      }
+      
+      // Create index once on page load
+      const searchIndex = createSearchIndex();
+      console.log(`Search index created with ${searchIndex.length} items`);
+      
+      // Enhanced search function
+      function search(query) {
+        if (!query || query.length < 2) {
+          searchResults.classList.remove('active');
+          return;
+        }
+        
+        searchResults.innerHTML = '';
+        const queryLower = query.toLowerCase();
+        
+        // Find matches with scoring
+        const matches = searchIndex.filter(item => {
+          const titleMatch = item.title.toLowerCase().includes(queryLower);
+          const contentMatch = item.content.toLowerCase().includes(queryLower);
+          return titleMatch || contentMatch;
+        }).map(item => {
+          // Score items: title matches are more important than content matches
+          const titleMatchScore = item.title.toLowerCase().includes(queryLower) ? 10 : 0;
+          const contentMatchScore = item.content.toLowerCase().includes(queryLower) ? 5 : 0;
+          
+          // Type-based scoring (boost important content types)
+          let typeScore = 0;
+          if (item.type === 'section') typeScore = 3;
+          else if (item.type === 'step') typeScore = 2;
+          else if (item.type === 'command') typeScore = 1;
+          
+          return {
+            ...item,
+            score: titleMatchScore + contentMatchScore + typeScore
+          };
+        }).sort((a, b) => b.score - a.score); // Sort by score
+        
+        if (matches.length === 0) {
+          searchResults.innerHTML = '<div class="no-results">No results found</div>';
+        } else {
+          // Show top results (limit to 8)
+          matches.slice(0, 8).forEach(result => {
+            const item = document.createElement('div');
+            item.className = 'search-result-item';
+            
+            // Create a type indicator icon
+            let typeIcon = 'fas fa-file-alt'; // Default icon
+            if (result.type === 'section') typeIcon = 'fas fa-bookmark';
+            else if (result.type === 'step') typeIcon = 'fas fa-list-ol';
+            else if (result.type === 'command') typeIcon = 'fas fa-terminal';
+            else if (result.type === 'code') typeIcon = 'fas fa-code';
+            else if (result.type === 'table' || result.type === 'list') typeIcon = 'fas fa-table';
+            
+            // Create snippet with highlighted match
+            let snippet = result.content;
+            if (snippet.toLowerCase().includes(queryLower)) {
+              const index = snippet.toLowerCase().indexOf(queryLower);
+              const start = Math.max(0, index - 40);
+              const end = Math.min(snippet.length, index + query.length + 60);
+              snippet = (start > 0 ? '...' : '') + 
+                        snippet.substring(start, end) + 
+                        (end < snippet.length ? '...' : '');
+              
+              // Highlight the matched text
+              snippet = snippet.replace(
+                new RegExp(query, 'gi'), 
+                match => `<span class="search-highlight">${match}</span>`
+              );
+            } else {
+              // If match is not in the snippet (e.g., in title only), use beginning of content
+              snippet = snippet.substring(0, 100) + (snippet.length > 100 ? '...' : '');
+            }
+            
+            item.innerHTML = `
+              <div class="result-icon"><i class="${typeIcon}"></i></div>
+              <div class="result-content">
+                <div class="result-title">${result.title}</div>
+                <div class="result-path">${result.path}</div>
+                <div class="result-snippet">${snippet}</div>
+              </div>
+            `;
+            
+            // Add click handler
+            item.addEventListener('click', function() {
+              navigateToResult(result);
+            });
+            
+            searchResults.appendChild(item);
+          });
+        }
+        
+        searchResults.classList.add('active');
+      }
+      
+      // Enhanced navigation to search result with better scrolling and highlighting
+      function navigateToResult(result) {
+        // First, ensure guides section is showing
+        const guidesSection = document.querySelector('.guides-section');
+        const landingSection = document.querySelector('.landing-section');
+        
+        if (getComputedStyle(guidesSection).display === 'none') {
+          // Show guides section
+          landingSection.classList.add('hidden');
+          
+          setTimeout(() => {
+            landingSection.style.display = 'none';
+            guidesSection.style.display = 'block';
+            
+            setTimeout(() => {
+              guidesSection.classList.add('visible');
+              showContent();
+            }, 50);
+          }, 400);
+        } else {
+          showContent();
+        }
+        
+        function showContent() {
+          // Show correct guide
+          document.querySelectorAll('.guide-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          document.getElementById(result.guide).classList.add('active');
+          
+          // Show correct section
+          const guide = document.getElementById(result.guide);
+          guide.querySelectorAll('.guide-section').forEach(section => {
+            section.classList.remove('active');
+          });
+          guide.querySelector(`#${result.section}`).classList.add('active');
+          
+          // Update sidebar active state
+          guide.querySelectorAll('.sidebar-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-section') === result.section) {
+              item.classList.add('active');
+            }
+          });
+          
+          // Scroll to element after a small delay
+          setTimeout(() => {
+            if (result.element) {
+              // Scroll the element into view
+              result.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              
+              // Apply highlight animation
+              result.element.classList.add('search-target');
+              
+              // For specific highlight of commands and steps
+              if (result.type === 'step' || result.type === 'command') {
+                result.element.style.animation = 'highlightPulse 2s ease-in-out';
+              }
+              
+              setTimeout(() => {
+                result.element.classList.remove('search-target');
+                if (result.type === 'step' || result.type === 'command') {
+                  result.element.style.animation = '';
+                }
+              }, 3000);
+            }
+            
+            // Hide search results
+            searchResults.classList.remove('active');
+            searchInput.value = '';
+          }, 300);
+        }
+      }
+      
+      // Event listeners for search
+      searchButton.addEventListener('click', function() {
+        search(searchInput.value);
+      });
+      
+      searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+          search(searchInput.value);
+        } else if (searchInput.value.length >= 2) {
+          search(searchInput.value);
+        } else if (searchInput.value.length === 0) {
+          searchResults.classList.remove('active');
+        }
+      });
+      
+      // Focus on search input with keyboard shortcut (Ctrl+K or /)
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey && e.key === 'k') || e.key === '/') {
+          if (document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+          }
+        }
+      });
+      
+      // Close search results when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+          searchResults.classList.remove('active');
+        }
+      });
+    }
+  
+    // Find all steps and update their structure
+    document.querySelectorAll('.step').forEach(step => {
+      // Find the heading and add the step number as data attribute
+      const stepNumber = step.querySelector('.step-number')?.textContent;
+      const heading = step.querySelector('h5');
+      if (heading && stepNumber) {
+        heading.setAttribute('data-step', stepNumber);
+      }
+      
+      // Remove the old step number element
+      const oldStepNumber = step.querySelector('.step-number');
+      if (oldStepNumber) {
+        oldStepNumber.remove();
+      }
+    });
+  
+    // Sidebar navigation functionality
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
+    
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const sectionId = this.getAttribute('data-section');
+        const parentGuide = this.closest('.guide-content');
+        
+        // Update active state in sidebar
+        parentGuide.querySelectorAll('.sidebar-item').forEach(sideItem => {
+          sideItem.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        // Show corresponding section
+        parentGuide.querySelectorAll('.guide-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        const targetSection = parentGuide.querySelector(`#${sectionId}`);
+        if (targetSection) {
+          targetSection.classList.add('active');
+          
+          // Initialize environment options if they exist in this section
+          const firstOption = targetSection.querySelector('.decision-option');
+          if (firstOption && !firstOption.classList.contains('selected')) {
+            firstOption.click();
+          }
+          
+          // Scroll to top of section
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  
+    // Tab functionality for installation guides
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', function() {
+        // Get the parent tab container
+        const tabContainer = this.closest('.installation-tabs');
+        
+        // Remove active class from all buttons in this container
+        tabContainer.querySelectorAll('.tab-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Get the target tab content
+        const tabId = this.getAttribute('data-tab');
+        
+        // Hide all tab content in this container
+        tabContainer.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Show the target tab content
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+  
+    // Installation decision tree functionality
+    document.querySelectorAll('.installation-decision .decision-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const target = this.getAttribute('data-target');
+        const decisionContainer = this.closest('.installation-decision');
+        const flowsContainer = decisionContainer.nextElementSibling;
+        
+        // Update selection state
+        decisionContainer.querySelectorAll('.decision-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        this.classList.add('selected');
+        
+        // Show corresponding installation flow
+        flowsContainer.querySelectorAll('.installation-flow').forEach(flow => {
+          flow.classList.remove('active');
+        });
+        
+        const targetFlow = document.getElementById(target);
+        if (targetFlow) {
+          targetFlow.classList.add('active');
+          
+          // Smooth scroll to the installation flow
+          setTimeout(() => {
+            targetFlow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      });
+    });
+  
+    // Initialize all installation flows - select the first option by default
+    document.querySelectorAll('.installation-decision').forEach(decision => {
+      const firstOption = decision.querySelector('.decision-option');
+      if (firstOption) {
+        // Trigger click on the first option after a short delay to ensure DOM is ready
+        setTimeout(() => {
+          firstOption.click();
+        }, 200);
+      }
+    });
+  
+    // Command copy functionality
+    document.querySelectorAll('.copy-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const commandText = this.previousElementSibling.textContent;
+        
+        // Create a temporary textarea element to copy the text
+        const textarea = document.createElement('textarea');
+        textarea.value = commandText;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        
+        // Select and copy the text
+        textarea.select();
+        document.execCommand('copy');
+        
+        // Remove the textarea
+        document.body.removeChild(textarea);
+        
+        // Show feedback
+        const originalIcon = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-check"></i>';
+        this.style.color = '#2ecc71';
+        
+        // Restore original icon after a delay
+        setTimeout(() => {
+          this.innerHTML = originalIcon;
+          this.style.color = '';
+        }, 2000);
+      });
+    });
+  
+    // Method comparison toggle
+    document.querySelector('.comparison-toggle').addEventListener('click', function() {
+      this.classList.toggle('active');
+      const tableContainer = document.querySelector('.comparison-table-container');
+      tableContainer.classList.toggle('active');
+    });
+  
+    // HX Deployment environment selection
+    const hxEnvironmentOptions = document.querySelectorAll('#hx .decision-option');
+    if (hxEnvironmentOptions.length > 0) {
+      hxEnvironmentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          // Get the target flow ID
+          const targetFlow = this.getAttribute('data-target');
+          
+          // Update selection state
+          document.querySelectorAll('#hx .decision-option').forEach(opt => {
+            opt.classList.remove('selected');
+          });
+          this.classList.add('selected');
+          
+          // Hide all flows
+          document.querySelectorAll('#hx .installation-flow').forEach(flow => {
+            flow.style.display = 'none';
+          });
+          
+          // Show selected flow
+          const selectedFlow = document.getElementById(targetFlow);
+          if (selectedFlow) {
+            selectedFlow.style.display = 'block';
+          }
+        });
+      });
+      
+      // Select the first option by default
+      hxEnvironmentOptions[0].click();
+    }
+  
+    // Enhanced animations and interactions
+    function setupEnhancedInteractions() {
+      // Progress tracking for steps
+      const stepsContainers = document.querySelectorAll('.steps-container');
+      stepsContainers.forEach(container => {
+        // Track progress as user scrolls through steps
+        const steps = container.querySelectorAll('.step');
+        const totalSteps = steps.length;
+        
+        // Set initial progress
+        updateStepProgress(container, 0);
+        
+        // Mark steps as completed when clicked
+        steps.forEach((step, index) => {
+          step.addEventListener('click', function() {
+            const isCompleted = this.classList.contains('completed');
+            
+            if (isCompleted) {
+              // If already completed, uncomplete it and all following steps
+              for (let i = index; i < totalSteps; i++) {
+                steps[i].classList.remove('completed');
+              }
+              
+              // Update progress
+              updateStepProgress(container, index);
+            } else {
+              // Mark all steps up to this one as completed
+              for (let i = 0; i <= index; i++) {
+                steps[i].classList.add('completed');
+              }
+              
+              // Update progress
+              updateStepProgress(container, index + 1);
+            }
+          });
+        });
+        
+        // Auto-progress as user scrolls (only on desktop)
+        if (window.innerWidth > 768) {
+          window.addEventListener('scroll', function() {
+            let visibleStepIndex = 0;
+            
+            steps.forEach((step, index) => {
+              const rect = step.getBoundingClientRect();
+              if (rect.top < window.innerHeight * 0.8 && rect.bottom > 0) {
+                visibleStepIndex = Math.max(visibleStepIndex, index + 1);
+              }
+            });
+            
+            updateStepProgress(container, visibleStepIndex);
+          }, { passive: true });
+        }
+      });
+      
+      function updateStepProgress(container, completedSteps) {
+        const totalSteps = container.querySelectorAll('.step').length;
+        const progressPercentage = (completedSteps / totalSteps) * 100;
+        container.style.setProperty('--progress', `${progressPercentage}%`);
+      }
+      
+      // Interactive command boxes
+      const commandBoxes = document.querySelectorAll('.command-box');
+      commandBoxes.forEach(box => {
+        // Create copy success indicator if it doesn't exist
+        if (!box.querySelector('.copy-success')) {
+          const copySuccess = document.createElement('div');
+          copySuccess.className = 'copy-success';
+          copySuccess.textContent = 'Copied!';
+          box.appendChild(copySuccess);
+        }
+        
+        // Add click-to-copy functionality directly on command box
+        box.addEventListener('click', function(e) {
+          if (e.target === this) {
+            const copyBtn = this.nextElementSibling;
+            if (copyBtn && copyBtn.classList.contains('copy-btn')) {
+              copyBtn.click(); // Trigger the existing copy button click
+            } else {
+              // Fallback if no copy button
+              copyText(this.textContent.trim());
+              
+              const copySuccess = this.querySelector('.copy-success');
+              if (copySuccess) {
+                copySuccess.classList.add('show');
+                setTimeout(() => {
+                  copySuccess.classList.remove('show');
+                }, 2000);
+              }
+            }
+          }
+        });
+      });
+      
+      function copyText(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      
+      // Enhanced copy button feedback
+      document.querySelectorAll('.copy-btn').forEach(button => {
+        const originalClickHandler = button.onclick;
+        
+        button.addEventListener('click', function() {
+          // Play a subtle copy animation
+          this.classList.add('animate__animated', 'animate__heartBeat');
+          setTimeout(() => {
+            this.classList.remove('animate__animated', 'animate__heartBeat');
+          }, 1000);
+          
+          // Add a ripple effect
+          const ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          this.appendChild(ripple);
+          
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = `${size}px`;
+          
+          ripple.style.left = '0px';
+          ripple.style.top = '0px';
+          
+          // Remove ripple after animation completes
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+      
+      // Product info banner interactivity
+      document.querySelectorAll('.product-info-banner').forEach(banner => {
+        banner.addEventListener('click', function() {
+          this.classList.add('active');
+          setTimeout(() => {
+            this.classList.remove('active');
+          }, 1000);
+          
+          // Create and animate particles
+          for (let i = 0; i < 5; i++) {
+            createParticle(this);
+          }
+        });
+        
+        function createParticle(parent) {
+          const particle = document.createElement('span');
+          particle.className = 'particle';
+          
+          // Random position, size and color
+          const size = Math.floor(Math.random() * 10 + 5);
+          const color = `hsl(${Math.random() * 60 + 270}, 70%, 60%)`;
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.background = color;
+          
+          // Random position
+          const parentRect = parent.getBoundingClientRect();
+          const x = Math.random() * parentRect.width;
+          const y = Math.random() * parentRect.height;
+          
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          
+          parent.appendChild(particle);
+          
+          // Animate and remove
+          setTimeout(() => {
+            particle.remove();
+          }, 1000);
+        }
+      });
+      
+      // Enhanced decision options
+      document.querySelectorAll('.decision-option').forEach(option => {
+        option.addEventListener('click', function() {
+          // Add a more pronounced selection effect
+          const ripple = document.createElement('span');
+          ripple.className = 'option-ripple';
+          this.appendChild(ripple);
+          
+          const rect = this.getBoundingClientRect();
+          ripple.style.width = ripple.style.height = `${Math.max(rect.width, rect.height) * 2}px`;
+          ripple.style.left = '50%';
+          ripple.style.top = '50%';
+          ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+          
+          // Animate the ripple
+          setTimeout(() => {
+            ripple.style.transform = 'translate(-50%, -50%) scale(1)';
+            ripple.style.opacity = '0';
+          }, 50);
+          
+          // Remove the ripple element after animation
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+      
+      // Section transition enhancement
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        const originalClickHandler = item.onclick;
+        
+        item.addEventListener('click', function(e) {
+          // Add a loading state to the guide content area
+          const contentArea = document.querySelector('.guide-content-area');
+          if (contentArea) {
+            contentArea.classList.add('loading');
+            
+            setTimeout(() => {
+              if (typeof originalClickHandler === 'function') {
+                originalClickHandler.call(this, e);
+              }
+              
+              // Remove loading state
+              setTimeout(() => {
+                contentArea.classList.remove('loading');
+              }, 300);
+            }, 300);
+          }
+        });
+      });
+    }
+  
+    // Call the function to set up the enhanced interactions
+    setupEnhancedInteractions();
+  
+    // Add window resize handler to reset animations on mobile/desktop transitions
+    let lastWidth = window.innerWidth;
+    window.addEventListener('resize', function() {
+      const currentWidth = window.innerWidth;
+      const breakpoint = 768;
+      
+      // Only trigger when crossing the mobile/desktop breakpoint
+      if ((lastWidth <= breakpoint && currentWidth > breakpoint) || 
+          (lastWidth > breakpoint && currentWidth <= breakpoint)) {
+        setupEnhancedInteractions();
+      }
+      
+      lastWidth = currentWidth;
+    });
+  });
