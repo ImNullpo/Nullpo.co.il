@@ -663,252 +663,398 @@ document.addEventListener('DOMContentLoaded', function() {
       // Select the first option by default
       hxEnvironmentOptions[0].click();
     }
-  
-    // Enhanced animations and interactions
-    function setupEnhancedInteractions() {
-      // Progress tracking for steps
-      const stepsContainers = document.querySelectorAll('.steps-container');
-      stepsContainers.forEach(container => {
-        // Track progress as user scrolls through steps
-        const steps = container.querySelectorAll('.step');
-        const totalSteps = steps.length;
-        
-        // Set initial progress
-        updateStepProgress(container, 0);
-        
-        // Mark steps as completed when clicked
-        steps.forEach((step, index) => {
-          step.addEventListener('click', function() {
-            const isCompleted = this.classList.contains('completed');
-            
-            if (isCompleted) {
-              // If already completed, uncomplete it and all following steps
-              for (let i = index; i < totalSteps; i++) {
-                steps[i].classList.remove('completed');
-              }
-              
-              // Update progress
-              updateStepProgress(container, index);
-            } else {
-              // Mark all steps up to this one as completed
-              for (let i = 0; i <= index; i++) {
-                steps[i].classList.add('completed');
-              }
-              
-              // Update progress
-              updateStepProgress(container, index + 1);
-            }
-          });
-        });
-        
-        // Auto-progress as user scrolls (only on desktop)
-        if (window.innerWidth > 768) {
-          window.addEventListener('scroll', function() {
-            let visibleStepIndex = 0;
-            
-            steps.forEach((step, index) => {
-              const rect = step.getBoundingClientRect();
-              if (rect.top < window.innerHeight * 0.8 && rect.bottom > 0) {
-                visibleStepIndex = Math.max(visibleStepIndex, index + 1);
-              }
-            });
-            
-            updateStepProgress(container, visibleStepIndex);
-          }, { passive: true });
-        }
-      });
-      
-      function updateStepProgress(container, completedSteps) {
-        const totalSteps = container.querySelectorAll('.step').length;
-        const progressPercentage = (completedSteps / totalSteps) * 100;
-        container.style.setProperty('--progress', `${progressPercentage}%`);
-      }
-      
-      // Interactive command boxes
-      const commandBoxes = document.querySelectorAll('.command-box');
-      commandBoxes.forEach(box => {
-        // Create copy success indicator if it doesn't exist
-        if (!box.querySelector('.copy-success')) {
-          const copySuccess = document.createElement('div');
-          copySuccess.className = 'copy-success';
-          copySuccess.textContent = 'Copied!';
-          box.appendChild(copySuccess);
-        }
-        
-        // Add click-to-copy functionality directly on command box
-        box.addEventListener('click', function(e) {
-          if (e.target === this) {
-            const copyBtn = this.nextElementSibling;
-            if (copyBtn && copyBtn.classList.contains('copy-btn')) {
-              copyBtn.click(); // Trigger the existing copy button click
-            } else {
-              // Fallback if no copy button
-              copyText(this.textContent.trim());
-              
-              const copySuccess = this.querySelector('.copy-success');
-              if (copySuccess) {
-                copySuccess.classList.add('show');
-                setTimeout(() => {
-                  copySuccess.classList.remove('show');
-                }, 2000);
-              }
-            }
-          }
-        });
-      });
-      
-      function copyText(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-      }
-      
-      // Enhanced copy button feedback
-      document.querySelectorAll('.copy-btn').forEach(button => {
-        const originalClickHandler = button.onclick;
-        
-        button.addEventListener('click', function() {
-          // Play a subtle copy animation
-          this.classList.add('animate__animated', 'animate__heartBeat');
-          setTimeout(() => {
-            this.classList.remove('animate__animated', 'animate__heartBeat');
-          }, 1000);
-          
-          // Add a ripple effect
-          const ripple = document.createElement('span');
-          ripple.className = 'ripple';
-          this.appendChild(ripple);
-          
-          const rect = this.getBoundingClientRect();
-          const size = Math.max(rect.width, rect.height);
-          ripple.style.width = ripple.style.height = `${size}px`;
-          
-          ripple.style.left = '0px';
-          ripple.style.top = '0px';
-          
-          // Remove ripple after animation completes
-          setTimeout(() => {
-            ripple.remove();
-          }, 600);
-        });
-      });
-      
-      // Product info banner interactivity
-      document.querySelectorAll('.product-info-banner').forEach(banner => {
-        banner.addEventListener('click', function() {
-          this.classList.add('active');
-          setTimeout(() => {
-            this.classList.remove('active');
-          }, 1000);
-          
-          // Create and animate particles
-          for (let i = 0; i < 5; i++) {
-            createParticle(this);
-          }
-        });
-        
-        function createParticle(parent) {
-          const particle = document.createElement('span');
-          particle.className = 'particle';
-          
-          // Random position, size and color
-          const size = Math.floor(Math.random() * 10 + 5);
-          const color = `hsl(${Math.random() * 60 + 270}, 70%, 60%)`;
-          
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.background = color;
-          
-          // Random position
-          const parentRect = parent.getBoundingClientRect();
-          const x = Math.random() * parentRect.width;
-          const y = Math.random() * parentRect.height;
-          
-          particle.style.left = `${x}px`;
-          particle.style.top = `${y}px`;
-          
-          parent.appendChild(particle);
-          
-          // Animate and remove
-          setTimeout(() => {
-            particle.remove();
-          }, 1000);
-        }
-      });
-      
-      // Enhanced decision options
-      document.querySelectorAll('.decision-option').forEach(option => {
-        option.addEventListener('click', function() {
-          // Add a more pronounced selection effect
-          const ripple = document.createElement('span');
-          ripple.className = 'option-ripple';
-          this.appendChild(ripple);
-          
-          const rect = this.getBoundingClientRect();
-          ripple.style.width = ripple.style.height = `${Math.max(rect.width, rect.height) * 2}px`;
-          ripple.style.left = '50%';
-          ripple.style.top = '50%';
-          ripple.style.transform = 'translate(-50%, -50%) scale(0)';
-          
-          // Animate the ripple
-          setTimeout(() => {
-            ripple.style.transform = 'translate(-50%, -50%) scale(1)';
-            ripple.style.opacity = '0';
-          }, 50);
-          
-          // Remove the ripple element after animation
-          setTimeout(() => {
-            ripple.remove();
-          }, 600);
-        });
-      });
-      
-      // Section transition enhancement
-      document.querySelectorAll('.sidebar-item').forEach(item => {
-        const originalClickHandler = item.onclick;
-        
-        item.addEventListener('click', function(e) {
-          // Add a loading state to the guide content area
-          const contentArea = document.querySelector('.guide-content-area');
-          if (contentArea) {
-            contentArea.classList.add('loading');
-            
-            setTimeout(() => {
-              if (typeof originalClickHandler === 'function') {
-                originalClickHandler.call(this, e);
-              }
-              
-              // Remove loading state
-              setTimeout(() => {
-                contentArea.classList.remove('loading');
-              }, 300);
-            }, 300);
-          }
-        });
-      });
-    }
-  
-    // Call the function to set up the enhanced interactions
-    setupEnhancedInteractions();
-  
-    // Add window resize handler to reset animations on mobile/desktop transitions
-    let lastWidth = window.innerWidth;
-    window.addEventListener('resize', function() {
-      const currentWidth = window.innerWidth;
-      const breakpoint = 768;
-      
-      // Only trigger when crossing the mobile/desktop breakpoint
-      if ((lastWidth <= breakpoint && currentWidth > breakpoint) || 
-          (lastWidth > breakpoint && currentWidth <= breakpoint)) {
-        setupEnhancedInteractions();
-      }
-      
-      lastWidth = currentWidth;
-    });
   });
+
+  // Cross-browser compatible enhancement script
+  (function() {
+    // Ensure the script works in all browsers
+    'use strict';
+    
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Feature detection first
+      var supportsAnimation = 'animation' in document.documentElement.style || 
+                             'webkitAnimation' in document.documentElement.style;
+      
+      var supportsTransform = 'transform' in document.documentElement.style || 
+                             'webkitTransform' in document.documentElement.style ||
+                             'msTransform' in document.documentElement.style;
+      
+      // ============ Interactive Icons =============
+      
+      // Animate the ePO cog icon when clicked
+      var epoCogIcon = document.querySelector('.sidebar-item[data-section="epo"] i');
+      if (epoCogIcon) {
+        epoCogIcon.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent sidebar item click
+          
+          // Simple manual rotation animation that works in all browsers
+          var startTime = null;
+          var duration = 2000; // 2 seconds
+          var startAngle = 0;
+          var endAngle = 720; // Two full rotations
+          
+          function rotateCog(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = timestamp - startTime;
+            var percentage = Math.min(progress / duration, 1);
+            
+            var currentAngle = startAngle + (percentage * (endAngle - startAngle));
+            epoCogIcon.style.transform = 'rotate(' + currentAngle + 'deg)';
+            epoCogIcon.style.webkitTransform = 'rotate(' + currentAngle + 'deg)';
+            epoCogIcon.style.msTransform = 'rotate(' + currentAngle + 'deg)';
+            
+            if (percentage < 1) {
+              window.requestAnimationFrame(rotateCog);
+            } else {
+              // Reset transform after animation completes
+              setTimeout(function() {
+                epoCogIcon.style.transform = '';
+                epoCogIcon.style.webkitTransform = '';
+                epoCogIcon.style.msTransform = '';
+              }, 100);
+            }
+          }
+          
+          window.requestAnimationFrame(rotateCog);
+          
+          // Show notification
+          if (window.showNotification) {
+            window.showNotification('ePO Configuration Module Activated', 'fas fa-cog');
+          }
+        });
+      }
+      
+      // ============ Command Box Copy Functionality =============
+      
+      // Enhance command boxes with copy functionality
+      var commandBoxes = document.querySelectorAll('.command-box');
+      commandBoxes.forEach(function(box) {
+        // Make command boxes copyable with click
+        box.addEventListener('click', function() {
+          copyTextToClipboard(this.textContent.trim());
+          showCopySuccess(this);
+        });
+        
+        // Add copy success indicator
+        var successIndicator = document.createElement('span');
+        successIndicator.className = 'copy-success';
+        successIndicator.textContent = 'Copied!';
+        box.appendChild(successIndicator);
+        
+        // Add visual indication that it's clickable
+        if (window.innerWidth > 768) { // Desktop only
+          box.title = 'Click to copy';
+          
+          // Adjust hover text for Safari/iOS
+          if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+            box.title = 'Tap to copy';
+          }
+        }
+      });
+      
+      function showCopySuccess(element) {
+        var success = element.querySelector('.copy-success');
+        if (success) {
+          success.classList.add('show');
+          
+          // Remove class after animation
+          setTimeout(function() {
+            success.classList.remove('show');
+          }, 2000);
+        }
+      }
+      
+      // Cross-browser clipboard function
+      function copyTextToClipboard(text) {
+        // Modern browsers
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).catch(function(err) {
+            console.error('Could not copy text: ', err);
+            fallbackCopyTextToClipboard(text);
+          });
+        } else {
+          // Fallback for older browsers
+          fallbackCopyTextToClipboard(text);
+        }
+        
+        function fallbackCopyTextToClipboard(text) {
+          var textArea = document.createElement('textarea');
+          textArea.value = text;
+          
+          // Make the textarea hidden
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-999999px';
+          textArea.style.top = '-999999px';
+          document.body.appendChild(textArea);
+          
+          // Preserve scrolling position
+          var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+          
+          textArea.focus();
+          textArea.select();
+          
+          var success = false;
+          try {
+            success = document.execCommand('copy');
+          } catch (err) {
+            console.error('Unable to copy', err);
+          }
+          
+          document.body.removeChild(textArea);
+          
+          // Restore scrolling position
+          window.scrollTo(0, scrollPosition);
+          
+          return success;
+        }
+      }
+      
+      // ============ Interactive Steps =============
+      
+      // Enable clickable steps to mark as completed
+      var steps = document.querySelectorAll('.step');
+      steps.forEach(function(step, index) {
+        step.addEventListener('click', function() {
+          // Toggle completed state
+          this.classList.toggle('completed');
+          
+          // Update step progress indicator
+          updateStepProgress();
+        });
+      });
+      
+      // Function to update progress line
+      function updateStepProgress() {
+        var stepsContainers = document.querySelectorAll('.steps-container');
+        
+        stepsContainers.forEach(function(container) {
+          var steps = container.querySelectorAll('.step');
+          var completedSteps = container.querySelectorAll('.step.completed');
+          
+          // Find or create progress line
+          var progressLine = container.querySelector('.progress-line');
+          if (!progressLine) {
+            progressLine = document.createElement('div');
+            progressLine.className = 'progress-line';
+            container.appendChild(progressLine);
+          }
+          
+          // Calculate progress percentage
+          var progress = (completedSteps.length / steps.length) * 100;
+          
+          // Update progress line height
+          var containerHeight = container.offsetHeight;
+          progressLine.style.height = (progress * containerHeight / 100) + 'px';
+        });
+      }
+      
+      // Initialize progress indicator
+      updateStepProgress();
+      
+      // ============ Button Ripple Effect =============
+      
+      // Add ripple effect to buttons
+      var rippleButtons = document.querySelectorAll('.primary-button, .secondary-button, .option-select-btn, .guide-button');
+      rippleButtons.forEach(function(button) {
+        button.classList.add('ripple-effect');
+        
+        button.addEventListener('click', function(e) {
+          if (!supportsTransform) return; // Skip if transforms not supported
+          
+          var rect = button.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          
+          var ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          
+          this.appendChild(ripple);
+          
+          setTimeout(function() {
+            ripple.classList.add('animate-ripple');
+          }, 10);
+          
+          // Remove after animation completes
+          setTimeout(function() {
+            if (ripple && ripple.parentNode) {
+              ripple.parentNode.removeChild(ripple);
+            }
+          }, 700);
+        });
+      });
+      
+      // ============ Option Selection Enhancements =============
+      
+      // Enhance decision options selection
+      var decisionOptions = document.querySelectorAll('.decision-option');
+      decisionOptions.forEach(function(option) {
+        option.addEventListener('click', function() {
+          var container = this.closest('.decision-options');
+          if (container) {
+            // Deselect all options
+            container.querySelectorAll('.decision-option').forEach(function(opt) {
+              opt.classList.remove('selected');
+            });
+          }
+          
+          // Select this option
+          this.classList.add('selected');
+          
+          // Add subtle feedback animation
+          if (supportsAnimation) {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(function() {
+              option.style.transform = '';
+            }, 200);
+          }
+        });
+      });
+      
+      // ============ Notification System =============
+      
+      // Initialize notification container
+      var notificationContainer;
+      
+      function createNotificationContainer() {
+        notificationContainer = document.createElement('div');
+        notificationContainer.id = 'notification-container';
+        notificationContainer.style.position = 'fixed';
+        notificationContainer.style.bottom = '20px';
+        notificationContainer.style.right = '20px';
+        notificationContainer.style.zIndex = '9999';
+        
+        document.body.appendChild(notificationContainer);
+      }
+      
+      // Function to show notifications
+      window.showNotification = function(message, iconClass) {
+        if (!notificationContainer) {
+          createNotificationContainer();
+        }
+        
+        // Create notification element
+        var notification = document.createElement('div');
+        notification.className = 'notification';
+        
+        // Add icon if provided
+        if (iconClass) {
+          var icon = document.createElement('i');
+          icon.className = iconClass;
+          notification.appendChild(icon);
+        }
+        
+        // Add message
+        var messageSpan = document.createElement('span');
+        messageSpan.textContent = message;
+        notification.appendChild(messageSpan);
+        
+        // Add close button
+        var closeBtn = document.createElement('span');
+        closeBtn.innerHTML = '&times;';
+        closeBtn.style.marginLeft = '10px';
+        closeBtn.style.cursor = 'pointer';
+        closeBtn.style.fontWeight = 'bold';
+        closeBtn.style.fontSize = '16px';
+        closeBtn.addEventListener('click', function() {
+          notification.classList.remove('show');
+          setTimeout(function() {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 300);
+        });
+        notification.appendChild(closeBtn);
+        
+        // Add to container
+        notificationContainer.appendChild(notification);
+        
+        // Trigger animation
+        setTimeout(function() {
+          notification.classList.add('show');
+        }, 10);
+        
+        // Auto-remove after delay
+        setTimeout(function() {
+          notification.classList.remove('show');
+          setTimeout(function() {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 300);
+        }, 5000);
+      };
+      
+      // ============ Product Logo Animation =============
+      
+      // Animate product logo on click
+      var productLogos = document.querySelectorAll('.product-logo');
+      productLogos.forEach(function(logo) {
+        logo.addEventListener('click', function() {
+          if (supportsAnimation) {
+            this.classList.add('pulse-animation');
+            
+            // Remove animation class after it completes
+            setTimeout(function() {
+              logo.classList.remove('pulse-animation');
+            }, 1500);
+          }
+          
+          var productName = this.parentNode.querySelector('.product-details h5');
+          if (productName) {
+            showNotification('Exploring ' + productName.textContent + '...', 'fas fa-info-circle');
+          }
+        });
+      });
+      
+      // ============ Welcome Message =============
+      
+      // Show welcome message after a delay
+      setTimeout(function() {
+        showNotification('Welcome to the enhanced Trellix Guide! Try clicking on items to discover interactive features.', 'fas fa-magic');
+      }, 2000);
+      
+      // ============ Browser Compatibility Check =============
+      
+      // Detect browser for any specific patches
+      function getBrowser() {
+        var ua = navigator.userAgent;
+        var browserName;
+        
+        if (ua.indexOf("Chrome") > -1 && ua.indexOf("Safari") > -1 && ua.indexOf("Edge") === -1 && ua.indexOf("Edg") === -1) {
+          browserName = "Chrome";
+        } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
+          browserName = "Safari";
+        } else if (ua.indexOf("Firefox") > -1) {
+          browserName = "Firefox";
+        } else if (ua.indexOf("MSIE") > -1 || ua.indexOf("Trident") > -1) {
+          browserName = "IE";
+        } else if (ua.indexOf("Edge") > -1 || ua.indexOf("Edg") > -1) {
+          browserName = "Edge";
+        } else {
+          browserName = "Unknown";
+        }
+        
+        return browserName;
+      }
+      
+      // Apply browser-specific patches if needed
+      var browser = getBrowser();
+      if (browser === "Safari") {
+        // Safari-specific fixes
+        document.querySelectorAll('.command-box').forEach(function(box) {
+          box.style.whiteSpace = 'pre-wrap';
+        });
+      } else if (browser === "IE") {
+        // Show notification for IE users
+        showNotification('Some interactive features may not work optimally in Internet Explorer. Consider using a modern browser for the best experience.', 'fas fa-exclamation-triangle');
+        
+        // Disable complex animations
+        document.querySelectorAll('.spin-animation, .pulse-animation, .float-animation').forEach(function(el) {
+          el.classList.remove('spin-animation', 'pulse-animation', 'float-animation');
+        });
+      }
+    });
+  })();
