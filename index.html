@@ -40,7 +40,7 @@
         <button class="secondary-button" id="explore-guides-btn">Explore Guides</button>
       </div>
     </div>
-    
+
     <div class="feature-grid">
       <div class="feature-card">
         <i class="fas fa-shield-alt feature-icon"></i>
@@ -68,10 +68,10 @@
   <!-- Guides Section -->
   <section id="guides" class="guides-section">
     <div class="guides-container">
-      <!-- Trellix Guide -->
-      <div id="trellix" class="guide-content">
+    <!-- Trellix Guide -->
+    <div id="trellix" class="guide-content">
         <div class="guide-header">
-          <h2>Trellix Guide</h2>
+      <h2>Trellix Guide</h2>
           <p class="guide-description">Complete configuration and setup instructions for Trellix enterprise products</p>
         </div>
 
@@ -88,7 +88,10 @@
                 <span>Database Configuration</span>
               </div>
               <div class="sidebar-item" data-section="tie">
-                <i class="fas fa-exchange-alt"></i>
+                <div class="icon-stack">
+                  <i class="fas fa-file"></i>
+                  <i class="fas fa-hashtag icon-overlay"></i>
+                </div>
                 <span>TIE Setup</span>
               </div>
               <div class="sidebar-item" data-section="ivx">
@@ -104,233 +107,203 @@
                 <span>Command Reference</span>
               </div>
             </div>
-          </div>
+      </div>
 
           <!-- Right Content Area -->
           <div class="guide-content-area">
-            <div id="epo" class="guide-section active">
-              <div class="section-header">
-                <h3>ePO Setup</h3>
-                <div class="section-meta">
-                  <span class="difficulty"><i class="fas fa-star"></i> Intermediate</span>
-                  <span class="time"><i class="far fa-clock"></i> 30 minutes</span>
+      <div id="epo" class="guide-section active">
+        <h3>Trellix ePO Management</h3>
+        
+        <!-- Product Info Banner -->
+        <div class="product-info-banner">
+          <div class="product-logo">
+            <i class="fas fa-cog"></i>
+          </div>
+          <div class="product-details">
+            <h5>Trellix ePolicy Orchestrator (ePO)</h5>
+            <div class="product-meta">
+              <span><i class="fas fa-server"></i> Central Management Console</span>
+              <span><i class="fas fa-shield-alt"></i> Security Policy Control</span>
+            </div>
+          </div>
+          <div class="product-links">
+            <a href="#" class="product-link"><i class="fas fa-external-link-alt"></i> Documentation</a>
+          </div>
+        </div>
+        
+        <!-- Main content card for introduction -->
+        <div class="content-card">
+          <h4>Choose Your ePO Journey</h4>
+          <p>Select the path that matches your current needs with Trellix ePO.</p>
+        </div>
+        
+        <!-- Path Selection Cards -->
+        <div class="epo-journey-selection">
+          <!-- Setup Path -->
+          <div class="journey-card setup-journey" id="setup-journey">
+            <div class="journey-icon">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h4>Initial Setup</h4>
+            <p>First-time installation, configuration, and deployment of your ePO environment.</p>
+            <ul class="journey-highlights">
+              <li><i class="fas fa-check-circle"></i> Server installation</li>
+              <li><i class="fas fa-check-circle"></i> Database configuration</li>
+              <li><i class="fas fa-check-circle"></i> Initial policy setup</li>
+              <li><i class="fas fa-check-circle"></i> First-time deployment</li>
+            </ul>
+            <div class="journey-footer">
+              <span class="journey-tag"><i class="fas fa-clock"></i> One-time process</span>
+              <button class="journey-select" data-journey="setup">Begin Setup</button>
+            </div>
+          </div>
+          
+          <!-- Operations Path -->
+          <div class="journey-card operations-journey" id="operations-journey">
+            <div class="journey-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <h4>Day-to-Day Operations</h4>
+            <p>Ongoing management, maintenance, and optimization of your ePO environment.</p>
+            <ul class="journey-highlights">
+              <li><i class="fas fa-check-circle"></i> Appliance management (SolidCore, ENS, DLP)</li>
+              <li><i class="fas fa-check-circle"></i> Extensions and packages</li>
+              <li><i class="fas fa-check-circle"></i> Client and server tasks</li>
+              <li><i class="fas fa-check-circle"></i> Reporting and troubleshooting</li>
+            </ul>
+            <div class="journey-footer">
+              <span class="journey-tag"><i class="fas fa-sync"></i> Regular activities</span>
+              <button class="journey-select" data-journey="operations">Manage ePO</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Content sections that will be shown/hidden based on path selection -->
+        <div id="epo-setup-content" class="epo-content-section" style="display: none;">
+          <!-- Setup content here -->
+          <div class="content-card">
+            <h4>ePO Setup Guide</h4>
+            <p>Follow these steps to install and configure your Trellix ePO environment.</p>
+            
+            <!-- Setup steps container -->
+            <div class="steps-container">
+              <!-- System requirements step -->
+              <div class="step">
+                <div class="step-content">
+                  <h5 data-step="1">Verify System Requirements</h5>
+                  <p>Ensure your environment meets the minimum system requirements before beginning installation.</p>
+                  <ul class="requirement-list">
+                    <li><strong>Processor:</strong> 8 cores minimum, 16 cores recommended</li>
+                    <li><strong>Memory:</strong> 16GB RAM minimum, 32GB RAM recommended</li>
+                    <li><strong>Storage:</strong> 100GB available space minimum</li>
+                    <li><strong>SQL Server:</strong> Microsoft SQL Server 2019 or later</li>
+                    <li><strong>Operating System:</strong> Windows Server 2019 or later</li>
+                  </ul>
                 </div>
               </div>
               
-              <div class="content-card">
-                <h4>Overview</h4>
-                <p>Trellix ePO (ePolicy Orchestrator) provides centralized security management for your entire enterprise security ecosystem. This guide covers the complete setup and configuration process for enterprise environments.</p>
-                
-                <div class="product-info-banner">
-                  <div class="product-logo">
-                    <i class="fas fa-cog"></i>
-                  </div>
-                  <div class="product-details">
-                    <h5>Trellix ePolicy Orchestrator (ePO)</h5>
-                    <div class="product-meta">
-                      <span><i class="fas fa-code-branch"></i> Latest Version: 5.10.0</span>
-                      <span><i class="fas fa-shield-alt"></i> Part of Trellix XDR</span>
-                    </div>
-                  </div>
-                  <div class="product-links">
-                    <a href="#" class="product-link"><i class="fas fa-external-link-alt"></i> Official Documentation</a>
-                  </div>
-                </div>
+              <!-- Additional setup steps would go here -->
+            </div>
+          </div>
+        </div>
+        
+        <div id="epo-operations-content" class="epo-content-section" style="display: none;">
+          <!-- Operations content here -->
+          <div class="operations-dashboard">
+            <!-- Dashboard navigation -->
+            <div class="dashboard-nav">
+              <div class="dashboard-nav-item active" data-target="appliances">
+                <i class="fas fa-shield-alt"></i>
+                <span>Appliances</span>
               </div>
-              
-              <div class="content-card">
-                <h4>System Requirements</h4>
-                <ul class="requirement-list">
-                  <li><strong>Server</strong> - 8+ CPU cores, 16GB+ RAM, 100GB+ storage</li>
-                  <li><strong>Operating System</strong> - Windows Server 2016/2019/2022</li>
-                  <li><strong>Database</strong> - Microsoft SQL Server 2016/2019/2022</li>
-                  <li><strong>Web Browser</strong> - Chrome, Firefox, or Edge (latest versions)</li>
-                </ul>
+              <div class="dashboard-nav-item" data-target="extensions">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Extensions</span>
               </div>
-              
-              <div class="content-card">
-                <h4>ePO Installation</h4>
-                
-                <div class="installation-decision">
-                  <h5 class="decision-question">Select your deployment environment:</h5>
-                  
-                  <div class="decision-options">
-                    <div class="decision-option" data-target="online-epo">
-                      <div class="option-icon"><i class="fas fa-globe"></i></div>
-                      <h6>Connected Environment</h6>
-                      <p>Standard deployment with Internet connectivity</p>
-                      <ul class="option-benefits">
-                        <li>Automatic product updates</li>
-                        <li>Real-time threat intelligence</li>
-                        <li>Cloud-based reputation services</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                    
-                    <div class="decision-option" data-target="offline-epo">
-                      <div class="option-icon"><i class="fas fa-shield-alt"></i></div>
-                      <h6>Air-Gapped Environment</h6>
-                      <p>Secure deployment for isolated networks</p>
-                      <ul class="option-benefits">
-                        <li>Complete network isolation</li>
-                        <li>Compliance with strict security policies</li>
-                        <li>Manual update control</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="installation-flows">
-                  <div class="installation-flow" id="online-epo">
-                    <div class="flow-header">
-                      <h5>Online ePO Installation</h5>
-                      <div class="environment-badge connected">
-                        <i class="fas fa-globe"></i> Connected Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 30 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: Medium</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Prepare Your Environment</h5>
-                          <p>Ensure your system meets all prerequisites and have admin credentials for SQL Server ready.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Download Installer</h5>
-                          <p>Download the latest ePO installation package from the Trellix Customer Portal.</p>
-                          <div class="official-package">
-                            <div class="package-name">TrellixEPO_5.10.0_Setup.exe</div>
-                            <div class="package-meta">2.1 GB | Released: September 2023</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Run Installation Wizard</h5>
-                          <p>Execute the installer and select the "Standard Installation" option for connected environments.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Configure Database Connection</h5>
-                          <p>Enter your Microsoft SQL Server details and authentication credentials.</p>
-                          <div class="command-box">trellix-epo-config --database-type sqlserver --server sql.example.com --database EPO_DB --username sa --auth-type windows</div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Set Up Admin Account</h5>
-                          <p>Create the initial administrator account that will be used to manage the ePO console.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="6">Enable Online Features</h5>
-                          <p>Configure connection to Trellix cloud services for automatic updates and real-time threat intelligence.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="installation-flow" id="offline-epo">
-                    <div class="flow-header">
-                      <h5>Air-Gapped ePO Installation</h5>
-                      <div class="environment-badge air-gapped">
-                        <i class="fas fa-shield-alt"></i> Air-Gapped Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 45 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: High</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Download Offline Package</h5>
-                          <p>On an internet-connected system, download the complete offline bundle and extension catalog.</p>
-                          <div class="official-package">
-                            <div class="package-name">TrellixEPO_5.10.0_Offline_Bundle.zip</div>
-                            <div class="package-meta">4.7 GB | Includes installer, extensions, and DAT files</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Transfer to Air-Gapped Environment</h5>
-                          <p>Transfer the package to your isolated environment following your security protocols.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Run Installation in Offline Mode</h5>
-                          <p>Execute the installer with the offline flag to disable any internet-dependent features.</p>
-                          <div class="command-box">TrellixEPO_5.10.0_Setup.exe --offline --catalog-path="C:\OfflineCatalog"</div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Configure Microsoft SQL Server</h5>
-                          <p>Use an existing air-gapped SQL Server instance or install SQL Server in the isolated environment.</p>
-                          <div class="command-box">trellix-epo-config --database-type sqlserver --server isolated-sql --database EPO_DB_OFFLINE --username sa --auth-type sql</div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Import Extensions Manually</h5>
-                          <p>Import the pre-downloaded extensions and DAT files from the offline package.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="6">Configure Manual Update Process</h5>
-                          <p>Establish a secure procedure for periodically updating ePO components in the air-gapped environment.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="7">Create Air-Gapped Update Package</h5>
-                          <div class="command-box">trellix-package-builder --export-updates --include-all-components --output-path=/media/usb/trellix-updates</div>
-                          <p>Generate a complete update package that can be safely transferred to an air-gapped environment.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="8">Verify Package Integrity</h5>
-                          <div class="command-box">trellix-package-verify --package=/path/to/offline-package.zip --generate-report</div>
-                          <p>Verify the integrity of an offline package before deploying it in an air-gapped environment.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="dashboard-nav-item" data-target="clients">
+                <i class="fas fa-laptop"></i>
+                <span>Clients</span>
               </div>
-              
-              <div class="content-card">
-                <h4>Visual Reference</h4>
-                <img src="https://via.placeholder.com/800x450" alt="ePO Setup Screenshot" class="guide-image">
-                <p class="image-caption">ePO Management Interface</p>
+              <div class="dashboard-nav-item" data-target="servers">
+                <i class="fas fa-server"></i>
+                <span>Servers</span>
               </div>
-              
-              <div class="trellix-tip">
-                <i class="fas fa-lightbulb"></i>
-                <div class="tip-content">
-                  <h6>Trellix Best Practice</h6>
-                  <p>Even for air-gapped environments, Trellix recommends regular updates at least monthly to ensure protection against the latest threats. Use a secure transfer procedure that complies with your organization's security policies.</p>
-                </div>
+              <div class="dashboard-nav-item" data-target="reports">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
               </div>
             </div>
+            
+            <!-- Dashboard content panels -->
+            <div class="dashboard-content">
+              <!-- Appliances panel -->
+              <div class="dashboard-panel active" id="appliances-panel">
+                <h4>Security Appliance Management</h4>
+                <p>Configure and monitor integrated security appliances.</p>
+                
+                <div class="appliance-cards">
+                  <!-- SolidCore card -->
+                  <div class="appliance-card">
+                    <div class="appliance-header">
+                      <div class="appliance-icon">
+                        <i class="fas fa-lock"></i>
+                      </div>
+                      <h5>SolidCore</h5>
+                    </div>
+                    <div class="appliance-description">
+                      <p>Application control and system lockdown to prevent execution of unauthorized code.</p>
+                    </div>
+                    <div class="appliance-actions">
+                      <button class="appliance-action"><i class="fas fa-cog"></i> Configure</button>
+                      <button class="appliance-action"><i class="fas fa-sync"></i> Update</button>
+                    </div>
+                  </div>
+                  
+                  <!-- ENS card -->
+                  <div class="appliance-card">
+                    <div class="appliance-header">
+                      <div class="appliance-icon">
+                        <i class="fas fa-laptop-shield"></i>
+                      </div>
+                      <h5>Endpoint Security (ENS)</h5>
+                    </div>
+                    <div class="appliance-description">
+                      <p>Comprehensive endpoint protection against malware, exploits, and zero-day threats.</p>
+                    </div>
+                    <div class="appliance-actions">
+                      <button class="appliance-action"><i class="fas fa-cog"></i> Configure</button>
+                      <button class="appliance-action"><i class="fas fa-sync"></i> Update</button>
+                    </div>
+                  </div>
+                  
+                  <!-- DLP card -->
+                  <div class="appliance-card">
+                    <div class="appliance-header">
+                      <div class="appliance-icon">
+                        <i class="fas fa-user-shield"></i>
+                      </div>
+                      <h5>Data Loss Prevention (DLP)</h5>
+                    </div>
+                    <div class="appliance-description">
+                      <p>Monitor and protect sensitive data from unauthorized access or exfiltration.</p>
+                    </div>
+                    <div class="appliance-actions">
+                      <button class="appliance-action"><i class="fas fa-cog"></i> Configure</button>
+                      <button class="appliance-action"><i class="fas fa-sync"></i> Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Other panels (extensions, clients, servers, reports) would go here -->
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div id="db" class="guide-section">
+      <div id="db" class="guide-section">
               <div class="section-header">
-                <h3>Database Configuration</h3>
+        <h3>Database Configuration</h3>
                 <div class="section-meta">
                   <span class="difficulty"><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
                   <span class="time"><i class="far fa-clock"></i> 45 minutes</span>
@@ -595,11 +568,11 @@ BACKUP LOG TrellixEPO TO DISK = 'D:\Backups\TrellixEPO_Log.trn';</div>
                   <p>For large Trellix deployments (10,000+ endpoints), consider implementing SQL Server Resource Governor to protect critical database resources and ensure consistent performance during peak load periods.</p>
                 </div>
               </div>
-            </div>
+      </div>
 
-            <div id="tie" class="guide-section">
+      <div id="tie" class="guide-section">
               <div class="section-header">
-                <h3>TIE Setup</h3>
+        <h3>TIE Setup</h3>
                 <div class="section-meta">
                   <span class="difficulty"><i class="fas fa-star"></i> Intermediate</span>
                   <span class="time"><i class="far fa-clock"></i> 25 minutes</span>
@@ -817,11 +790,11 @@ BACKUP LOG TrellixEPO TO DISK = 'D:\Backups\TrellixEPO_Log.trn';</div>
                 <img src="https://via.placeholder.com/800x450" alt="TIE Dashboard" class="guide-image">
                 <p class="image-caption">Trellix TIE Dashboard showing threat intelligence metrics</p>
               </div>
-            </div>
+      </div>
 
-            <div id="ivx" class="guide-section">
+      <div id="ivx" class="guide-section">
               <div class="section-header">
-                <h3>IVX Configuration</h3>
+        <h3>IVX Configuration</h3>
                 <div class="section-meta">
                   <span class="difficulty"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Expert</span>
                   <span class="time"><i class="far fa-clock"></i> 60 minutes</span>
@@ -1672,29 +1645,29 @@ trellix-verify --check-all</code></pre>
               </div>
             </div>
           </div>
-        </div>
       </div>
+    </div>
 
-      <!-- Guide 2 -->
-      <div id="guide2" class="guide-content">
-        <h2>Guide 2</h2>
-        <!-- Similar structure as Trellix guide -->
-        <p>Content coming soon...</p>
-      </div>
+    <!-- Guide 2 -->
+    <div id="guide2" class="guide-content">
+      <h2>Guide 2</h2>
+      <!-- Similar structure as Trellix guide -->
+      <p>Content coming soon...</p>
+    </div>
 
-      <!-- Guide 3 -->
-      <div id="guide3" class="guide-content">
-        <h2>Guide 3</h2>
-        <!-- Similar structure as Trellix guide -->
-        <p>Content coming soon...</p>
-      </div>
+    <!-- Guide 3 -->
+    <div id="guide3" class="guide-content">
+      <h2>Guide 3</h2>
+      <!-- Similar structure as Trellix guide -->
+      <p>Content coming soon...</p>
+    </div>
 
-      <!-- About Me Section -->
-      <div id="whoami" class="guide-content">
-        <h2>About Me</h2>
-        <p>Hi, I'm [Your Name]. I specialize in [Your Expertise] and created this knowledge hub to share guides,
-          tutorials, and best practices I've developed throughout my career.</p>
-        <a href="#home">Back to Home</a>
+    <!-- About Me Section -->
+    <div id="whoami" class="guide-content">
+      <h2>About Me</h2>
+      <p>Hi, I'm [Your Name]. I specialize in [Your Expertise] and created this knowledge hub to share guides,
+        tutorials, and best practices I've developed throughout my career.</p>
+      <a href="#home">Back to Home</a>
       </div>
     </div>
   </section>
@@ -1726,83 +1699,41 @@ trellix-verify --check-all</code></pre>
   <!-- Add before closing body tag -->
   <div id="notification-container"></div>
 
-  <!-- Add fallback if JavaScript is disabled -->
-  <noscript>
-    <div style="position: fixed; top: 0; left: 0; right: 0; background: #ff3860; color: white; text-align: center; padding: 10px; z-index: 9999;">
-      For the best experience, please enable JavaScript in your browser.
-    </div>
-  </noscript>
-
-  <!-- Fallback for older browsers -->
+  <!-- Add browser compatibility check -->
   <script>
-    // Feature detection
-    var browserSupport = {
-      cssAnimations: false,
-      cssTransforms: false,
-      flexbox: false,
-      customProperties: false
-    };
-    
-    // Check CSS animation support
+    // Check if browser supports key features
     (function() {
-      var elm = document.createElement('div');
+      const isIE = navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > -1;
       
-      if ('animation' in elm.style || 'webkitAnimation' in elm.style) {
-        browserSupport.cssAnimations = true;
+      if (isIE) {
+        // Create a notification for IE users
+        setTimeout(function() {
+          if (window.showNotification) {
+            window.showNotification('Some hover animations may not work in Internet Explorer. Consider using Edge, Chrome, Firefox or Safari for the best experience.', 'fas fa-info-circle');
+          }
+        }, 1000);
       }
       
-      if ('transform' in elm.style || 'webkitTransform' in elm.style || 'msTransform' in elm.style) {
-        browserSupport.cssTransforms = true;
+      // Check for CSS features support
+      const supports = {
+        transition: typeof document.documentElement.style.transition !== 'undefined',
+        transform: typeof document.documentElement.style.transform !== 'undefined',
+        animation: typeof document.documentElement.style.animation !== 'undefined'
+      };
+      
+      if (!supports.transition || !supports.transform) {
+        // Basic transition/transform features fallback
+        const style = document.createElement('style');
+        style.textContent = `
+          /* Basic fallbacks for browsers without transition/transform */
+          .sidebar-item:hover { background-color: rgba(138, 43, 226, 0.15) !important; }
+          .primary-button:hover, .secondary-button:hover { background-color: #a45ee5 !important; color: white !important; }
+          .command-box:hover { border-left-width: 5px !important; }
+          .feature-card:hover, .content-card:hover, .decision-option:hover { border-color: #a45ee5 !important; }
+        `;
+        document.head.appendChild(style);
       }
-      
-      if ('flexBasis' in elm.style || 'webkitFlexBasis' in elm.style || 'msFlexBasis' in elm.style) {
-        browserSupport.flexbox = true;
-      }
-      
-      // Test CSS variables support
-      var style = document.createElement('style');
-      style.textContent = ':root { --test-var: 1; }';
-      document.head.appendChild(style);
-      
-      var div = document.createElement('div');
-      div.style.setProperty('--test-var', 0);
-      document.body.appendChild(div);
-      
-      var computedStyle = getComputedStyle(div);
-      var supports = computedStyle.getPropertyValue('--test-var') === '0';
-      
-      document.body.removeChild(div);
-      document.head.removeChild(style);
-      
-      browserSupport.customProperties = supports;
     })();
-    
-    // Apply fallback styles for older browsers
-    if (!browserSupport.customProperties) {
-      // Add fallback colors
-      var fallbackStyles = document.createElement('style');
-      fallbackStyles.textContent = `
-        .sidebar-item.active { color: #8A2BE2 !important; }
-        .primary-button, .search-button { background-color: #8A2BE2 !important; }
-        .secondary-button, .product-link { color: #8A2BE2 !important; }
-        .feature-icon, .sidebar-item.active i { color: #8A2BE2 !important; }
-        .step::before { background-color: #8A2BE2 !important; }
-        .guide-section.active { display: block !important; }
-      `;
-      document.head.appendChild(fallbackStyles);
-    }
-    
-    // Apply fallback for flex layouts in older browsers
-    if (!browserSupport.flexbox) {
-      var flexFallbacks = document.createElement('style');
-      flexFallbacks.textContent = `
-        .feature-grid { display: block !important; }
-        .feature-card { display: block !important; width: 100%; max-width: 350px; margin: 30px auto; }
-        .decision-options { display: block !important; }
-        .decision-option { width: 100%; max-width: 350px; margin: 15px auto; }
-      `;
-      document.head.appendChild(flexFallbacks);
-    }
   </script>
 
   <!-- Add this near the top of body -->
