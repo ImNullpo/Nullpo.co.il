@@ -87,7 +87,20 @@ document.addEventListener('DOMContentLoaded', function() {
         parentGuide.querySelectorAll('.guide-section').forEach(section => {
           section.classList.remove('active');
         });
-        parentGuide.querySelector(`#${sectionId}`).classList.add('active');
+        
+        const targetSection = parentGuide.querySelector(`#${sectionId}`);
+        if (targetSection) {
+          targetSection.classList.add('active');
+          
+          // Initialize environment options if they exist in this section
+          const firstOption = targetSection.querySelector('.decision-option');
+          if (firstOption && !firstOption.classList.contains('selected')) {
+            firstOption.click();
+          }
+          
+          // Scroll to top of section
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
   
@@ -663,6 +676,304 @@ document.addEventListener('DOMContentLoaded', function() {
       // Select the first option by default
       hxEnvironmentOptions[0].click();
     }
+  
+    // Interactive Hover Animations
+    const supportsAnimations = 
+      (typeof document.documentElement.style.animation !== 'undefined') || 
+      (typeof document.documentElement.style.webkitAnimation !== 'undefined');
+    
+    // Only apply these effects if animations are supported
+    if (supportsAnimations) {
+      // 1. Add Particle Effect on Command Box Hover
+      const commandBoxes = document.querySelectorAll('.command-box');
+      commandBoxes.forEach(box => {
+        box.addEventListener('mouseenter', function() {
+          // Create particle container if it doesn't exist
+          let particleContainer = this.querySelector('.particle-container');
+          if (!particleContainer) {
+            particleContainer = document.createElement('div');
+            particleContainer.className = 'particle-container';
+            particleContainer.style.position = 'absolute';
+            particleContainer.style.top = '0';
+            particleContainer.style.left = '0';
+            particleContainer.style.width = '100%';
+            particleContainer.style.height = '100%';
+            particleContainer.style.pointerEvents = 'none';
+            particleContainer.style.overflow = 'hidden';
+            this.style.position = 'relative';
+            this.appendChild(particleContainer);
+          }
+          
+          // Create 5 particles
+          for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+              if (!this.contains(particleContainer)) return; // Safety check
+              
+              const particle = document.createElement('div');
+              particle.className = 'command-particle';
+              particle.style.position = 'absolute';
+              particle.style.backgroundColor = 'rgba(138, 43, 226, 0.3)';
+              particle.style.borderRadius = '50%';
+              particle.style.width = Math.random() * 8 + 4 + 'px';
+              particle.style.height = particle.style.width;
+              
+              // Random position along the left border
+              particle.style.left = '0px';
+              particle.style.top = Math.random() * 100 + '%';
+              
+              // Animation with JS for better browser support
+              particle.style.transition = 'all 1s ease-out';
+              
+              // Add to container
+              particleContainer.appendChild(particle);
+              
+              // Trigger animation after a small delay
+              setTimeout(() => {
+                particle.style.transform = `translate(${Math.random() * 100 + 50}px, ${(Math.random() - 0.5) * 60}px)`;
+                particle.style.opacity = '0';
+              }, 10);
+              
+              // Remove particle after animation
+              setTimeout(() => {
+                if (particle.parentNode) {
+                  particle.parentNode.removeChild(particle);
+                }
+              }, 1000);
+            }, i * 100);
+          }
+        });
+      });
+      
+      // 2. Magnetic Hover Effect for Feature Icons
+      const featureIcons = document.querySelectorAll('.feature-icon');
+      featureIcons.forEach(icon => {
+        const parent = icon.closest('.feature-item') || icon.closest('.feature-card');
+        if (!parent) return;
+        
+        parent.addEventListener('mousemove', function(e) {
+          const boundingRect = this.getBoundingClientRect();
+          const relX = e.clientX - boundingRect.left;
+          const relY = e.clientY - boundingRect.top;
+          
+          const centerX = boundingRect.width / 2;
+          const centerY = boundingRect.height / 2;
+          
+          const deltaX = (relX - centerX) / 10;
+          const deltaY = (relY - centerY) / 10;
+          
+          icon.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        });
+        
+        parent.addEventListener('mouseleave', function() {
+          icon.style.transform = '';
+        });
+      });
+      
+      // 3. Step Highlight Animation
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((step, index) => {
+        step.addEventListener('mouseenter', function() {
+          // Create a subtle pulse effect
+          const highlight = document.createElement('div');
+          highlight.className = 'step-highlight';
+          highlight.style.position = 'absolute';
+          highlight.style.top = '0';
+          highlight.style.left = '0';
+          highlight.style.right = '0';
+          highlight.style.bottom = '0';
+          highlight.style.backgroundColor = 'rgba(138, 43, 226, 0.05)';
+          highlight.style.borderRadius = '8px';
+          highlight.style.opacity = '0';
+          highlight.style.zIndex = '-1';
+          
+          // Set position relative for proper absolute positioning
+          this.style.position = 'relative';
+          
+          this.appendChild(highlight);
+          
+          // Animate with opacity for cross-browser support
+          setTimeout(() => {
+            highlight.style.transition = 'opacity 0.3s ease-in-out';
+            highlight.style.opacity = '1';
+          }, 10);
+        });
+        
+        step.addEventListener('mouseleave', function() {
+          const highlight = this.querySelector('.step-highlight');
+          if (highlight) {
+            highlight.style.opacity = '0';
+            
+            // Remove after transition
+            setTimeout(() => {
+              if (highlight.parentNode) {
+                highlight.parentNode.removeChild(highlight);
+              }
+            }, 300);
+          }
+        });
+      });
+      
+      // 4. Interactive Header Logo
+      const headerLogo = document.querySelector('.header-logo');
+      if (headerLogo) {
+        headerLogo.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05)';
+          this.style.textShadow = '0 0 10px rgba(138, 43, 226, 0.6)';
+        });
+        
+        headerLogo.addEventListener('mouseleave', function() {
+          this.style.transform = '';
+          this.style.textShadow = '';
+        });
+      }
+      
+      // 5. Glowing Effect for Selected Decision Options
+      const decisionOptions = document.querySelectorAll('.decision-option');
+      decisionOptions.forEach(option => {
+        const glowInterval = { interval: null };
+        
+        option.addEventListener('mouseenter', function() {
+          if (this.classList.contains('selected')) {
+            startGlowEffect(this, glowInterval);
+          }
+        });
+        
+        option.addEventListener('mouseleave', function() {
+          if (glowInterval.interval) {
+            clearInterval(glowInterval.interval);
+            glowInterval.interval = null;
+            this.style.boxShadow = '';
+          }
+        });
+        
+        // Add glow effect when option is selected
+        option.addEventListener('click', function() {
+          const allOptions = document.querySelectorAll('.decision-option');
+          allOptions.forEach(opt => {
+            const interval = opt._glowInterval;
+            if (interval) {
+              clearInterval(interval);
+              opt._glowInterval = null;
+              opt.style.boxShadow = '';
+            }
+          });
+          
+          // Start glow effect for this option
+          if (this.classList.contains('selected')) {
+            startGlowEffect(this, glowInterval);
+          }
+        });
+      });
+      
+      function startGlowEffect(element, intervalRef) {
+        // Clear existing interval
+        if (intervalRef.interval) {
+          clearInterval(intervalRef.interval);
+        }
+        
+        // Create glow animation
+        let intensity = 0;
+        let increasing = true;
+        
+        intervalRef.interval = setInterval(() => {
+          if (increasing) {
+            intensity += 0.05;
+            if (intensity >= 1) {
+              intensity = 1;
+              increasing = false;
+            }
+          } else {
+            intensity -= 0.05;
+            if (intensity <= 0.3) {
+              intensity = 0.3;
+              increasing = true;
+            }
+          }
+          
+          element.style.boxShadow = `0 0 ${10 + intensity * 15}px rgba(138, 43, 226, ${0.3 + intensity * 0.4})`;
+        }, 50);
+        
+        // Store reference for cleanup
+        element._glowInterval = intervalRef.interval;
+      }
+    }
+    
+    // Add hover effect for product info banners even if animations aren't supported
+    const productBanners = document.querySelectorAll('.product-info-banner');
+    productBanners.forEach(banner => {
+      banner.addEventListener('mouseenter', function() {
+        this.style.borderColor = 'rgba(138, 43, 226, 0.6)';
+      });
+      
+      banner.addEventListener('mouseleave', function() {
+        this.style.borderColor = '';
+      });
+    });
+  
+    // Journey selection functionality
+    const journeyButtons = document.querySelectorAll('.journey-select');
+    
+    journeyButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const journey = this.getAttribute('data-journey');
+        
+        // Hide all content sections
+        document.querySelectorAll('.epo-content-section').forEach(section => {
+          section.style.display = 'none';
+        });
+        
+        // Show selected journey content
+        document.getElementById(`epo-${journey}-content`).style.display = 'block';
+        
+        // Scroll into view
+        document.getElementById(`epo-${journey}-content`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Highlight the selected journey card
+        document.querySelectorAll('.journey-card').forEach(card => {
+          card.style.borderColor = 'var(--border-color)';
+          card.style.transform = 'translateY(0)';
+        });
+        
+        document.getElementById(`${journey}-journey`).style.borderColor = 'var(--primary)';
+        document.getElementById(`${journey}-journey`).style.transform = 'translateY(-10px)';
+      });
+    });
+  
+    // Dashboard navigation functionality
+    const dashboardNavItems = document.querySelectorAll('.dashboard-nav-item');
+    
+    dashboardNavItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const target = this.getAttribute('data-target');
+        
+        // Update active navigation item
+        dashboardNavItems.forEach(navItem => {
+          navItem.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        // Show selected panel
+        document.querySelectorAll('.dashboard-panel').forEach(panel => {
+          panel.classList.remove('active');
+        });
+        document.getElementById(`${target}-panel`).classList.add('active');
+      });
+    });
+  
+    // Add appliance card hover effects
+    const applianceCards = document.querySelectorAll('.appliance-card');
+    
+    applianceCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.appliance-icon i');
+        icon.style.transform = 'scale(1.2)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.appliance-icon i');
+        icon.style.transform = '';
+      });
+    });
   });
 
   // Cross-browser compatible enhancement script
