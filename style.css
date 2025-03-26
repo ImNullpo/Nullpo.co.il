@@ -15,6 +15,23 @@
     --hover-bg: #f0f0f0;
 }
 
+/* Force dark theme by default, even without JavaScript */
+html {
+    color-scheme: dark;
+    --bg-primary: #0F1729; /* Deep navy background */
+    --bg-secondary: #1E1B4B;
+    --bg-card: #1E1B4B;
+    --text-primary: #ffffff;
+    --text-secondary: #A5B4FC;
+    --text-muted: #818CF8;
+    --border-color: #312E81;
+    --accent: #8B5CF6; /* Violet for dark mode */
+    --accent-light: #A78BFA;
+    --header-bg: rgba(15, 23, 41, 0.95);
+    --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --hover-bg: #312E81;
+}
+
 [data-theme="dark"] {
     --bg-primary: #0F1729; /* Deep navy background */
     --bg-secondary: #1E1B4B;
