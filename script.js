@@ -85,6 +85,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.getElementById('mainContent');
     const guideContents = document.querySelectorAll('.guide-content');
     
+    // Track current view state without changing URL
+    let currentView = {
+        isGuide: false,
+        guideId: null
+    };
+    
     // Handle feature card navigation
     const featureCardLinks = document.querySelectorAll('.feature-card-link');
     featureCardLinks.forEach(link => {
@@ -94,8 +100,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetGuideId) {
                 showGuide(targetGuideId);
                 
-                // Update URL without page reload
-                history.pushState({guideId: targetGuideId}, '', '#' + targetGuideId);
+                // Store state in memory without changing URL
+                currentView = {
+                    isGuide: true,
+                    guideId: targetGuideId
+                };
+                
+                // Optionally save to localStorage for persistence across page refreshes
+                localStorage.setItem('currentView', JSON.stringify(currentView));
                 
                 // Scroll to top
                 window.scrollTo(0, 0);
@@ -110,8 +122,14 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             showMainContent();
             
-            // Update URL without page reload
-            history.pushState({guideId: null}, '', window.location.pathname);
+            // Update state without changing URL
+            currentView = {
+                isGuide: false,
+                guideId: null
+            };
+            
+            // Update localStorage
+            localStorage.setItem('currentView', JSON.stringify(currentView));
         });
     });
     
@@ -143,21 +161,95 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Handle browser back/forward navigation
+    // Handle browser back button - intercept and use our own navigation
     window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.guideId) {
-            showGuide(event.state.guideId);
-        } else {
-            showMainContent();
-        }
+        // Always return to main content when back button is pressed
+        showMainContent();
+        
+        // Update current view state
+        currentView = {
+            isGuide: false,
+            guideId: null
+        };
+        
+        localStorage.setItem('currentView', JSON.stringify(currentView));
     });
     
-    // Check if URL has a hash on page load
-    if (window.location.hash) {
-        const guideId = window.location.hash.substring(1);
-        showGuide(guideId);
+    // Check if we should restore a previous view on page load
+    const savedView = localStorage.getItem('currentView');
+    if (savedView) {
+        try {
+            const viewState = JSON.parse(savedView);
+            if (viewState.isGuide && viewState.guideId) {
+                showGuide(viewState.guideId);
+                currentView = viewState;
+            }
+        } catch (e) {
+            console.error('Error parsing saved view state:', e);
+        }
+    }
+
+    // Handle back/forward navigation using keyboard or context menu
+    document.addEventListener('keydown', function(e) {
+        // Add Escape key to return to main page from any guide
+        if (e.key === 'Escape' && currentView.isGuide) {
+            showMainContent();
+            currentView = {
+                isGuide: false,
+                guideId: null
+            };
+            localStorage.setItem('currentView', JSON.stringify(currentView));
+        }
+    });
+
+    // Fix for specific guides that might not be working
+    const guideIds = ['policy-guide', 'reporting-guide'];
+    guideIds.forEach(guideId => {
+        const guideElement = document.getElementById(guideId);
+        if (guideElement) {
+            // Make sure the guide is properly initialized
+            guideElement.classList.add('guide-content');
+            guideElement.classList.remove('active');
+            
+            // Find any links pointing to this guide and ensure they have the right attribute
+            const links = document.querySelectorAll(`[data-guide="${guideId}"]`);
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showGuide(guideId);
+                    
+                    // Update view state
+                    currentView = {
+                        isGuide: true,
+                        guideId: guideId
+                    };
+                    
+                    localStorage.setItem('currentView', JSON.stringify(currentView));
+                    window.scrollTo(0, 0);
+                });
+            });
+        }
+    });
+
+    // Debug policy guide specifically
+    console.log('Available guides:', document.querySelectorAll('.guide-content').length);
+    console.log('Policy guide exists:', document.getElementById('policy-guide') !== null);
+    const policyLinks = document.querySelectorAll('[data-guide="policy-guide"]');
+    console.log('Policy links count:', policyLinks.length);
+
+    // Extra handling for policy guide
+    if (document.getElementById('policy-guide')) {
+        console.log('Policy guide found in DOM');
         
-        // Add state to history
-        history.replaceState({guideId: guideId}, '', window.location.hash);
+        // Force the policy guide to be registered
+        const policyGuide = document.getElementById('policy-guide');
+        policyGuide.classList.add('guide-content');
+        
+        // Log when policy guide is clicked
+        policyLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                console.log('Policy link clicked');
+            });
+        });
     }
 });
