@@ -1,1776 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>nullpo.wiki - Personal Knowledge Hub</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trellix ePO Guide | Nullpo.co.il</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <!-- Pixel overlay for trapezoid header -->
-  <div class="pixel-overlay"></div>
-  <!-- Falling pixels from trapezoid edge -->
-  <div class="falling-pixels"></div>
-  <!-- Additional falling pixels for more density -->
-  <div class="falling-pixels-extra"></div>
-  <!-- Header logo -->
-  <div class="header-logo">nullpo.wiki</div>
-  
-  <!-- Search bar -->
-  <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search documentation...">
-    <button class="search-button">
-      <i class="fas fa-search"></i>
-    </button>
-    <div class="search-results" id="searchResults"></div>
-  </div>
-
-  <!-- Landing Page Section -->
-  <section id="home" class="landing-section">
-    <div class="hero-container">
-      <h1 class="hero-title">Personal Knowledge Hub</h1>
-      <p class="hero-subtitle">Curated technical guides and documentation for enterprise solutions</p>
-      
-      <div class="hero-cta">
-        <button class="primary-button" onclick="window.location.href='#whoami'">About Me</button>
-        <button class="secondary-button" id="explore-guides-btn">Explore Guides</button>
-      </div>
-    </div>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <i class="fas fa-shield-alt feature-icon"></i>
-        <h3>Trellix Guide</h3>
-        <p>Complete configuration guides for Trellix enterprise solutions</p>
-        <button class="guide-button" data-guide="trellix">View Guide</button>
-      </div>
-      
-      <div class="feature-card">
-        <i class="fas fa-server feature-icon"></i>
-        <h3>Guide 2</h3>
-        <p>Detailed documentation and implementation steps</p>
-        <button class="guide-button" data-guide="guide2">View Guide</button>
-      </div>
-      
-      <div class="feature-card">
-        <i class="fas fa-code-branch feature-icon"></i>
-        <h3>Guide 3</h3>
-        <p>Advanced technical configurations and best practices</p>
-        <button class="guide-button" data-guide="guide3">View Guide</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Guides Section -->
-  <section id="guides" class="guides-section">
-    <div class="guides-container">
-    <!-- Trellix Guide -->
-    <div id="trellix" class="guide-content">
-        <div class="guide-header">
-      <h2>Trellix Guide</h2>
-          <p class="guide-description">Complete configuration and setup instructions for Trellix enterprise products</p>
+    <header>
+        <a href="/" class="logo">Nullpo.co.il</a>
+        <div class="nav-center">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search guides... (Ctrl + /)">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div id="searchResults" class="search-results"></div>
+            </div>
         </div>
-
-        <div class="guide-container">
-          <!-- Left Sidebar Navigation -->
-          <div class="guide-sidebar">
-            <div class="sidebar-nav">
-              <div class="sidebar-item active" data-section="epo">
-                <i class="fas fa-cog"></i>
-                <span>ePO Setup</span>
-              </div>
-              <div class="sidebar-item" data-section="db">
-                <i class="fas fa-database"></i>
-                <span>Database Configuration</span>
-              </div>
-              <div class="sidebar-item" data-section="tie">
-                <div class="icon-stack">
-                  <i class="fas fa-file"></i>
-                  <i class="fas fa-hashtag icon-overlay"></i>
-                </div>
-                <span>TIE Setup</span>
-              </div>
-              <div class="sidebar-item" data-section="ivx">
-                <i class="fas fa-shield-alt"></i>
-                <span>IVX Configuration</span>
-              </div>
-              <div class="sidebar-item" data-section="hx">
-                <i class="fas fa-laptop-code"></i>
-                <span>HX Endpoint Security</span>
-              </div>
-              <div class="sidebar-item" data-section="cmd">
-                <i class="fas fa-terminal"></i>
-                <span>Command Reference</span>
-              </div>
-            </div>
-      </div>
-
-          <!-- Right Content Area -->
-          <div class="guide-content-area">
-      <div id="epo" class="guide-section active">
-        <h3>Trellix ePO Management</h3>
-        
-        <!-- Product Info Banner -->
-        <div class="product-info-banner">
-          <div class="product-logo">
-            <i class="fas fa-cog"></i>
-          </div>
-          <div class="product-details">
-            <h5>Trellix ePolicy Orchestrator (ePO)</h5>
-            <div class="product-meta">
-              <span><i class="fas fa-server"></i> Central Management Console</span>
-              <span><i class="fas fa-shield-alt"></i> Security Policy Control</span>
-            </div>
-          </div>
-          <div class="product-links">
-            <a href="#" class="product-link"><i class="fas fa-external-link-alt"></i> Documentation</a>
-          </div>
-        </div>
-        
-        <!-- Main content card for introduction -->
-        <div class="content-card">
-          <h4>Choose Your ePO Journey</h4>
-          <p>Select the path that matches your current needs with Trellix ePO.</p>
-        </div>
-        
-        <!-- Path Selection Cards -->
-        <div class="epo-journey-selection">
-          <!-- Setup Path -->
-          <div class="journey-card setup-journey" id="setup-journey">
-            <div class="journey-icon">
-              <i class="fas fa-tools"></i>
-            </div>
-            <h4>Initial Setup</h4>
-            <p>First-time installation, configuration, and deployment of your ePO environment.</p>
-            <ul class="journey-highlights">
-              <li><i class="fas fa-check-circle"></i> Server installation</li>
-              <li><i class="fas fa-check-circle"></i> Database configuration</li>
-              <li><i class="fas fa-check-circle"></i> Initial policy setup</li>
-              <li><i class="fas fa-check-circle"></i> First-time deployment</li>
-            </ul>
-            <div class="journey-footer">
-              <span class="journey-tag"><i class="fas fa-clock"></i> One-time process</span>
-              <button class="journey-select" data-journey="setup">Begin Setup</button>
-            </div>
-          </div>
-          
-          <!-- Operations Path -->
-          <div class="journey-card operations-journey" id="operations-journey">
-            <div class="journey-icon">
-              <i class="fas fa-tasks"></i>
-            </div>
-            <h4>Day-to-Day Operations</h4>
-            <p>Ongoing management, maintenance, and optimization of your ePO environment.</p>
-            <ul class="journey-highlights">
-              <li><i class="fas fa-check-circle"></i> Appliance management (SolidCore, ENS, DLP)</li>
-              <li><i class="fas fa-check-circle"></i> Extensions and packages</li>
-              <li><i class="fas fa-check-circle"></i> Client and server tasks</li>
-              <li><i class="fas fa-check-circle"></i> Reporting and troubleshooting</li>
-            </ul>
-            <div class="journey-footer">
-              <span class="journey-tag"><i class="fas fa-sync"></i> Regular activities</span>
-              <button class="journey-select" data-journey="operations">Manage ePO</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Content sections that will be shown/hidden based on path selection -->
-        <div id="epo-setup-content" class="epo-content-section" style="display: none;">
-          <!-- Setup content here -->
-          <div class="content-card">
-            <h4>ePO Setup Guide</h4>
-            <p>Follow these steps to install and configure your Trellix ePO environment.</p>
-            
-            <!-- Setup steps container -->
-            <div class="steps-container">
-              <!-- System requirements step -->
-              <div class="step">
-                <div class="step-content">
-                  <h5 data-step="1">Verify System Requirements</h5>
-                  <p>Ensure your environment meets the minimum system requirements before beginning installation.</p>
-                  <ul class="requirement-list">
-                    <li><strong>Processor:</strong> 8 cores minimum, 16 cores recommended</li>
-                    <li><strong>Memory:</strong> 16GB RAM minimum, 32GB RAM recommended</li>
-                    <li><strong>Storage:</strong> 100GB available space minimum</li>
-                    <li><strong>SQL Server:</strong> Microsoft SQL Server 2019 or later</li>
-                    <li><strong>Operating System:</strong> Windows Server 2019 or later</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <!-- Additional setup steps would go here -->
-            </div>
-          </div>
-        </div>
-        
-        <div id="epo-operations-content" class="epo-content-section" style="display: none;">
-          <!-- Operations content here -->
-          <div class="operations-dashboard">
-            <!-- Dashboard navigation -->
-            <div class="dashboard-nav">
-              <div class="dashboard-nav-item active" data-target="appliances">
-                <i class="fas fa-shield-alt"></i>
-                <span>Appliances</span>
-              </div>
-              <div class="dashboard-nav-item" data-target="extensions">
-                <i class="fas fa-puzzle-piece"></i>
-                <span>Extensions</span>
-              </div>
-              <div class="dashboard-nav-item" data-target="clients">
-                <i class="fas fa-laptop"></i>
-                <span>Clients</span>
-              </div>
-              <div class="dashboard-nav-item" data-target="servers">
-                <i class="fas fa-server"></i>
-                <span>Servers</span>
-              </div>
-              <div class="dashboard-nav-item" data-target="reports">
-                <i class="fas fa-chart-bar"></i>
-                <span>Reports</span>
-              </div>
-            </div>
-            
-            <!-- Dashboard content panels -->
-            <div class="dashboard-content">
-              <!-- Appliances panel -->
-              <div class="dashboard-panel active" id="appliances-panel">
-                <h4>Security Appliance Management</h4>
-                <p>Configure and monitor integrated security appliances.</p>
-                
-                <div class="appliance-cards">
-                  <!-- SolidCore card -->
-                  <div class="appliance-card">
-                    <div class="appliance-header">
-                      <div class="appliance-icon">
-                        <i class="fas fa-lock"></i>
-                      </div>
-                      <h5>SolidCore</h5>
-                    </div>
-                    <div class="appliance-description">
-                      <p>Application control and system lockdown to prevent execution of unauthorized code.</p>
-                    </div>
-                    <div class="appliance-actions">
-                      <button class="appliance-action"><i class="fas fa-cog"></i> Configure</button>
-                      <button class="appliance-action"><i class="fas fa-sync"></i> Update</button>
-                    </div>
-                  </div>
-                  
-                  <!-- ENS card -->
-                  <div class="appliance-card">
-                    <div class="appliance-header">
-                      <div class="appliance-icon">
-                        <i class="fas fa-laptop-shield"></i>
-                      </div>
-                      <h5>Endpoint Security (ENS)</h5>
-                    </div>
-                    <div class="appliance-description">
-                      <p>Comprehensive endpoint protection against malware, exploits, and zero-day threats.</p>
-                    </div>
-                    <div class="appliance-actions">
-                      <button class="appliance-action"><i class="fas fa-cog"></i> Configure</button>
-                      <button class="appliance-action"><i class="fas fa-sync"></i> Update</button>
-                    </div>
-                  </div>
-                  
-                  <!-- DLP card -->
-                  <div class="appliance-card">
-                    <div class="appliance-header">
-                      <div class="appliance-icon">
-                        <i class="fas fa-user-shield"></i>
-                      </div>
-                      <h5>Data Loss Prevention (DLP)</h5>
-                    </div>
-                    <div class="appliance-description">
-                      <p>Monitor and protect sensitive data from unauthorized access or exfiltration.</p>
-                    </div>
-                    <div class="appliance-actions">
-                      <button class="appliance-action"><i class="fas fa-cog"></i> Configure</button>
-                      <button class="appliance-action"><i class="fas fa-sync"></i> Update</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Other panels (extensions, clients, servers, reports) would go here -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="db" class="guide-section">
-              <div class="section-header">
-        <h3>Database Configuration</h3>
-                <div class="section-meta">
-                  <span class="difficulty"><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
-                  <span class="time"><i class="far fa-clock"></i> 45 minutes</span>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Database Overview</h4>
-                <p>The Trellix platform requires a properly configured Microsoft SQL Server database for optimal performance and data storage. This guide covers setting up SQL Server for Trellix, configuring replication, and optimizing performance for enterprise deployments.</p>
-                
-                <div class="product-info-banner">
-                  <div class="product-logo">
-                    <i class="fas fa-database"></i>
-                  </div>
-                  <div class="product-details">
-                    <h5>Microsoft SQL Server for Trellix</h5>
-                    <div class="product-meta">
-                      <span><i class="fas fa-server"></i> Recommended: SQL Server 2019</span>
-                      <span><i class="fas fa-shield-alt"></i> Critical for Trellix Platform</span>
-                    </div>
-                  </div>
-                  <div class="product-links">
-                    <a href="#" class="product-link"><i class="fas fa-external-link-alt"></i> SQL Server Documentation</a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Pre-requisites</h4>
-                <ul class="requirement-list">
-                  <li><strong>Microsoft SQL Server 2019+</strong> - Standard or Enterprise edition</li>
-                  <li><strong>Minimum 16GB RAM</strong> allocated to database services</li>
-                  <li><strong>100GB+ storage</strong> with high I/O performance (SSD recommended)</li>
-                  <li><strong>Network connectivity</strong> between Trellix server and database</li>
-                  <li><strong>SQL Server Authentication</strong> - Mixed Mode authentication enabled</li>
-                </ul>
-              </div>
-              
-              <div class="content-card">
-                <h4>SQL Server Configuration</h4>
-                
-                <div class="installation-decision">
-                  <h5 class="decision-question">Select your database deployment type:</h5>
-                  
-                  <div class="decision-options">
-                    <div class="decision-option" data-target="standard-db">
-                      <div class="option-icon"><i class="fas fa-server"></i></div>
-                      <h6>Standard Deployment</h6>
-                      <p>Single SQL Server instance for small to medium environments</p>
-                      <ul class="option-benefits">
-                        <li>Simplified management</li>
-                        <li>Lower hardware requirements</li>
-                        <li>Easier backup and recovery</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                    
-                    <div class="decision-option" data-target="enterprise-db">
-                      <div class="option-icon"><i class="fas fa-database"></i></div>
-                      <h6>Enterprise Deployment</h6>
-                      <p>High-availability SQL cluster for large environments</p>
-                      <ul class="option-benefits">
-                        <li>Fault tolerance and failover</li>
-                        <li>Enhanced performance</li>
-                        <li>Better scalability</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="installation-flows">
-                  <div class="installation-flow" id="standard-db">
-                    <div class="flow-header">
-                      <h5>Standard SQL Server Setup</h5>
-                      <div class="environment-badge connected">
-                        <i class="fas fa-server"></i> Single-Instance
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 45 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: Medium</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Install Microsoft SQL Server</h5>
-                          <p>Install SQL Server with Mixed Mode authentication enabled. Ensure TCP/IP protocol is enabled in SQL Server Configuration Manager.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Create Trellix Database</h5>
-                          <div class="command-box">CREATE DATABASE TrellixEPO
-COLLATE SQL_Latin1_General_CP1_CI_AS;</div>
-                          <p>Set the database collation to SQL_Latin1_General_CP1_CI_AS for compatibility with Trellix components.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Configure Database User</h5>
-                          <div class="command-box">CREATE LOGIN TrellixUser WITH PASSWORD = 'StrongPassword123!';
-USE TrellixEPO;
-CREATE USER TrellixUser FOR LOGIN TrellixUser;
-EXEC sp_addrolemember 'db_owner', 'TrellixUser';</div>
-                          <p>Create a dedicated database user with appropriate permissions for the Trellix application.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Configure SQL Server Properties</h5>
-                          <p>Set SQL Server memory limits, recovery model, and auto-growth settings based on your environment scale.</p>
-                          <div class="command-box">-- Set memory limits
-EXEC sp_configure 'show advanced options', 1;
-RECONFIGURE;
-EXEC sp_configure 'max server memory (MB)', 12288; -- 12GB for SQL Server
-RECONFIGURE;</div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Configure Maintenance Plans</h5>
-                          <p>Set up SQL Server maintenance plans for index maintenance, statistics updates, and backups.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="installation-flow" id="enterprise-db">
-                    <div class="flow-header">
-                      <h5>Enterprise SQL Server Setup</h5>
-                      <div class="environment-badge air-gapped">
-                        <i class="fas fa-server"></i> High-Availability Cluster
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 120 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: High</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Install SQL Server on Multiple Nodes</h5>
-                          <p>Install Microsoft SQL Server on all cluster nodes with the same configuration and patch level.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Configure Windows Server Failover Clustering</h5>
-                          <p>Set up Windows Server Failover Clustering (WSFC) as the foundation for SQL Server Always On Availability Groups.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Set Up Always On Availability Groups</h5>
-                          <div class="command-box">-- Enable Always On feature
-EXEC sp_configure 'show advanced options', 1;
-RECONFIGURE;
-EXEC sp_configure 'hadr enabled', 1;
-RECONFIGURE;</div>
-                          <p>Configure SQL Server Always On Availability Groups for high availability and disaster recovery.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Create Trellix Database with Replication</h5>
-                          <div class="command-box">CREATE DATABASE TrellixEPO
-COLLATE SQL_Latin1_General_CP1_CI_AS;
--- Add to Availability Group
-ALTER AVAILABILITY GROUP [AG_Trellix] ADD DATABASE [TrellixEPO];</div>
-                          <p>Create the Trellix database and add it to the availability group for replication.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Configure Database User with Replication</h5>
-                          <div class="command-box">-- Create login on all instances
-CREATE LOGIN TrellixUser WITH PASSWORD = 'StrongPassword123!';
--- Create user in the database
-USE TrellixEPO;
-CREATE USER TrellixUser FOR LOGIN TrellixUser;
-EXEC sp_addrolemember 'db_owner', 'TrellixUser';</div>
-                          <p>Create users on all SQL instances and ensure proper synchronization.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="6">Configure Advanced SQL Server Settings</h5>
-                          <p>Optimize SQL Server settings for enterprise performance including memory allocation, TempDB configuration, and more.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Database Maintenance</h4>
-                <p>Regular maintenance is crucial for optimal Microsoft SQL Server performance. Set up the following maintenance tasks:</p>
-                <div class="steps-container">
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="1">Index Maintenance</h5>
-                      <p>Schedule weekly index reorganization or rebuilds to maintain query performance.</p>
-                      <div class="command-box">-- Sample index maintenance script
-DECLARE @TableName NVARCHAR(255)
-DECLARE TableCursor CURSOR FOR
-SELECT table_name FROM information_schema.tables
-WHERE table_type = 'base table'
-OPEN TableCursor
-FETCH NEXT FROM TableCursor INTO @TableName
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    EXEC('ALTER INDEX ALL ON ' + @TableName + ' REBUILD')
-    FETCH NEXT FROM TableCursor INTO @TableName
-END
-CLOSE TableCursor
-DEALLOCATE TableCursor</div>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="2">Statistics Updates</h5>
-                      <p>Update statistics daily to ensure the SQL Server query optimizer has current information.</p>
-                      <div class="command-box">-- Update statistics for all tables
-EXEC sp_updatestats;</div>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="3">Backup Strategy</h5>
-                      <p>Implement SQL Server full backups weekly, differential backups daily, and transaction log backups hourly for comprehensive recovery capabilities.</p>
-                      <div class="command-box">-- Full backup
-BACKUP DATABASE TrellixEPO TO DISK = 'D:\Backups\TrellixEPO_Full.bak';
--- Differential backup
-BACKUP DATABASE TrellixEPO TO DISK = 'D:\Backups\TrellixEPO_Diff.bak' WITH DIFFERENTIAL;
--- Transaction log backup
-BACKUP LOG TrellixEPO TO DISK = 'D:\Backups\TrellixEPO_Log.trn';</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Performance Optimization</h4>
-                <p>For optimal Microsoft SQL Server performance with Trellix products:</p>
-                <ul class="requirement-list">
-                  <li><strong>Properly size data and log files</strong> - Pre-allocate files to their expected size to reduce auto-growth events</li>
-                  <li><strong>Use multiple TempDB files</strong> - Configure one TempDB file per CPU core (up to 8) to reduce contention</li>
-                  <li><strong>Place files on separate volumes</strong> - Put data files, log files, and TempDB on separate physical storage</li>
-                  <li><strong>Ensure proper indexing</strong> - Monitor query performance and add indexes to frequently queried columns</li>
-                  <li><strong>Regular maintenance</strong> - Follow the maintenance plan outlined above</li>
-                </ul>
-              </div>
-              
-              <div class="trellix-tip">
-                <i class="fas fa-lightbulb"></i>
-                <div class="tip-content">
-                  <h6>Microsoft SQL Server Best Practice</h6>
-                  <p>For large Trellix deployments (10,000+ endpoints), consider implementing SQL Server Resource Governor to protect critical database resources and ensure consistent performance during peak load periods.</p>
-                </div>
-              </div>
-      </div>
-
-      <div id="tie" class="guide-section">
-              <div class="section-header">
-        <h3>TIE Setup</h3>
-                <div class="section-meta">
-                  <span class="difficulty"><i class="fas fa-star"></i> Intermediate</span>
-                  <span class="time"><i class="far fa-clock"></i> 25 minutes</span>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Threat Intelligence Exchange Overview</h4>
-                <p>Trellix Threat Intelligence Exchange (TIE) enables real-time sharing of threat information across your security ecosystem. This guide will walk you through the installation, configuration, and integration with other security components.</p>
-              </div>
-              
-              <div class="content-card">
-                <h4>Architecture Components</h4>
-                <ul class="component-list">
-                  <li><strong>TIE Server</strong> - Central repository for threat intelligence</li>
-                  <li><strong>DXL Fabric</strong> - Communication infrastructure for sharing intelligence</li>
-                  <li><strong>TIE Clients</strong> - Endpoints and security tools that consume and contribute intelligence</li>
-                  <li><strong>Reputation Providers</strong> - Sources of threat intelligence (GTI, ATD, etc.)</li>
-                </ul>
-              </div>
-              
-              <div class="content-card">
-                <h4>TIE Server Setup</h4>
-                
-                <div class="installation-decision">
-                  <h5 class="decision-question">What type of environment are you working in?</h5>
-                  
-                  <div class="decision-options">
-                    <div class="decision-option" data-target="online-tie">
-                      <div class="option-icon"><i class="fas fa-globe"></i></div>
-                      <h6>Connected Environment</h6>
-                      <p>Systems with direct internet access</p>
-                      <ul class="option-benefits">
-                        <li>Automatic updates</li>
-                        <li>Streamlined installation</li>
-                        <li>Real-time intelligence feeds</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                    
-                    <div class="decision-option" data-target="offline-tie">
-                      <div class="option-icon"><i class="fas fa-shield-alt"></i></div>
-                      <h6>Air-Gapped Environment</h6>
-                      <p>Isolated systems with no internet access</p>
-                      <ul class="option-benefits">
-                        <li>Maximum security</li>
-                        <li>Compliance with strict regulations</li>
-                        <li>Controlled update process</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="installation-flows">
-                  <div class="installation-flow" id="online-tie">
-                    <div class="flow-header">
-                      <h5>Online Installation</h5>
-                      <div class="environment-badge connected">
-                        <i class="fas fa-globe"></i> Connected Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 30 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: Medium</span>
-                      </div>
-                    </div>
-                    
-                    <div class="flow-diagram">
-                      <!-- Visual representation of installation flow -->
-                      <div class="flow-diagram-image">
-                        <img src="https://via.placeholder.com/800x120" alt="Online Installation Flow">
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <!-- Online installation steps (existing content) -->
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Install Prerequisites</h5>
-                          <p>Ensure you have ePO installed and configured. TIE Server requires ePO 5.10 or later and a functioning DXL infrastructure.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Download TIE Server Package</h5>
-                          <p>Log into the Trellix Customer Portal and download the latest TIE Server extension package.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Install TIE Server Extension</h5>
-                          <p>In ePO, navigate to Software > Extensions and install the TIE Server extension package (.zip file).</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Configure Reputation Sources</h5>
-                          <p>Navigate to Menu > Configuration > TIE Server > Reputations and configure the enterprise reputation sources and weightings.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Set File Reputation Policy</h5>
-                          <p>Create and assign file reputation policies that determine how files with different reputation scores are handled.</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="common-issues-section">
-                      <h6><i class="fas fa-exclamation-triangle"></i> Common Issues</h6>
-                      <div class="issue-item">
-                        <h6>Connection Timeouts</h6>
-                        <p>If you experience connection timeouts during download, check your proxy settings or try using a direct connection.</p>
-                        <div class="solution-command">
-                          <div class="command-box">trellix-network-test --proxy-check</div>
-                          <button class="copy-btn" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="installation-flow" id="offline-tie">
-                    <!-- Similar structure for offline installation -->
-                    <div class="flow-header">
-                      <h5>Offline Installation</h5>
-                      <div class="environment-badge air-gapped">
-                        <i class="fas fa-shield-alt"></i> Air-Gapped Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 60 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: High</span>
-                      </div>
-                    </div>
-                    
-                    <div class="flow-diagram">
-                      <div class="flow-diagram-image">
-                        <img src="https://via.placeholder.com/800x120" alt="Offline Installation Flow">
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <!-- Offline installation steps (existing content) -->
-                    </div>
-                    
-                    <div class="common-issues-section">
-                      <!-- Offline-specific troubleshooting content -->
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="method-comparison">
-                  <button class="comparison-toggle">Show Method Comparison <i class="fas fa-chevron-down"></i></button>
-                  <div class="comparison-table-container">
-                    <table class="comparison-table">
-                      <thead>
-                        <tr>
-                          <th>Feature</th>
-                          <th>Online Installation</th>
-                          <th>Offline Installation</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Installation Time</td>
-                          <td><i class="fas fa-check-circle text-success"></i> Faster (30 min)</td>
-                          <td><i class="fas fa-exclamation-circle text-warning"></i> Longer (60 min)</td>
-                        </tr>
-                        <tr>
-                          <td>Security</td>
-                          <td><i class="fas fa-check-circle text-success"></i> Standard</td>
-                          <td><i class="fas fa-check-circle text-success"></i> Maximum</td>
-                        </tr>
-                        <tr>
-                          <td>Updates</td>
-                          <td><i class="fas fa-check-circle text-success"></i> Automatic</td>
-                          <td><i class="fas fa-exclamation-circle text-warning"></i> Manual</td>
-                        </tr>
-                        <tr>
-                          <td>Complexity</td>
-                          <td><i class="fas fa-check-circle text-success"></i> Low</td>
-                          <td><i class="fas fa-exclamation-circle text-warning"></i> High</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Client Integration</h4>
-                <div class="steps-container">
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="1">Deploy TIE Client</h5>
-                      <p>Deploy the TIE Client package to endpoints through ePO.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="2">Configure Client Settings</h5>
-                      <p>Configure TIE Client settings including reputation thresholds and actions.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="3">Test Integration</h5>
-                      <p>Verify that endpoints are correctly reporting to and receiving information from the TIE Server.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>TIE Dashboard</h4>
-                <img src="https://via.placeholder.com/800x450" alt="TIE Dashboard" class="guide-image">
-                <p class="image-caption">Trellix TIE Dashboard showing threat intelligence metrics</p>
-              </div>
-      </div>
-
-      <div id="ivx" class="guide-section">
-              <div class="section-header">
-        <h3>IVX Configuration</h3>
-                <div class="section-meta">
-                  <span class="difficulty"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Expert</span>
-                  <span class="time"><i class="far fa-clock"></i> 60 minutes</span>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Interactive Vulnerability Exchange (IVX) Overview</h4>
-                <p>Trellix IVX provides advanced vulnerability management capabilities through integration with various security components. This guide covers installation, configuration, and optimization for enterprise environments.</p>
-              </div>
-              
-              <div class="content-card">
-                <h4>System Requirements</h4>
-                <ul class="requirement-list">
-                  <li><strong>Server Hardware</strong> - 8+ CPU cores, 32GB+ RAM, 500GB+ storage</li>
-                  <li><strong>Operating System</strong> - Windows Server 2019/2022 or Red Hat Enterprise Linux 8+</li>
-                  <li><strong>Network</strong> - Gigabit connectivity, outbound internet access for updates</li>
-                  <li><strong>Integration</strong> - Trellix ePO 5.10+, TIE Server, compatible database</li>
-                </ul>
-              </div>
-              
-              <div class="content-card">
-                <h4>Advanced Installation Process</h4>
-                
-                <div class="installation-decision">
-                  <h5 class="decision-question">Select your IVX deployment environment:</h5>
-                  
-                  <div class="decision-options">
-                    <div class="decision-option" data-target="online-ivx">
-                      <div class="option-icon"><i class="fas fa-globe"></i></div>
-                      <h6>Connected Environment</h6>
-                      <p>Standard deployment with Internet connectivity</p>
-                      <ul class="option-benefits">
-                        <li>Automatic vulnerability database updates</li>
-                        <li>Real-time threat feeds</li>
-                        <li>Cloud-enhanced scanning</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                    
-                    <div class="decision-option" data-target="offline-ivx">
-                      <div class="option-icon"><i class="fas fa-shield-alt"></i></div>
-                      <h6>Air-Gapped Environment</h6>
-                      <p>Secure deployment for isolated networks</p>
-                      <ul class="option-benefits">
-                        <li>Complete network isolation</li>
-                        <li>Controlled update process</li>
-                        <li>Compliance with strict regulations</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="installation-flows">
-                  <div class="installation-flow" id="online-ivx">
-                    <div class="flow-header">
-                      <h5>Online IVX Installation</h5>
-                      <div class="environment-badge connected">
-                        <i class="fas fa-globe"></i> Connected Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 60 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: Medium</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Prepare Environment</h5>
-                          <p>Configure server hardening, network security, and prerequisites according to Trellix's security guidelines.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Download Installer</h5>
-                          <p>Download the latest IVX installer package from the Trellix Customer Portal.</p>
-                          <div class="official-package">
-                            <div class="package-name">trellix-ivx-installer-3.5.0.exe</div>
-                            <div class="package-meta">2.3 GB | Released: October 2023</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Install Core Components</h5>
-                          <div class="command-box">sudo ./ivx_installer.sh --mode=silent --eposerver=epo.example.com --dbserver=db.example.com --adminuser=admin</div>
-                          <p>Run the silent installer with appropriate parameters for your environment.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Configure Integration Points</h5>
-                          <p>Set up integration with vulnerability scanning tools, patch management systems, and threat intelligence sources.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Deploy Agents</h5>
-                          <p>Deploy IVX agents to endpoints through ePO or other supported deployment mechanisms.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="6">Configure Advanced Settings</h5>
-                          <p>Fine-tune scanning intervals, vulnerability prioritization, and remediation workflows.</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="common-issues-section">
-                      <h6><i class="fas fa-exclamation-triangle"></i> Common Issues</h6>
-                      <div class="issue-item">
-                        <h6>Database Connection Failures</h6>
-                        <p>If the IVX server cannot connect to the Microsoft SQL database, verify SQL authentication settings and firewall rules.</p>
-                        <div class="solution-command">
-                          <div class="command-box">trellix-ivx-diagnostic --check-db-connection --detail</div>
-                          <button class="copy-btn" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="installation-flow" id="offline-ivx">
-                    <div class="flow-header">
-                      <h5>Air-Gapped IVX Installation</h5>
-                      <div class="environment-badge air-gapped">
-                        <i class="fas fa-shield-alt"></i> Air-Gapped Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 90 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: High</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Download Complete Package</h5>
-                          <p>From an internet-connected system, download the IVX complete offline bundle that includes all dependencies, vulnerability databases, and agent packages.</p>
-                          <div class="official-package">
-                            <div class="package-name">trellix-ivx-offline-bundle-3.5.0.zip</div>
-                            <div class="package-meta">6.7 GB | Includes all dependencies</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Verify Package Integrity</h5>
-                          <div class="command-box">sha256sum -c ivx_offline_package.sha256</div>
-                          <p>Verify the integrity of the downloaded package using the provided checksum file.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Transport to Secure Environment</h5>
-                          <p>Transfer the verified package to your air-gapped environment using approved media and following your organization's data transfer protocols.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Extract and Prepare Installation</h5>
-                          <div class="command-box">tar -xzf ivx_offline_package.tar.gz && cd ivx_offline</div>
-                          <p>Extract the package and prepare for installation in your offline environment.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Run Offline Installer</h5>
-                          <div class="command-box">sudo ./ivx_offline_install.sh --offline-mode --use-bundled-db</div>
-                          <p>Run the specialized offline installer that uses pre-packaged databases and dependencies.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="6">Configure Update Schedule</h5>
-                          <p>Set up a periodic update process where vulnerability definitions are downloaded on an internet-connected system, verified, and then securely transferred to the air-gapped environment.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="7">Create Air-Gapped Update Package</h5>
-                          <div class="command-box">trellix-package-builder --export-updates --include-all-components --output-path=/media/usb/trellix-updates</div>
-                          <p>Generate a complete update package that can be safely transferred to an air-gapped environment.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="8">Verify Package Integrity</h5>
-                          <div class="command-box">trellix-package-verify --package=/path/to/offline-package.zip --generate-report</div>
-                          <p>Verify the integrity of an offline package before deploying it in an air-gapped environment.</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="common-issues-section">
-                      <h6><i class="fas fa-exclamation-triangle"></i> Common Issues</h6>
-                      <div class="issue-item">
-                        <h6>Offline Updates Not Applied</h6>
-                        <p>If vulnerability updates are not applying correctly in the air-gapped environment, verify the package format and version compatibility.</p>
-                        <div class="solution-command">
-                          <div class="command-box">trellix-ivx-offline-update-verify --package-path=/path/to/update.zip</div>
-                          <button class="copy-btn" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                        </div>
-                      </div>
-                      <div class="issue-item">
-                        <h6>Missing Dependencies</h6>
-                        <p>If you encounter missing dependencies during installation, use the dependency check tool before transferring packages.</p>
-                        <div class="solution-command">
-                          <div class="command-box">trellix-dependency-check --package=/path/to/package.zip --detailed</div>
-                          <button class="copy-btn" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                        </div>
-                      </div>
-                      <div class="issue-item">
-                        <h6>Certificate Validation Failures</h6>
-                        <p>For certificate validation issues in offline environments, use the certificate export and import utilities.</p>
-                        <div class="solution-command">
-                          <div class="command-box">trellix-cert-export --output=/path/to/certs/
-trellix-cert-import --input=/path/to/certs/ --offline-mode</div>
-                          <button class="copy-btn" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Vulnerability Management Workflow</h4>
-                <div class="steps-container">
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="1">Discovery</h5>
-                      <p>Continuous scanning and asset inventory to identify vulnerable systems and applications.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="2">Prioritization</h5>
-                      <p>Risk-based prioritization of vulnerabilities based on CVSS score, exploitability, and business impact.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="3">Remediation</h5>
-                      <p>Automated and manual remediation workflows with integration to patch management systems.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="4">Verification</h5>
-                      <p>Confirmation of successful remediation through follow-up scans and validation checks.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Advanced Configuration</h4>
-                <div class="config-table-container">
-                  <table class="config-table">
-                    <thead>
-                      <tr>
-                        <th>Setting</th>
-                        <th>Recommended Value</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Scan Frequency</td>
-                        <td>24 hours</td>
-                        <td>How often endpoints are scanned for vulnerabilities</td>
-                      </tr>
-                      <tr>
-                        <td>Risk Threshold</td>
-                        <td>CVSS 7.0+</td>
-                        <td>Minimum severity score for automatic remediation</td>
-                      </tr>
-                      <tr>
-                        <td>Exclusion Window</td>
-                        <td>72 hours</td>
-                        <td>Grace period before enforcing remediations</td>
-                      </tr>
-                      <tr>
-                        <td>Data Retention</td>
-                        <td>90 days</td>
-                        <td>How long vulnerability history is kept</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Dashboard</h4>
-                <img src="https://via.placeholder.com/800x450" alt="IVX Dashboard" class="guide-image">
-                <p class="image-caption">IVX Vulnerability Management Dashboard</p>
-              </div>
-            </div>
-
-            <div id="hx" class="guide-section">
-              <div class="section-header">
-                <h3>HX Endpoint Security</h3>
-                <div class="section-meta">
-                  <span class="difficulty"><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
-                  <span class="time"><i class="far fa-clock"></i> 40 minutes</span>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Trellix HX Overview</h4>
-                <p>Trellix Host Endpoint Security (HX) provides advanced endpoint detection and response capabilities with real-time monitoring, threat intelligence integration, and automated containment options. This guide covers installation, configuration, and best practices for enterprise deployments.</p>
-                
-                <div class="product-info-banner">
-                  <div class="product-logo">
-                    <i class="fas fa-laptop-code"></i>
-                  </div>
-                  <div class="product-details">
-                    <h5>Trellix Host Endpoint Security (HX)</h5>
-                    <div class="product-meta">
-                      <span><i class="fas fa-code-branch"></i> Latest Version: 32.30</span>
-                      <span><i class="fas fa-shield-alt"></i> Part of Trellix XDR</span>
-                    </div>
-                  </div>
-                  <div class="product-links">
-                    <a href="#" class="product-link"><i class="fas fa-external-link-alt"></i> Official Documentation</a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>System Requirements</h4>
-                <ul class="requirement-list">
-                  <li><strong>HX Controller</strong> - Enterprise-grade server with 16+ CPU cores, 64GB+ RAM</li>
-                  <li><strong>Storage</strong> - 1TB+ SSD storage (scales with endpoint count)</li>
-                  <li><strong>Operating System</strong> - Red Hat Enterprise Linux 8/9 or Windows Server 2019/2022</li>
-                  <li><strong>Endpoints</strong> - Windows 10/11, macOS 10.14+, or Linux (RHEL/Ubuntu/CentOS)</li>
-                  <li><strong>Network</strong> - High-bandwidth, low-latency connections for real-time telemetry</li>
-                </ul>
-              </div>
-              
-              <div class="content-card">
-                <h4>HX Deployment</h4>
-                
-                <div class="installation-decision">
-                  <h5 class="decision-question">Select your HX deployment environment:</h5>
-                  
-                  <div class="decision-options">
-                    <div class="decision-option" data-target="online-hx">
-                      <div class="option-icon"><i class="fas fa-globe"></i></div>
-                      <h6>Connected Environment</h6>
-                      <p>Standard deployment with Internet connectivity</p>
-                      <ul class="option-benefits">
-                        <li>Real-time threat intelligence updates</li>
-                        <li>Cloud-augmented detection</li>
-                        <li>Automatic signature updates</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                    
-                    <div class="decision-option" data-target="offline-hx">
-                      <div class="option-icon"><i class="fas fa-shield-alt"></i></div>
-                      <h6>Air-Gapped Environment</h6>
-                      <p>Secure deployment for isolated networks</p>
-                      <ul class="option-benefits">
-                        <li>Complete network isolation</li>
-                        <li>Periodic manual updates</li>
-                        <li>High-security compliance</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="installation-flows">
-                  <div class="installation-flow" id="online-hx">
-                    <div class="flow-header">
-                      <h5>Online HX Deployment</h5>
-                      <div class="environment-badge connected">
-                        <i class="fas fa-globe"></i> Connected Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 40 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: Medium</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Prepare Infrastructure</h5>
-                          <p>Set up a dedicated server for the HX Controller that meets the system requirements. Ensure proper network segmentation and firewall rules are in place.</p>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Download HX Components</h5>
-                          <p>Log in to the Trellix Customer Portal and download the HX Controller installation package and agent installers for your supported platforms.</p>
-                          <div class="official-package">
-                            <div class="package-name">trellix-hx-controller-32.30.1.exe</div>
-                            <div class="package-meta">4.2 GB | Released: October 2023</div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Install HX Controller</h5>
-                          <p>Run the installer on your prepared server with the following recommended configuration:</p>
-                          <div class="command-box">./trellix-hx-installer.sh --accepteula --dbpassword "StrongPassword123!" --adminuser "admin" --adminpass "SecureAdminPass456!" --apiuser "api_user" --apipass "ApiUserPass789!"</div>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Configure Intelligence Sources</h5>
-                          <p>Connect the HX Controller to Trellix's threat intelligence cloud and enable automatic updates for indicators of compromise (IOCs) and detection rules.</p>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Deploy HX Agents</h5>
-                          <p>Use your preferred deployment tool (SCCM, GPO, MDM, etc.) to deploy the HX agent to endpoints. You can also generate a deployment URL in the HX Console for manual installation.</p>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="6">Verify Deployment</h5>
-                          <p>Confirm that agents are properly reporting to the HX Controller and telemetry data is being collected by reviewing the dashboard.</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="common-issues-section">
-                      <h6><i class="fas fa-exclamation-triangle"></i> Common Issues</h6>
-                      <div class="issue-item">
-                        <h6>Agent Communication Failures</h6>
-                        <p>If endpoints cannot connect to the HX Controller, verify network connectivity and firewall rules for ports 443 and 8080.</p>
-                        <div class="solution-command">
-                          <div class="command-box">trellix-hx-diagnostic --check-connectivity --endpoint-ip 192.168.1.100</div>
-                          <button class="copy-btn" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="installation-flow" id="offline-hx">
-                    <div class="flow-header">
-                      <h5>Air-Gapped HX Deployment</h5>
-                      <div class="environment-badge air-gapped">
-                        <i class="fas fa-shield-alt"></i> Air-Gapped Environment
-                      </div>
-                      <div class="installation-stats">
-                        <span><i class="far fa-clock"></i> 60 minutes</span>
-                        <span><i class="fas fa-cog"></i> Complexity: High</span>
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Download Offline Package</h5>
-                          <p>On an internet-connected system, download the complete HX offline bundle that includes all necessary components:</p>
-                          <div class="official-package">
-                            <div class="package-name">trellix-hx-offline-bundle-32.30.1.tar.gz</div>
-                            <div class="package-meta">7.8 GB | Includes controller, agents, and IOC database</div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Transfer to Air-Gapped Environment</h5>
-                          <p>Transfer the offline bundle to your air-gapped environment using approved secure media transfer procedures.</p>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Install HX Controller in Offline Mode</h5>
-                          <div class="command-box">./trellix-hx-installer.sh --offline --use-bundled-iocs --accepteula --dbpassword "StrongPassword123!" --adminuser "admin" --adminpass "SecureAdminPass456!"</div>
-                          <p>The offline installation flag configures HX to operate without internet connectivity.</p>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Deploy Agents Using Offline Installers</h5>
-                          <p>Use the agent installers included in the offline bundle for deployment to endpoints.</p>
-                        </div>
-                      </div>
-                      
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="5">Configure Manual Update Process</h5>
-                          <p>Establish a secure procedure for periodically updating threat intelligence and IOCs by downloading updates on an internet-connected system and transferring them to the air-gapped environment.</p>
-                          <div class="command-box">./trellix-hx-update-packager.sh --output /tmp/hx-updates.tar.gz</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>HX Core Features</h4>
-                
-                <div class="feature-section">
-                  <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-search"></i></div>
-                    <div class="feature-details">
-                      <h5>Real-Time Endpoint Monitoring</h5>
-                      <p>Continuous monitoring of endpoint activity including process execution, file modifications, registry changes, and network connections.</p>
-                    </div>
-                  </div>
-                  
-                  <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-virus-slash"></i></div>
-                    <div class="feature-details">
-                      <h5>Advanced Threat Detection</h5>
-                      <p>Machine learning-based detection combined with behavioral analysis to identify known and unknown threats.</p>
-                    </div>
-                  </div>
-                  
-                  <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-laptop-medical"></i></div>
-                    <div class="feature-details">
-                      <h5>Endpoint Containment</h5>
-                      <p>Ability to isolate compromised endpoints from the network while maintaining management connection.</p>
-                    </div>
-                  </div>
-                  
-                  <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-microscope"></i></div>
-                    <div class="feature-details">
-                      <h5>Digital Forensics</h5>
-                      <p>Enterprise Search and Acquisition capabilities for deep investigation of security incidents.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Integration with Trellix XDR</h4>
-                <p>HX forms a critical component of the Trellix XDR ecosystem, providing detailed endpoint telemetry and response capabilities.</p>
-                
-                <div class="steps-container">
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="1">Configure DXL Integration</h5>
-                      <p>Connect HX to the Data Exchange Layer (DXL) fabric to enable bi-directional sharing of threat data with other Trellix products.</p>
-                      <div class="command-box">trellix-hx-integration --enable-dxl --broker-ip 192.168.1.10 --cert-path /path/to/cert</div>
-                    </div>
-                  </div>
-                  
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="2">Link with Trellix ePO</h5>
-                      <p>Integrate HX with ePO for centralized management and unified policy enforcement.</p>
-                    </div>
-                  </div>
-                  
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="3">Enable TIE Integration</h5>
-                      <p>Configure HX to consume and contribute to the Threat Intelligence Exchange for enhanced detection and response.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>HX Dashboard</h4>
-                <p>The HX Controller features a comprehensive dashboard for real-time monitoring and threat management.</p>
-                <img src="https://via.placeholder.com/800x450" alt="HX Dashboard" class="guide-image">
-                <p class="image-caption">Trellix HX Controller Dashboard showing endpoint status and alerts</p>
-              </div>
-              
-              <div class="trellix-tip">
-                <i class="fas fa-lightbulb"></i>
-                <div class="tip-content">
-                  <h6>Trellix Best Practice</h6>
-                  <p>For optimal performance in large environments, deploy multiple HX Controller instances with load balancing, and implement a hierarchical architecture with a master console for centralized management.</p>
-                </div>
-              </div>
-            </div>
-
-            <div id="cmd" class="guide-section">
-              <div class="section-header">
-                <h3>Command Reference</h3>
-                <div class="section-meta">
-                  <span class="difficulty"><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
-                  <span class="time"><i class="far fa-clock"></i> 15 minutes</span>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Essential Commands</h4>
-                <p>This section provides a comprehensive reference for commonly used Trellix command-line tools and their applications in administration, troubleshooting, and maintenance tasks.</p>
-              </div>
-              
-              <div class="content-card">
-                <h4>Server Management Commands</h4>
-                <div class="code-container">
-                  <pre><code class="language-bash"># Check status of ePO services
-sudo service eposerver status
-
-# Restart ePO server
-sudo service eposerver restart
-
-# Start all Trellix services
-sudo trellix-service --start-all
-
-# Stop all Trellix services
-sudo trellix-service --stop-all
-
-# Get service information
-sudo trellix-service --info</code></pre>
-                </div>
-                <p class="code-caption">Basic service management commands for Trellix servers</p>
-              </div>
-              
-              <div class="content-card">
-                <h4>Configuration Commands</h4>
-                <div class="code-container">
-                  <pre><code class="language-bash"># Configure database connection
-trellix-config --set-db-credentials --username [USER] --password [PASS]
-
-# Configure server properties
-trellix-config --set-property SERVER_NAME=trellix-primary
-
-# Export current configuration
-trellix-export --output config.xml --include-credentials
-
-# Import configuration
-trellix-import --input config.xml --override
-
-# Verify system integrity
-trellix-verify --check-all</code></pre>
-                </div>
-                <p class="code-caption">Configuration management commands</p>
-              </div>
-              
-              <div class="content-card">
-                <h4>Agent Management Commands</h4>
-                <div class="steps-container">
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="1">Agent Deployment</h5>
-                      <div class="command-box">trellix-deploy --target 192.168.1.0/24 --credentials domain/admin</div>
-                      <p>Deploy Trellix agents to all systems in the specified subnet using provided credentials.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="2">Agent Status</h5>
-                      <div class="command-box">trellix-agent-status --list-all --format=csv > agent_status.csv</div>
-                      <p>Export the status of all agents to a CSV file for review and analysis.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step-content">
-                      <h5 data-step="3">Wake Up Agents</h5>
-                      <div class="command-box">trellix-agent-wakeup --group "Finance Dept" --action scan</div>
-                      <p>Trigger immediate check-in and scan for all agents in the Finance Department group.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Troubleshooting Commands</h4>
-                
-                <div class="installation-decision">
-                  <h5 class="decision-question">Select your troubleshooting scenario:</h5>
-                  
-                  <div class="decision-options">
-                    <div class="decision-option" data-target="general-troubleshooting">
-                      <div class="option-icon"><i class="fas fa-tools"></i></div>
-                      <h6>General Diagnostics</h6>
-                      <p>Common troubleshooting for most issues</p>
-                      <ul class="option-benefits">
-                        <li>Log collection and analysis</li>
-                        <li>Service status verification</li>
-                        <li>Basic system checks</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                    
-                    <div class="decision-option" data-target="advanced-troubleshooting">
-                      <div class="option-icon"><i class="fas fa-microscope"></i></div>
-                      <h6>Advanced Diagnostics</h6>
-                      <p>Deep technical investigation tools</p>
-                      <ul class="option-benefits">
-                        <li>Database repair utilities</li>
-                        <li>Network trace analysis</li>
-                        <li>Thread dump collection</li>
-                      </ul>
-                      <button class="option-select-btn">Select</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="installation-flows">
-                  <div class="installation-flow" id="general-troubleshooting">
-                    <div class="flow-header">
-                      <h5>General Diagnostic Commands</h5>
-                      <div class="environment-badge connected">
-                        <i class="fas fa-tools"></i> Basic Troubleshooting
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">Log Collection</h5>
-                          <div class="command-box">trellix-collect-logs --days 3 --output /tmp/logs.zip</div>
-                          <p>Collect all logs from the past 3 days and compress them into a single archive.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Diagnostic Report</h5>
-                          <div class="command-box">trellix-diagnostics --full --include-db</div>
-                          <p>Generate a comprehensive diagnostic report including database statistics.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Connection Test</h5>
-                          <div class="command-box">trellix-test-connection --target epo.example.com --port 8443 --timeout 5</div>
-                          <p>Test connectivity to the specified server with a 5-second timeout.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Service Health Check</h5>
-                          <div class="command-box">trellix-health-check --all-services</div>
-                          <p>Run a health check on all Trellix services to verify they're functioning correctly.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="installation-flow" id="advanced-troubleshooting">
-                    <div class="flow-header">
-                      <h5>Advanced Diagnostic Commands</h5>
-                      <div class="environment-badge air-gapped">
-                        <i class="fas fa-microscope"></i> Expert Troubleshooting
-                      </div>
-                    </div>
-                    
-                    <div class="steps-container">
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="1">SQL Server Database Repair</h5>
-                          <div class="command-box">trellix-db-repair --instance TrellixEPO --backup-first --repair-mode=comprehensive</div>
-                          <p>Diagnose and repair Microsoft SQL Server database issues with automatic backup for safety.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="2">Thread Dump Collection</h5>
-                          <div class="command-box">trellix-thread-dump --process eposerver --interval 10 --count 3</div>
-                          <p>Collect multiple thread dumps at specified intervals to diagnose performance or deadlock issues.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="3">Network Packet Analysis</h5>
-                          <div class="command-box">trellix-network-capture --interfaces eth0 --duration 60 --filter "port 8443 or port 443"</div>
-                          <p>Capture network traffic on specific interfaces and ports for deep analysis of communication issues.</p>
-                        </div>
-                      </div>
-                      <div class="step">
-                        <div class="step-content">
-                          <h5 data-step="4">Memory Leak Analysis</h5>
-                          <div class="command-box">trellix-memory-analyze --heap-dump --process eposerver</div>
-                          <p>Generate and analyze heap dumps to identify memory leaks or excessive memory usage patterns.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="content-card">
-                <h4>Command Troubleshooting</h4>
-                <table class="command-table">
-                  <thead>
-                    <tr>
-                      <th>Error Code</th>
-                      <th>Description</th>
-                      <th>Solution</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>ERR-1001</td>
-                      <td>Microsoft SQL Server connection failed</td>
-                      <td>Verify SQL Server credentials and connection settings</td>
-                    </tr>
-                    <tr>
-                      <td>ERR-1203</td>
-                      <td>Service unavailable</td>
-                      <td>Check service status and restart if necessary</td>
-                    </tr>
-                    <tr>
-                      <td>ERR-1500</td>
-                      <td>Permission denied</td>
-                      <td>Run command with elevated privileges</td>
-                    </tr>
-                    <tr>
-                      <td>ERR-2105</td>
-                      <td>Configuration file corrupt</td>
-                      <td>Restore from backup or recreate configuration</td>
-                    </tr>
-                    <tr>
-                      <td>ERR-3012</td>
-                      <td>Network timeout</td>
-                      <td>Check network connectivity and firewall settings</td>
-                    </tr>
-                    <tr>
-                      <td>ERR-4002</td>
-                      <td>SQL query timeout</td>
-                      <td>Verify SQL Server performance and query optimization</td>
-                    </tr>
-                    <tr>
-                      <td>ERR-5320</td>
-                      <td>Certificate validation failed</td>
-                      <td>Check certificate expiration or import the correct trust chain</td>
-                    </tr>
-                  </tbody>
-                </table>
-                
-                <div class="trellix-tip">
-                  <i class="fas fa-lightbulb"></i>
-                  <div class="tip-content">
-                    <h6>Trellix Command Best Practice</h6>
-                    <p>Always use the <code>--dry-run</code> flag with potentially destructive commands to preview changes before applying them. This is especially important in production environments.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-    </div>
-
-    <!-- Guide 2 -->
-    <div id="guide2" class="guide-content">
-      <h2>Guide 2</h2>
-      <!-- Similar structure as Trellix guide -->
-      <p>Content coming soon...</p>
-    </div>
-
-    <!-- Guide 3 -->
-    <div id="guide3" class="guide-content">
-      <h2>Guide 3</h2>
-      <!-- Similar structure as Trellix guide -->
-      <p>Content coming soon...</p>
-    </div>
-
-    <!-- About Me Section -->
-    <div id="whoami" class="guide-content">
-      <h2>About Me</h2>
-      <p>Hi, I'm [Your Name]. I specialize in [Your Expertise] and created this knowledge hub to share guides,
-        tutorials, and best practices I've developed throughout my career.</p>
-      <a href="#home">Back to Home</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer Section -->
-  <footer>
-    <div class="footer-content">
-      <p class="copyright">© 2023 nullpo.wiki. All rights reserved.</p>
-
-      <div class="social-links">
-        <button class="social-button discord">
-          <i class="fab fa-discord"></i>
-          <span class="tooltip">My Discord: YourDiscordTag</span>
+        <button class="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-sun"></i>
         </button>
+    </header>
 
-        <a href="https://linkedin.com/in/your-profile" target="_blank" class="social-button linkedin">
-          <i class="fab fa-linkedin"></i>
-        </a>
+    <main id="mainContent" class="landing-section main-content">
+        <div class="hero">
+            <div class="hero-badge">Unofficial Guide</div>
+            <h1 class="hero-title">Trellix ePO Installation & Configuration</h1>
+            <p class="hero-subtitle">A comprehensive guide for setting up and managing your Trellix environment</p>
+            
+            <!-- Documentation link styled like Trellix UI -->
+            <div class="trellix-docs-container">
+                <div class="trellix-docs-card">
+                    <div class="trellix-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="trellix-info">
+                        <h3>Trellix ePolicy Orchestrator (ePO) <span class="trellix-official-badge">Official</span></h3>
+                        <div class="trellix-tags">
+                            <span class="trellix-tag"><i class="fas fa-desktop"></i> Central Management Console</span>
+                            <span class="trellix-tag"><i class="fas fa-lock"></i> Security Policy Control</span>
+                        </div>
+                    </div>
+                    <a href="https://docs.trellix.com/en-us/enterprise/home.htm" target="_blank" class="trellix-docs-button">
+                        <i class="fas fa-external-link-alt"></i>
+                        Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        <a href="https://youtube.com/c/your-channel" target="_blank" class="social-button youtube">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
-    </div>
-  </footer>
+        <!-- Server Components Section - With clickable cards -->
+        <section class="content-section">
+            <div class="section-title">
+                <h2>Server Components</h2>
+                <p>Essential server components for your Trellix infrastructure</p>
+            </div>
 
-  <script src="script.js"></script>
+            <div class="feature-grid">
+                <a href="#" class="feature-card-link" data-guide="epo-database-guide">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>ePO + Database</h3>
+                        <p>Core management console and database setup for centralized control. Provides central management, policy configuration, and comprehensive reporting & analytics capabilities.</p>
+                        <div class="card-meta">
+                            <span class="difficulty-badge">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                Advanced
+                            </span>
+                            <span class="time-estimate">
+                                <i class="far fa-clock"></i>
+                                45 minutes
+                            </span>
+                        </div>
+                        <span class="card-link-arrow"><i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
 
-  <!-- Add before closing body tag -->
-  <div id="notification-container"></div>
+                <a href="#" class="feature-card-link" data-guide="dxl-guide">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>DXL</h3>
+                        <p>Data Exchange Layer for real-time communication and integration between security components. Enables seamless data sharing and automated responses.</p>
+                        <div class="card-meta">
+                            <span class="difficulty-badge">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                Advanced
+                            </span>
+                            <span class="time-estimate">
+                                <i class="far fa-clock"></i>
+                                30 minutes
+                            </span>
+                        </div>
+                        <span class="card-link-arrow"><i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
 
-  <!-- Add browser compatibility check -->
-  <script>
-    // Check if browser supports key features
-    (function() {
-      const isIE = navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > -1;
-      
-      if (isIE) {
-        // Create a notification for IE users
-        setTimeout(function() {
-          if (window.showNotification) {
-            window.showNotification('Some hover animations may not work in Internet Explorer. Consider using Edge, Chrome, Firefox or Safari for the best experience.', 'fas fa-info-circle');
-          }
-        }, 1000);
-      }
-      
-      // Check for CSS features support
-      const supports = {
-        transition: typeof document.documentElement.style.transition !== 'undefined',
-        transform: typeof document.documentElement.style.transform !== 'undefined',
-        animation: typeof document.documentElement.style.animation !== 'undefined'
-      };
-      
-      if (!supports.transition || !supports.transform) {
-        // Basic transition/transform features fallback
-        const style = document.createElement('style');
-        style.textContent = `
-          /* Basic fallbacks for browsers without transition/transform */
-          .sidebar-item:hover { background-color: rgba(138, 43, 226, 0.15) !important; }
-          .primary-button:hover, .secondary-button:hover { background-color: #a45ee5 !important; color: white !important; }
-          .command-box:hover { border-left-width: 5px !important; }
-          .feature-card:hover, .content-card:hover, .decision-option:hover { border-color: #a45ee5 !important; }
-        `;
-        document.head.appendChild(style);
-      }
-    })();
-  </script>
+                <a href="#" class="feature-card-link" data-guide="tie-guide">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h3>TIE</h3>
+                        <p>Threat Intelligence Exchange for advanced threat detection. Provides file reputation services and real-time threat intelligence sharing across your security infrastructure.</p>
+                        <div class="card-meta">
+                            <span class="difficulty-badge">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                Advanced
+                            </span>
+                            <span class="time-estimate">
+                                <i class="far fa-clock"></i>
+                                35 minutes
+                            </span>
+                        </div>
+                        <span class="card-link-arrow"><i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
 
-  <!-- Add this near the top of body -->
-  <div id="browser-warning" style="display: none; padding: 15px; background-color: #ff3860; color: white; text-align: center; position: relative;">
-    You're using an outdated browser. Some interactive features may not work correctly. 
-    <a href="https://browsehappy.com/" style="color: white; text-decoration: underline; font-weight: bold;">Update your browser</a>
-    <button style="position: absolute; right: 15px; top: 15px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;" onclick="this.parentNode.style.display='none'">×</button>
-  </div>
+                <a href="#" class="feature-card-link" data-guide="ivx-guide">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3>IVX</h3>
+                        <p>Interactive Virtual Environment for malware analysis. Provides sandbox capabilities for analyzing suspicious files and detecting advanced threats.</p>
+                        <div class="card-meta">
+                            <span class="difficulty-badge">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                Advanced
+                            </span>
+                            <span class="time-estimate">
+                                <i class="far fa-clock"></i>
+                                40 minutes
+                            </span>
+                        </div>
+                        <span class="card-link-arrow"><i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
 
-  <script>
-    // Detect very old browsers
-    var isOldBrowser = false;
-    
-    // Check for very old IE
-    if (/MSIE [6-8]\./.test(navigator.userAgent)) {
-      isOldBrowser = true;
-    }
-    
-    // Check for other features
-    try {
-      // Test for ES5 features
-      if (!Object.keys || !Array.prototype.forEach) {
-        isOldBrowser = true;
-      }
-      
-      // Test for querySelector
-      if (!document.querySelector) {
-        isOldBrowser = true;
-      }
-    } catch(e) {
-      isOldBrowser = true;
-    }
-    
-    if (isOldBrowser) {
-      document.getElementById('browser-warning').style.display = 'block';
-    }
-  </script>
+                <a href="#" class="feature-card-link" data-guide="hx-guide">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-magnifying-glass"></i>
+                        </div>
+                        <h3>HX</h3>
+                        <p>Host Extension for endpoint detection and response. Enables advanced threat hunting and incident investigation across your endpoints.</p>
+                        <div class="card-meta">
+                            <span class="difficulty-badge">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                Advanced
+                            </span>
+                            <span class="time-estimate">
+                                <i class="far fa-clock"></i>
+                                30 minutes
+                            </span>
+                        </div>
+                        <span class="card-link-arrow"><i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Security Products Section -->
+        <section class="content-section">
+            <div class="section-title">
+                <h2>Security Products</h2>
+                <p>Comprehensive security solutions for your environment</p>
+            </div>
+
+            <div class="feature-grid">
+                <!-- SINGLE DLP card with shield icon -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>DLP</h3>
+                    <p>Data Loss Prevention for protecting sensitive information. Prevents unauthorized data exfiltration and ensures compliance with data protection policies.</p>
+                </div>
+
+                <!-- Solidcore -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Solidcore</h3>
+                    <p>Application control and system lockdown solution. Provides change control, application whitelisting, and system hardening capabilities.</p>
+                </div>
+
+                <!-- ENS -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-virus-slash"></i>
+                    </div>
+                    <h3>ENS</h3>
+                    <p>Endpoint Security for comprehensive threat protection. Delivers advanced malware protection, exploit prevention, and device control.</p>
+                </div>
+
+                <!-- SIR -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-circle-info"></i>
+                    </div>
+                    <h3>SIR</h3>
+                    <p>Security Information and Response for incident management. Enables effective incident response, threat hunting, and security analytics.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ePO Management Section -->
+        <section class="content-section">
+            <div class="section-title">
+                <h2>ePO Management</h2>
+                <p>Centrally manage and monitor your Trellix security environment</p>
+            </div>
+
+            <div class="feature-grid">
+                <!-- Client Tasks -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Client Tasks</h3>
+                    <p>Configure and deploy client-side tasks for endpoint management. Schedule scans, updates, and maintenance activities across your organization.</p>
+                </div>
+
+                <!-- Server Tasks -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Server Tasks</h3>
+                    <p>Manage server-side operations including database maintenance, backups, and system updates. Ensure optimal performance of your security infrastructure.</p>
+                </div>
+
+                <!-- Automations -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Automations</h3>
+                    <p>Build and configure automated workflows for security operations. Set up automatic responses to security events and streamline routine management tasks.</p>
+                </div>
+
+                <!-- Policies -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Policies</h3>
+                    <p>Create, deploy, and manage security policies across your environment. Enforce consistent security controls throughout your organization's infrastructure.</p>
+                </div>
+
+                <!-- Dashboards -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Dashboards</h3>
+                    <p>Configure customized dashboards to monitor security status in real-time. Visualize threats, compliance status, and security metrics at a glance.</p>
+                </div>
+
+                <!-- Reporting -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Reporting</h3>
+                    <p>Generate comprehensive security reports for compliance and operational needs. Schedule automated report delivery and create custom report templates.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ePO + Database Guide Content -->
+    <section id="epo-database-guide" class="guide-content">
+        <div class="guide-header">
+            <div class="guide-breadcrumb">
+                <a href="#" class="back-to-main"><i class="fas fa-home"></i> Home</a>
+                <span class="separator">/</span>
+                <span>Database Configuration</span>
+            </div>
+            <h1 class="guide-title">Database Configuration</h1>
+            <div class="guide-metadata">
+                <div class="guide-difficulty">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span>Advanced</span>
+                </div>
+                <div class="guide-time">
+                    <i class="far fa-clock"></i>
+                    <span>45 minutes</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Database Overview</h2>
+            <p>The Trellix platform requires a properly configured Microsoft SQL Server database for optimal performance and data storage. This guide covers setting up SQL Server for Trellix, configuring replication, and optimizing performance for enterprise deployments.</p>
+            
+            <div class="guide-note">
+                <strong>Note:</strong> This guide assumes you have administrative access to your SQL Server environment and the necessary permissions to create databases and configure server settings.
+            </div>
+            
+            <div class="trellix-docs-container">
+                <div class="trellix-docs-card">
+                    <div class="trellix-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="trellix-info">
+                        <h3>Microsoft SQL Server for Trellix <span class="trellix-official-badge">Official</span></h3>
+                        <div class="trellix-tags">
+                            <span class="trellix-tag"><i class="fas fa-server"></i> Recommended: SQL Server 2019</span>
+                            <span class="trellix-tag"><i class="fas fa-exclamation-triangle"></i> Critical for Trellix Platform</span>
+                        </div>
+                    </div>
+                    <a href="https://docs.microsoft.com/en-us/sql/sql-server/what-s-new-in-sql-server-2019" target="_blank" class="trellix-docs-button">
+                        <i class="fas fa-external-link-alt"></i>
+                        SQL Server Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Pre-requisites</h2>
+            <ul>
+                <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Microsoft SQL Server 2019+ - Standard or Enterprise edition</li>
+                <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Minimum 16GB RAM allocated to database services</li>
+                <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> 100GB+ storage with high I/O performance (SSD recommended)</li>
+                <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Network connectivity between Trellix server and database</li>
+                <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> SQL Server Authentication - Mixed Mode authentication enabled</li>
+            </ul>
+        </div>
+
+        <div class="guide-section">
+            <h2>Standard SQL Server Setup</h2>
+            
+            <div class="guide-step">
+                <div class="guide-step-number">1</div>
+                <div class="guide-step-content">
+                    <h4>Install Microsoft SQL Server</h4>
+                    <p>Install SQL Server with Mixed Mode authentication enabled. Ensure TCP/IP protocol is enabled in SQL Server Configuration Manager.</p>
+                </div>
+            </div>
+            
+            <div class="guide-step">
+                <div class="guide-step-number">2</div>
+                <div class="guide-step-content">
+                    <h4>Create Trellix Database</h4>
+                    <p>Set the database collation to SQL_Latin1_General_CP1_CI_AS for compatibility with Trellix components.</p>
+                    <div class="guide-code">
+                        CREATE DATABASE TrellixEPO COLLATE SQL_Latin1_General_CP1_CI_AS;
+                    </div>
+                </div>
+            </div>
+            
+            <div class="guide-step">
+                <div class="guide-step-number">3</div>
+                <div class="guide-step-content">
+                    <h4>Configure Database User</h4>
+                    <p>Create a dedicated database user with appropriate permissions for the Trellix application.</p>
+                    <div class="guide-code">
+                        CREATE LOGIN TrellixUser WITH PASSWORD = 'StrongPassword123!';
+                        USE TrellixEPO;
+                        CREATE USER TrellixUser FOR LOGIN TrellixUser;
+                    </div>
+                </div>
+            </div>
+            
+            <div class="guide-step">
+                <div class="guide-step-number">4</div>
+                <div class="guide-step-content">
+                    <h4>Configure SQL Server Properties</h4>
+                    <p>Set SQL Server memory limits, recovery model, and auto-growth settings based on your environment scale.</p>
+                    <div class="guide-code">
+                        -- Set memory limits
+                        EXEC sp_configure 'show advanced options', 1;
+                        RECONFIGURE;
+                        EXEC sp_configure 'max server memory (MB)', 12288;
+                        RECONFIGURE;
+                    </div>
+                </div>
+            </div>
+            
+            <div class="guide-step">
+                <div class="guide-step-number">5</div>
+                <div class="guide-step-content">
+                    <h4>Configure Maintenance Plans</h4>
+                    <p>Set up SQL Server maintenance plans for index maintenance, statistics updates, and backups.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Performance Optimization</h2>
+            <p>For optimal Microsoft SQL Server performance with Trellix products:</p>
+            
+            <div class="guide-tip">
+                <h4>Properly size data and log files</h4>
+                <p>Pre-allocate files to their expected size to reduce auto-growth events</p>
+            </div>
+            
+            <div class="guide-tip">
+                <h4>Use multiple TempDB files</h4>
+                <p>Configure one TempDB file per CPU core (up to 8) to reduce contention</p>
+            </div>
+            
+            <div class="guide-tip">
+                <h4>Place files on separate volumes</h4>
+                <p>Put data files, log files, and TempDB on separate physical storage</p>
+            </div>
+            
+            <div class="guide-tip">
+                <h4>Ensure proper indexing</h4>
+                <p>Monitor query performance and add indexes to frequently queried columns</p>
+            </div>
+            
+            <div class="guide-tip">
+                <h4>Regular maintenance</h4>
+                <p>Follow the maintenance plan outlined above</p>
+            </div>
+            
+            <div class="guide-warning">
+                <h4>Best Practice for Large Deployments</h4>
+                <p>For large Trellix deployments (10,000+ endpoints), consider implementing SQL Server Resource Governor to protect critical database resources and ensure consistent performance during peak load periods.</p>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Next Steps</h2>
+            <p>After configuring your database, proceed to:</p>
+            <ul>
+                <li><a href="#" style="color: var(--accent);">ePO Server Installation</a></li>
+                <li><a href="#" style="color: var(--accent);">Database Backup and Recovery Planning</a></li>
+                <li><a href="#" style="color: var(--accent);">High Availability Configuration</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#" class="social-button discord">
+                <i class="fab fa-discord"></i>
+                <span class="tooltip">Discord: @nullpo</span>
+            </a>
+            <a href="#" class="social-button linkedin">
+                <i class="fab fa-linkedin"></i>
+                <span class="tooltip">Connect on LinkedIn</span>
+            </a>
+            <a href="#" class="social-button youtube">
+                <i class="fab fa-youtube"></i>
+                <span class="tooltip">Watch Tutorials</span>
+            </a>
+        </div>
+        <div class="footer-note">
+            <p>This is an unofficial guide created by the community</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
-
 </html>
