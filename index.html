@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Dark Mode Initialization - Add this at the top of your head section -->
+    <script>
+        // Apply dark theme immediately before page loads
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trellix ePO Guide | Nullpo.co.il</title>
+    <title>Trellix ePO Guide</title>
+    
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -4099,5 +4107,33 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Always scroll to top on page load/refresh and clear stored position
+        window.onload = function() {
+            window.scrollTo(0, 0);
+            localStorage.removeItem('lastScrollPosition');
+        };
+
+        // On page load, restore the saved scroll position if available
+        // Check for saved scroll position
+        const savedScrollPosition = localStorage.getItem('lastScrollPosition');
+        if (savedScrollPosition && !currentView.isGuide) {
+            setTimeout(() => {
+                window.scrollTo(0, parseInt(savedScrollPosition));
+            }, 100);
+        }
+
+        // Force scroll to top on page reload
+        window.addEventListener('beforeunload', function() {
+            // Save the fact that we're reloading the page
+            sessionStorage.setItem('isPageReload', 'true');
+        });
+
+        // On page load, check if it's a reload and scroll to top
+        if (sessionStorage.getItem('isPageReload') === 'true') {
+            window.scrollTo(0, 0);
+            sessionStorage.removeItem('isPageReload');
+        }
+    </script>
 </body>
 </html>
