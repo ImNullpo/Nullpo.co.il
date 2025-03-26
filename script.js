@@ -2,11 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');
     
-    // Set initial theme to dark mode
+    // Modified theme initialization (don't set initial theme here as it's already set)
     function initializeTheme() {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        // Only update the icon, not the theme itself (already set in <head>)
         updateThemeIcon('dark');
-        localStorage.setItem('theme', 'dark');
     }
 
     function updateThemeIcon(theme) {
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateThemeIcon(newTheme);
     });
 
-    // Initialize theme
+    // Initialize theme (only icon)
     initializeTheme();
 
     // Search functionality
@@ -91,13 +90,21 @@ document.addEventListener('DOMContentLoaded', function() {
         guideId: null
     };
     
-    // Handle feature card navigation
+    // Add this near the top of your script.js file, before the navigation handlers
+    let lastScrollPosition = 0;
+    // Add this to track guide scroll positions separately
+    let guideScrollPositions = {};
+    
+    // Modify the feature card link handler to save scroll position before navigating to a guide
     const featureCardLinks = document.querySelectorAll('.feature-card-link');
     featureCardLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetGuideId = this.getAttribute('data-guide');
             if (targetGuideId) {
+                // Save current scroll position before showing the guide
+                lastScrollPosition = window.scrollY;
+                
                 showGuide(targetGuideId);
                 
                 // Store state in memory without changing URL
@@ -106,20 +113,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     guideId: targetGuideId
                 };
                 
-                // Optionally save to localStorage for persistence across page refreshes
+                // Save the scroll position along with view state
                 localStorage.setItem('currentView', JSON.stringify(currentView));
+                localStorage.setItem('lastScrollPosition', lastScrollPosition);
                 
-                // Scroll to top
+                // We still scroll to top for guides
                 window.scrollTo(0, 0);
             }
         });
     });
     
-    // Handle back navigation to main page
+    // Modify the back link handler to restore scroll position
     const backLinks = document.querySelectorAll('.back-to-main');
     backLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            // Save current guide scroll position before going back
+            if (currentView.isGuide && currentView.guideId) {
+                guideScrollPositions[currentView.guideId] = window.scrollY;
+                localStorage.setItem('guideScrollPositions', JSON.stringify(guideScrollPositions));
+            }
+            
             showMainContent();
             
             // Update state without changing URL
@@ -130,6 +145,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Update localStorage
             localStorage.setItem('currentView', JSON.stringify(currentView));
+            
+            // Restore last scroll position instead of going to top
+            setTimeout(() => {
+                window.scrollTo(0, lastScrollPosition);
+            }, 10);
         });
     });
     
@@ -163,6 +183,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle browser back button - intercept and use our own navigation
     window.addEventListener('popstate', function(event) {
+        // Save current guide scroll position before going back
+        if (currentView.isGuide && currentView.guideId) {
+            guideScrollPositions[currentView.guideId] = window.scrollY;
+            localStorage.setItem('guideScrollPositions', JSON.stringify(guideScrollPositions));
+        }
+        
         // Always return to main content when back button is pressed
         showMainContent();
         
@@ -175,6 +201,31 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('currentView', JSON.stringify(currentView));
     });
     
+    // Add this function to track scroll position in guides
+    window.addEventListener('scroll', function() {
+        // If we're in a guide, store its scroll position
+        if (currentView.isGuide && currentView.guideId) {
+            guideScrollPositions[currentView.guideId] = window.scrollY;
+            localStorage.setItem('guideScrollPositions', JSON.stringify(guideScrollPositions));
+        } else {
+            // If we're on main page, store that scroll position
+            lastScrollPosition = window.scrollY;
+            localStorage.setItem('lastScrollPosition', lastScrollPosition);
+        }
+    });
+    
+    // Update the page load state restoration
+    // Try to load saved guide scroll positions
+    const savedGuideScrollPositions = localStorage.getItem('guideScrollPositions');
+    if (savedGuideScrollPositions) {
+        try {
+            guideScrollPositions = JSON.parse(savedGuideScrollPositions);
+        } catch (e) {
+            console.error('Error parsing saved guide scroll positions:', e);
+            guideScrollPositions = {};
+        }
+    }
+    
     // Check if we should restore a previous view on page load
     const savedView = localStorage.getItem('currentView');
     if (savedView) {
@@ -183,22 +234,54 @@ document.addEventListener('DOMContentLoaded', function() {
             if (viewState.isGuide && viewState.guideId) {
                 showGuide(viewState.guideId);
                 currentView = viewState;
+                
+                // Restore scroll position for this guide
+                setTimeout(() => {
+                    const guideScrollPos = guideScrollPositions[viewState.guideId] || 0;
+                    window.scrollTo(0, guideScrollPos);
+                }, 100);
+            } else {
+                // Main content is showing, maybe restore scroll
+                const savedScrollPosition = localStorage.getItem('lastScrollPosition');
+                if (savedScrollPosition) {
+                    lastScrollPosition = parseInt(savedScrollPosition);
+                    setTimeout(() => {
+                        window.scrollTo(0, lastScrollPosition);
+                    }, 100);
+                } else {
+                    // If no saved position for main content, go to top
+                    window.scrollTo(0, 0);
+                }
             }
         } catch (e) {
             console.error('Error parsing saved view state:', e);
         }
+    } else {
+        // No saved state, ensure we scroll to top on initial page load
+        window.scrollTo(0, 0);
     }
 
     // Handle back/forward navigation using keyboard or context menu
     document.addEventListener('keydown', function(e) {
         // Add Escape key to return to main page from any guide
         if (e.key === 'Escape' && currentView.isGuide) {
+            // Save current guide scroll position before going back
+            if (currentView.guideId) {
+                guideScrollPositions[currentView.guideId] = window.scrollY;
+                localStorage.setItem('guideScrollPositions', JSON.stringify(guideScrollPositions));
+            }
+            
             showMainContent();
             currentView = {
                 isGuide: false,
                 guideId: null
             };
             localStorage.setItem('currentView', JSON.stringify(currentView));
+            
+            // Restore last scroll position on main content
+            setTimeout(() => {
+                window.scrollTo(0, lastScrollPosition);
+            }, 10);
         }
     });
 
@@ -251,5 +334,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Policy link clicked');
             });
         });
+    }
+
+    // Update the logo click handler
+    const logoLink = document.querySelector('.logo');
+    if (logoLink) {
+        logoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Save current guide scroll position if in a guide
+            if (currentView.isGuide && currentView.guideId) {
+                guideScrollPositions[currentView.guideId] = window.scrollY;
+                localStorage.setItem('guideScrollPositions', JSON.stringify(guideScrollPositions));
+            }
+            
+            showMainContent();
+            
+            // Update state without changing URL
+            currentView = {
+                isGuide: false,
+                guideId: null
+            };
+            
+            // Update localStorage
+            localStorage.setItem('currentView', JSON.stringify(currentView));
+            
+            // Restore last scroll position instead of going to top
+            setTimeout(() => {
+                window.scrollTo(0, lastScrollPosition);
+            }, 10);
+        });
+    }
+
+    // On page load, restore the saved scroll position if available
+    // Check for saved scroll position
+    const savedScrollPosition = localStorage.getItem('lastScrollPosition');
+    if (savedScrollPosition && !currentView.isGuide) {
+        setTimeout(() => {
+            window.scrollTo(0, parseInt(savedScrollPosition));
+        }, 100);
     }
 });
