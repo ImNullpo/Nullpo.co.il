@@ -4111,7 +4111,11 @@
         // Always scroll to top on page load/refresh and clear stored position
         window.onload = function() {
             window.scrollTo(0, 0);
+            // Clear any saved state
+            localStorage.removeItem('currentView');
             localStorage.removeItem('lastScrollPosition');
+            localStorage.removeItem('guideScrollPositions');
+            sessionStorage.removeItem('isPageReload');
         };
 
         // On page load, restore the saved scroll position if available
