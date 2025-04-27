@@ -38,6 +38,9 @@
 
 // Preloading functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Set dark mode as default immediately to prevent flashing
+    document.body.classList.add('dark-mode');
+    
     // Create preload overlay
     const preloadOverlay = document.createElement('div');
     preloadOverlay.className = 'preload-overlay';
@@ -80,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Initialize components with animation
             initializeDynamicElements();
             
+            // Initialize mobile navigation
+            initMobileNavigation();
+            
             // Check if URL has a hash and navigate to that content
             if (window.location.hash) {
                 const targetId = window.location.hash.substring(1);
@@ -107,19 +113,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeSwitch = document.getElementById('theme-switch');
     const body = document.body;
     
-    // Check for saved theme preference
+    // Force dark mode as default
+    body.className = 'dark-mode';
+    themeSwitch.checked = true;
+    
+    // Only use saved preference if it exists
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         body.className = savedTheme;
         themeSwitch.checked = savedTheme === 'dark-mode';
         // Ensure text visibility on load
         setTimeout(refreshTextVisibility, 100);
-    }
-    
-    // Also check for system dark mode preference if no saved preference
-    if (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        body.className = 'dark-mode';
-        themeSwitch.checked = true;
+    } else {
+        // If no saved preference, set dark mode as default
         localStorage.setItem('theme', 'dark-mode');
     }
     
@@ -475,5 +481,68 @@ document.addEventListener('DOMContentLoaded', function() {
             navigateBack();
         }
     });
+
+    // Add mobile navigation functionality
+    function initMobileNavigation() {
+        const mobileNavButton = document.getElementById('mobile-nav-button');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        if (!mobileNavButton || !mobileNav) return;
+        
+        // Toggle mobile nav on button click
+        mobileNavButton.addEventListener('click', function() {
+            mobileNav.classList.toggle('active');
+        });
+        
+        // Hide mobile nav when clicking elsewhere
+        document.addEventListener('click', function(event) {
+            if (!mobileNav.contains(event.target) && !mobileNavButton.contains(event.target)) {
+                mobileNav.classList.remove('active');
+            }
+        });
+        
+        // Hide mobile nav when clicking on a nav item
+        const mobileNavItems = mobileNav.querySelectorAll('.mobile-nav-item');
+        mobileNavItems.forEach(item => {
+            item.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                
+                // Smooth scroll to section
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        event.preventDefault();
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Show/hide mobile nav button based on scroll position
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st > lastScrollTop && st > 300) {
+                // Scrolling down and past hero section - hide button
+                mobileNavButton.style.transform = 'translateY(70px)';
+                mobileNavButton.style.opacity = '0';
+                mobileNav.classList.remove('active');
+            } else {
+                // Scrolling up or near top - show button
+                mobileNavButton.style.transform = 'translateY(0)';
+                mobileNavButton.style.opacity = '1';
+            }
+            
+            // Update last scroll position
+            lastScrollTop = st <= 0 ? 0 : st;
+        }, window.eventOptions);
+    }
+
+    // Call after DOM is loaded
+    initMobileNavigation();
 });
 
