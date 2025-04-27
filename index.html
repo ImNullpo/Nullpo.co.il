@@ -18,6 +18,13 @@
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
     <link rel="preload" href="script.js" as="script">
+    <!-- Force dark mode before JavaScript loads -->
+    <style>
+        body {
+            background-color: #121a2b;
+            color: #f0f0f0;
+        }
+    </style>
     <!-- No script fallback -->
     <noscript>
         <style>
@@ -26,6 +33,11 @@
                 opacity: 1 !important; 
                 transform: none !important;
                 display: block !important;
+            }
+            /* Force dark mode in noscript */
+            body {
+                background-color: #121a2b !important;
+                color: #f0f0f0 !important;
             }
         </style>
     </noscript>
@@ -525,6 +537,17 @@
             <p class="copyright">&copy; 2023 Adir Shabtai. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Mobile Navigation -->
+    <button class="mobile-nav-button" id="mobile-nav-button" aria-label="Open navigation menu">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="#top" class="mobile-nav-item"><i class="fas fa-home"></i> Home</a>
+        <a href="#about" class="mobile-nav-item"><i class="fas fa-user"></i> About</a>
+        <a href="#knowledge" class="mobile-nav-item"><i class="fas fa-book"></i> Knowledge Base</a>
+        <a href="#connect" class="mobile-nav-item"><i class="fas fa-envelope"></i> Connect</a>
+    </nav>
 
     <script src="script.js"></script>
 </body>
