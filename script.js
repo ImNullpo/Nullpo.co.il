@@ -544,4 +544,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Call after DOM is loaded
     initMobileNavigation();
+
+    // Add this to your existing DOMContentLoaded event handler
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const body = document.body;
+            if (body.classList.contains('dark-mode')) {
+                body.className = 'light-mode';
+                localStorage.setItem('theme', 'light-mode');
+            } else {
+                body.className = 'dark-mode';
+                localStorage.setItem('theme', 'dark-mode');
+            }
+            refreshTextVisibility();
+        });
+    }
 });
