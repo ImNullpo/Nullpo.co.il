@@ -545,4 +545,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call after DOM is loaded
     initMobileNavigation();
 });
-
