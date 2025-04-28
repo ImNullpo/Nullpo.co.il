@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Adir Shabtai's personal website and Trellix EPO knowledge base">
+    <meta name="theme-color" content="#121a2b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Adir Shabtai | Adir.Sh</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Preload resources -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <!-- Force dark mode before JavaScript loads -->
+    <style>
+        body {
+            background-color: #121a2b;
+            color: #f0f0f0;
+        }
+    </style>
+    <!-- No script fallback -->
+    <noscript>
+        <style>
+            .preload-overlay { display: none; }
+            .knowledge-grid, .content-article { 
+                opacity: 1 !important; 
+                transform: none !important;
+                display: block !important;
+            }
+            /* Force dark mode in noscript */
+            body {
+                background-color: #121a2b !important;
+                color: #f0f0f0 !important;
+            }
+        </style>
+    </noscript>
+</head>
+<body class="dark-mode">
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+
+    <header>
+        <div class="container">
+            <a href="#top" class="logo" aria-label="Home">Adir.Sh</a>
+            <div class="search-container header-search">
+                <input type="text" id="search-input" placeholder="Search my knowledge base... (Ctrl + /)" aria-label="Search knowledge base">
+                <button id="search-button" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></button>
+            </div>
+            <div class="theme-toggle">
+                <i class="fas fa-sun" aria-hidden="true"></i>
+                <label class="switch" for="theme-switch">
+                    <input type="checkbox" id="theme-switch" checked aria-label="Toggle dark mode">
+                    <span class="slider round"></span>
+                </label>
+                <i class="fas fa-moon" aria-hidden="true"></i>
+            </div>
+        </div>
+    </header>
+
+    <main id="top">
+        <span id="main-content" tabindex="-1"></span>
+        <!-- Personal Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Adir Shabtai</h1>
+                        <p class="subtitle">Cybersecurity Expert & Trellix EPO Specialist</p>
+                        <p class="hero-description">Welcome to my personal site where I share my expertise and knowledge in cybersecurity, with a focus on Trellix EPO solutions.</p>
+                    </div>
+                    <div class="hero-image">
+                        <div class="profile-placeholder">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <p>Hi, I'm Adir Shabtai. I specialize in cybersecurity with extensive experience in Trellix EPO implementation and management. This website serves as both my personal profile and a knowledge repository where I share insights from my professional experience.</p>
+                    <p>My expertise includes endpoint security, threat intelligence, and security policy orchestration. I'm passionate about helping organizations strengthen their security posture through effective use of Trellix solutions.</p>
+                </div>
+                <div class="skills">
+                    <div class="skill-tag">Trellix EPO</div>
+                    <div class="skill-tag">Endpoint Security</div>
+                    <div class="skill-tag">Threat Intelligence</div>
+                    <div class="skill-tag">Security Policy</div>
+                    <div class="skill-tag">Cybersecurity</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Base Section -->
+        <section class="knowledge-section" id="knowledge">
+            <div class="container">
+                <h2>My Trellix EPO Knowledge Base</h2>
+                <p class="section-subtitle">Resources and guides from my personal experience</p>
+
+                <div class="tabs">
+                    <button class="tab-btn active" data-category="all">All</button>
+                    <button class="tab-btn" data-category="guides">Guides</button>
+                    <button class="tab-btn" data-category="servers">Servers</button>
+                    <button class="tab-btn" data-category="products">Products</button>
+                    <button class="tab-btn" data-category="soc">SOC Operations</button>
+                    <button class="tab-btn" data-category="operations">Operations & Maintenance</button>
+                    <button class="tab-btn" data-category="troubleshooting">Troubleshooting</button>
+                </div>
+
+                <div class="knowledge-grid" id="knowledge-grid">
+                    <!-- GUIDES -->
+                    <div class="knowledge-item" data-tags="installation setup guide guides">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>EPO Installation Guide</h3>
+                            <p>My step-by-step approach to installing and configuring Trellix EPO in enterprise environments.</p>
+                            <a href="#article-epo-installation" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- TROUBLESHOOTING -->
+                    <div class="knowledge-item" data-tags="troubleshooting errors fixes solutions">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>Common Troubleshooting Tips</h3>
+                            <p>Solutions to frequently encountered issues with Trellix EPO deployment based on my experience.</p>
+                            <a href="#article-troubleshooting" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- OPERATIONS -->
+                    <div class="knowledge-item" data-tags="best-practices security optimization operations">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>EPO Best Practices</h3>
+                            <p>My recommended security best practices and optimizations for your Trellix EPO setup.</p>
+                            <a href="#article-best-practices" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- OPERATIONS -->
+                    <div class="knowledge-item" data-tags="updates patches maintenance guides operations">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>Update and Maintenance Guide</h3>
+                            <p>How I approach updating and maintaining Trellix EPO environments for optimal performance.</p>
+                            <a href="#article-maintenance" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- SERVERS - EPO & DB -->
+                    <div class="knowledge-item" data-tags="servers epo database management">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>EPO & Database</h3>
+                            <p>Core management console and database setup, architecture, and performance tuning recommendations.</p>
+                            <a href="#article-epodb" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- SERVERS - DXL -->
+                    <div class="knowledge-item" data-tags="servers dxl exchange handlers integration">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>Handlers & DXL</h3>
+                            <p>Configuration of handlers and Data Exchange Layer for real-time security integration and communication.</p>
+                            <a href="#article-dxl" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- SERVERS - TIE -->
+                    <div class="knowledge-item" data-tags="servers tie threat intelligence exchange">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>TIE</h3>
+                            <p>Threat Intelligence Exchange deployment, configuration and operational best practices.</p>
+                            <a href="#article-tie" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- SERVERS - IVX -->
+                    <div class="knowledge-item" data-tags="servers ivx investigation">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>IVX</h3>
+                            <p>Investigation Exchange setup and operation for enhanced threat identification and response.</p>
+                            <a href="#article-ivx" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- SERVERS - HX -->
+                    <div class="knowledge-item" data-tags="servers hx host extension">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>HX</h3>
+                            <p>Host extension deployment and configuration for advanced endpoint detection and response.</p>
+                            <a href="#article-hx" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS - AGENT -->
+                    <div class="knowledge-item" data-tags="products agent endpoint">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>Agent</h3>
+                            <p>Trellix Agent deployment strategies, troubleshooting, and management best practices.</p>
+                            <a href="#article-agent" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS - ENS -->
+                    <div class="knowledge-item" data-tags="products ens endpoint security">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>ENS</h3>
+                            <p>Endpoint Security configuration, policy management, and optimization techniques.</p>
+                            <a href="#article-ens" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS - DLP -->
+                    <div class="knowledge-item" data-tags="products dlp data loss prevention">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>DLP</h3>
+                            <p>Data Loss Prevention implementation strategies and policy configuration guidelines.</p>
+                            <a href="#article-dlp" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS - SOLIDCORE -->
+                    <div class="knowledge-item" data-tags="products solidcore application control">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>SolidCore</h3>
+                            <p>Application control implementation, whitelisting strategies, and change control management.</p>
+                            <a href="#article-solidcore" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS - SIR -->
+                    <div class="knowledge-item" data-tags="products sir incident response">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>SIR</h3>
+                            <p>Security Incident Response tools configuration and incident management workflows.</p>
+                            <a href="#article-sir" class="read-more">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- SOC OPERATIONS - ALERTS -->
+                    <div class="knowledge-item" data-tags="soc operations alerts monitoring">
+                        <div class="knowledge-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="knowledge-content">
+                            <h3>Alerts Management</h3>
+                            <p>Configuring, triaging, and responding to security alerts in Trellix EPO environment.</p>
+                            <a href="#article-alerts" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Pages Section (Initially Hidden) -->
+        <section class="content-pages" id="content-pages">
+            <div class="container">
+                <!-- EPO Installation Article -->
+                <article id="article-epo-installation" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>EPO Installation Guide</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>This detailed guide covers my approach to installing and configuring Trellix EPO in enterprise environments.</p>
+                        
+                        <h3>Prerequisites</h3>
+                        <ul>
+                            <li>Windows Server 2016/2019/2022</li>
+                            <li>SQL Server 2016 or later</li>
+                            <li>Minimum 8GB RAM (16GB recommended)</li>
+                            <li>100GB available disk space</li>
+                        </ul>
+                        
+                        <h3>Installation Steps</h3>
+                        <ol>
+                            <li>Prepare the server environment</li>
+                            <li>Install and configure SQL Server</li>
+                            <li>Run the EPO installation package</li>
+                            <li>Configure initial settings</li>
+                            <li>Deploy your first policies</li>
+                        </ol>
+                        
+                        <p>Full installation instructions will be detailed here...</p>
+                    </div>
+                </article>
+
+                <!-- Troubleshooting Article -->
+                <article id="article-troubleshooting" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>Common Troubleshooting Tips</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Based on my experience, these are the solutions to frequently encountered issues with Trellix EPO deployments.</p>
+                        
+                        <h3>Database Connection Issues</h3>
+                        <p>When EPO can't connect to the database, check the following:</p>
+                        <ul>
+                            <li>SQL Server service status</li>
+                            <li>Network connectivity between EPO server and SQL server</li>
+                            <li>SQL authentication credentials</li>
+                        </ul>
+                        
+                        <h3>Agent Communication Problems</h3>
+                        <p>If agents aren't checking in properly:</p>
+                        <ul>
+                            <li>Verify agent installation status</li>
+                            <li>Check server connection settings</li>
+                            <li>Review firewall configurations</li>
+                        </ul>
+                        
+                        <p>Additional troubleshooting information will be provided here...</p>
+                    </div>
+                </article>
+
+                <!-- Add placeholder content for all other articles -->
+                <!-- For brevity, I'm not including all the article contents here, but in a real implementation, each would have complete content -->
+                <article id="article-best-practices" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>EPO Best Practices</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-maintenance" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>Update and Maintenance Guide</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-epodb" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>EPO & Database</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-dxl" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>Handlers & DXL</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-tie" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>TIE</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-ivx" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>IVX</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-hx" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>HX</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-agent" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>Agent</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-ens" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>ENS</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-dlp" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>DLP</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-solidcore" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>SolidCore</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-sir" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>SIR</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+
+                <article id="article-alerts" class="content-article">
+                    <div class="article-header">
+                        <button class="back-button"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</button>
+                        <h2>Alerts Management</h2>
+                    </div>
+                    <div class="article-content">
+                        <p>Content coming soon...</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Connect Section -->
+        <section class="connect-section" id="connect">
+            <div class="container">
+                <h2>Let's Connect</h2>
+                <p class="section-subtitle">Feel free to reach out for collaborations or questions about Trellix EPO</p>
+                
+                <div class="connect-options">
+                    <a href="#" class="connect-option">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Me</span>
+                    </a>
+                    <a href="#" class="connect-option">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="#" class="connect-option">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="connect-option">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+            <p class="copyright">&copy; 2023 Adir Shabtai. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <button class="mobile-nav-button" id="mobile-nav-button" aria-label="Open navigation menu">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="#top" class="mobile-nav-item"><i class="fas fa-home"></i> Home</a>
+        <a href="#about" class="mobile-nav-item"><i class="fas fa-user"></i> About</a>
+        <a href="#knowledge" class="mobile-nav-item"><i class="fas fa-book"></i> Knowledge Base</a>
+        <a href="#connect" class="mobile-nav-item"><i class="fas fa-envelope"></i> Connect</a>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
