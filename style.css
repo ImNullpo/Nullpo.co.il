@@ -206,11 +206,8 @@ body.light-mode {
 }
 
 body.light-mode .hero h1 {
-  background: linear-gradient(90deg, #ff7b00 0%, #7b2ff2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
+  color: var(--primary-color);
+  background: none;
 }
 
 body.light-mode header {
@@ -226,10 +223,10 @@ body.light-mode .knowledge-item {
 }
 
 body.light-mode .knowledge-icon {
-  background: linear-gradient(135deg, var(--primary-color) 60%, var(--secondary-color) 100%);
+  background-color: var(--primary-color);
 }
 body.light-mode .knowledge-item:nth-child(even) .knowledge-icon {
-  background: linear-gradient(135deg, var(--secondary-color) 60%, var(--primary-color) 100%);
+  background-color: var(--secondary-color);
 }
 
 body.light-mode .knowledge-content h3 {
@@ -516,12 +513,9 @@ section h2:after {
 .hero h1 {
   font-size: 48px;
   margin-bottom: 15px;
-  background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
+  color: var(--primary-color);
   display: inline-block;
+  background: none;
 }
 
 .subtitle {
@@ -842,7 +836,7 @@ section h2:after {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-color) 60%, var(--secondary-color) 100%);
+  background-color: var(--primary-color);
 }
 
 .knowledge-icon i {
@@ -1072,198 +1066,213 @@ footer {
 
 /* Media Queries */
 @media (max-width: 768px) {
-  /* Show mobile navigation button */
-  .mobile-nav-button {
-      display: flex;
-  }
-  
-  /* Rest of the mobile styles */
-  header {
-      padding: 12px 0;
-  }
-  
   header .container {
-      padding: 0 15px;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-areas: 
+      "logo mode search"
+      "searchbar searchbar searchbar";
+    gap: 10px;
+    align-items: center;
+    padding: 10px 15px;
   }
-  
+
   .logo {
-      font-size: 20px;
-      width: 40px;
-      height: 40px;
-      justify-content: center;
-      background-color: var(--primary-color);
-      border-radius: 8px;
-      color: white;
-      transition: all 0.3s ease;
+    grid-area: logo;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    color: white;
   }
-  
-  .logo-text {
-      display: none;
+
+  /* Theme toggle changes */
+  .theme-toggle {
+    grid-area: mode;
+    justify-self: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--component-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
   }
-  
-  .logo::before {
-      content: '\f015';  /* Font Awesome home icon */
-      font-family: 'Font Awesome 6 Free';
-      font-weight: 900;
+
+  .theme-toggle .fa-sun,
+  .theme-toggle .fa-moon,
+  .theme-toggle .switch {
+    display: none;
   }
-  
-  .logo:hover {
-      background-color: var(--secondary-color);
-      transform: translateY(-2px);
+
+  .theme-toggle::before {
+    content: '\f186'; /* moon icon */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--text-dark);
+    font-size: 18px;
   }
-  
+
+  body.light-mode .theme-toggle::before {
+    content: '\f185'; /* sun icon */
+  }
+
+  /* Search bar changes */
   .header-search {
-      order: 2;
-      width: 100%;
-      max-width: 100%;
-      margin: 10px 0;
+    grid-area: searchbar;
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
-  
+
   #search-input {
-      padding: 12px 40px 12px 15px;
-      font-size: 16px;
-      width: 100%;
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    font-size: 16px;
+    background-color: var(--component-bg);
+    border: 1px solid var(--border-dark);
   }
-  
+
   #search-button {
-      width: 40px;
-      height: 40px;
-      right: 5px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    width: 40px;
+    height: 40px;
+    right: 5px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
+
   .tabs {
-      padding: 5px;
-      background-color: rgba(25, 34, 53, 0.5);
-      border-radius: 8px;
-      position: sticky;
-      top: 65px;
-      z-index: 90;
-      margin: 0 -5px 20px;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      background-image: linear-gradient(to right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-      background-size: 20px 100%;
-      background-repeat: no-repeat;
-      background-position: right center;
+    padding: 5px;
+    background-color: rgba(25, 34, 53, 0.5);
+    border-radius: 8px;
+    position: sticky;
+    top: 65px;
+    z-index: 90;
+    margin: 0 -5px 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    background-size: 20px 100%;
+    background-repeat: no-repeat;
+    background-position: right center;
   }
   
   .tab-btn {
-      flex: 0 0 auto;
-      margin-right: 8px;
-      padding: 10px 15px;
-      font-size: 14px;
-      white-space: nowrap;
+    flex: 0 0 auto;
+    margin-right: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    white-space: nowrap;
   }
   
   .knowledge-grid {
-      gap: 15px;
+    gap: 15px;
   }
   
   .knowledge-item {
-      margin-bottom: 5px;
+    margin-bottom: 5px;
   }
   
   .knowledge-icon {
-      width: 60px;
-      padding: 10px;
+    width: 60px;
+    padding: 10px;
   }
   
   .knowledge-content {
-      padding: 12px;
+    padding: 12px;
   }
   
   .knowledge-content h3 {
-      font-size: 16px;
+    font-size: 16px;
   }
   
   .content-article {
-      padding: 20px 15px;
+    padding: 20px 15px;
   }
   
   .article-header {
-      margin-bottom: 20px;
-      padding-bottom: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
   }
   
   .article-header h2 {
-      font-size: 20px;
+    font-size: 20px;
   }
   
   .back-button {
-      padding: 8px 12px;
-      font-size: 13px;
+    padding: 8px 12px;
+    font-size: 13px;
   }
   
   .hero {
-      padding: 40px 0 30px;
+    padding: 40px 0 30px;
   }
   
   .hero h1 {
-      font-size: 32px;
+    font-size: 32px;
   }
   
   .subtitle {
-      font-size: 18px;
+    font-size: 18px;
   }
   
   .hero-description {
-      font-size: 15px;
+    font-size: 15px;
   }
   
   .profile-placeholder {
-      width: 120px;
-      height: 120px;
+    width: 120px;
+    height: 120px;
   }
   
   .profile-placeholder i {
-      font-size: 60px;
+    font-size: 60px;
   }
 
   .connect-options {
-      gap: 10px;
+    gap: 10px;
   }
   
   .connect-option {
-      width: calc(50% - 5px);
-      padding: 15px 5px;
+    width: calc(50% - 5px);
+    padding: 15px 5px;
   }
 }
 
 /* Small mobile devices */
 @media (max-width: 375px) {
   .hero h1 {
-      font-size: 28px;
+    font-size: 28px;
   }
   
   .subtitle {
-      font-size: 16px;
+    font-size: 16px;
   }
   
   .profile-placeholder {
-      width: 100px;
-      height: 100px;
+    width: 100px;
+    height: 100px;
   }
   
   .knowledge-icon {
-      width: 50px;
+    width: 50px;
   }
   
   .tab-btn {
-      padding: 8px 12px;
-      font-size: 13px;
+    padding: 8px 12px;
+    font-size: 13px;
   }
   
   .connect-option {
-      width: 100%;
-      margin-bottom: 10px;
+    width: 100%;
+    margin-bottom: 10px;
   }
 }
 
