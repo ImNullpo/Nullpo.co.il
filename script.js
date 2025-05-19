@@ -25,7 +25,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Home button functionality
     document.getElementById('home-button').addEventListener('click', function(e) {
         e.preventDefault();
-        showHome();
+        
+        // Show all main sections
+        document.getElementById('hero').style.display = 'block';
+        document.getElementById('about').style.display = 'block';
+        document.getElementById('knowledge-base').style.display = 'block';
+        
+        // Hide article container if visible
+        document.getElementById('article-container').classList.add('hidden');
+        
+        // Hide all EDR content sections initially
+        const edrContents = document.querySelectorAll('.edr-content');
+        edrContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Remove active class from all EDR buttons
+        const edrBtns = document.querySelectorAll('.edr-btn');
+        edrBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
     });
     
     // Knowledge Base Tab Navigation
@@ -328,7 +350,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return doc.body.textContent || "";
     }
 
-    // Get context snippets around matched terms - modified for whole word matching
+    // Function to truncate text for search suggestions
+    function truncateText(text, maxLength = 50) {
+        if (!text || text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    }
+
+    // Improved function to display context around search terms
     function getContextSnippets(text, searchTerm, maxSnippets = 2) {
         // Create a regex with word boundaries to match the whole word only
         const wordRegex = new RegExp(`\\b${escapeRegExp(searchTerm)}\\b`, 'gi');
@@ -339,10 +367,70 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Limit number of snippets and trim them
         return matches.slice(0, maxSnippets).map(snippet => {
-            // Trim to reasonable length and highlight the search term
-            const trimmed = snippet.trim();
+            // Get the trimmed snippet with the search term centered
+            const trimmed = centerSearchTerm(snippet.trim(), searchTerm);
             return highlightWholeWord(trimmed, searchTerm);
         });
+    }
+
+    // Function to center the search term in the snippet with context on both sides
+    function centerSearchTerm(text, searchTerm, maxLength = 60) {
+        if (text.length <= maxLength) return text;
+        
+        const wordRegex = new RegExp(`\\b${escapeRegExp(searchTerm)}\\b`, 'i');
+        const match = text.match(wordRegex);
+        
+        if (!match) return text.substring(0, maxLength) + '...';
+        
+        // Find the position of the search term
+        const matchIndex = match.index;
+        const matchLength = match[0].length;
+        
+        // Calculate how much context to show on each side
+        const contextLength = Math.floor((maxLength - matchLength) / 2);
+        
+        // Calculate initial positions
+        let startPos = Math.max(0, matchIndex - contextLength);
+        let endPos = Math.min(text.length, matchIndex + matchLength + contextLength);
+        
+        // Check for sentence boundaries (period, question mark, exclamation point)
+        if (endPos < text.length) {
+            // Find the next sentence end after the search term
+            const nextSentenceEnd = text.substring(matchIndex).search(/[.!?]\s/);
+            if (nextSentenceEnd !== -1 && matchIndex + nextSentenceEnd < endPos + 15) {
+                // If a sentence end is found nearby, use it as the end point
+                endPos = matchIndex + nextSentenceEnd + 1;
+            } else {
+                // Otherwise find the nearest word boundary
+                const nextSpace = text.indexOf(' ', endPos);
+                if (nextSpace !== -1 && nextSpace < endPos + 10) {
+                    endPos = nextSpace;
+                }
+            }
+        }
+        
+        // For the start, try to find a sentence beginning
+        if (startPos > 0) {
+            const prevText = text.substring(0, startPos);
+            const lastSentenceStart = prevText.lastIndexOf('. ');
+            
+            if (lastSentenceStart !== -1 && startPos - lastSentenceStart < 20) {
+                startPos = lastSentenceStart + 2; // Skip the period and space
+            } else {
+                // Find the next space before startPos
+                const lastSpace = prevText.lastIndexOf(' ');
+                if (lastSpace !== -1) {
+                    startPos = lastSpace + 1;
+                }
+            }
+        }
+        
+        // Add ellipsis if needed
+        let result = text.substring(startPos, endPos);
+        if (startPos > 0) result = '... ' + result;
+        if (endPos < text.length) result = result + '...';
+        
+        return result;
     }
 
     // Helper function to escape special regex characters
@@ -732,6 +820,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <h3>Reporting and Dashboard Issues</h3>
                 <p>Troubleshooting reporting problems involves checking data sources, validating query parameters, and reviewing report execution logs. Common issues include missing data and performance degradation.</p>
+            `,
+            'elastic-test': `
+                <h1>Elastic EDR Test Article</h1>
+                <h2>This is a sample article for Elastic EDR</h2>
+                
+                <p>This is a placeholder article for the Elastic EDR knowledge base section. You can replace this with actual content about Elastic EDR implementation, configuration, and best practices.</p>
+                
+                <h3>Sample Section</h3>
+                <p>This is where detailed information about Elastic EDR would go.</p>
+            `,
+            'carbon-test': `
+                <h1>Carbon Black EDR Test Article</h1>
+                <h2>This is a sample article for Carbon Black EDR</h2>
+                
+                <p>This is a placeholder article for the Carbon Black EDR knowledge base section. You can replace this with actual content about Carbon Black EDR implementation, configuration, and best practices.</p>
+                
+                <h3>Sample Section</h3>
+                <p>This is where detailed information about Carbon Black EDR would go.</p>
             `
         };
         
@@ -755,9 +861,39 @@ document.addEventListener('DOMContentLoaded', function() {
             'alerts': 'fas fa-bell',
             'epo-best-practices': 'fas fa-star',
             'tasks': 'fas fa-tasks',
-            'troubleshooting-tips': 'fas fa-wrench'
+            'troubleshooting-tips': 'fas fa-wrench',
+            'elastic-test': 'fas fa-search',
+            'carbon-test': 'fas fa-lock'
         };
         
         return icons[articleId] || 'fas fa-file';
     }
+
+    // EDR Selection Logic
+    const edrBtns = document.querySelectorAll('.edr-btn');
+    const edrContents = document.querySelectorAll('.edr-content');
+    
+    // Hide all EDR content initially
+    edrContents.forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    edrBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            edrBtns.forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Hide all content sections
+            edrContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show the corresponding content
+            const edrId = this.getAttribute('data-edr');
+            document.getElementById(edrId + '-content').classList.add('active');
+        });
+    });
 });
