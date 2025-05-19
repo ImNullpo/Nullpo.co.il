@@ -11,18 +11,22 @@
 <body>
     <!-- Header with sticky search bar -->
     <header id="site-header">
-        <div class="logo">
-            <a href="#" id="home-button"><i class="fas fa-home"></i></a>
-        </div>
-        <div class="search-container">
-            <input type="text" id="search-bar" placeholder="Search the knowledge base...">
-            <button id="search-button"><i class="fas fa-search"></i></button>
-            <div id="search-suggestions" class="search-suggestions"></div>
-        </div>
-        <div class="theme-toggle">
-            <button id="theme-toggle-btn">
-                <i class="fas fa-moon"></i>
-            </button>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="#" id="home-button">Adir.Sh</a>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="search-bar" placeholder="Search my knowledge base... (Ctrl + /)">
+                    <button id="search-button"><i class="fas fa-search"></i></button>
+                    <div id="search-suggestions" class="search-suggestions"></div>
+                </div>
+                <div class="theme-toggle">
+                    <button id="theme-toggle-btn">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -31,10 +35,15 @@
         <!-- Hero section with profile -->
         <section id="hero">
             <div class="container">
-                <div class="profile">
-                    <img src="Adir.jpg" alt="Adir Shabtai" class="profile-img">
-                    <h1>Adir Shabtai</h1>
-                    <p class="tagline">Cybersecurity Expert & Trellix EPO Specialist</p>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Adir Shabtai</h1>
+                        <p class="tagline">Cybersecurity Expert & Trellix EPO Specialist</p>
+                        <p class="hero-description">Welcome to my personal site where I share my expertise and knowledge in cybersecurity, with a focus on Trellix EPO solutions.</p>
+                    </div>
+                    <div class="profile-img-container">
+                        <img src="Adir.jpg" alt="Adir Shabtai" class="profile-img">
+                    </div>
                 </div>
             </div>
         </section>
@@ -42,16 +51,18 @@
         <!-- About Me section -->
         <section id="about">
             <div class="container">
-                <h2>About Me</h2>
-                <p>I am a cybersecurity professional with extensive experience in Trellix EPO implementation and management. My expertise spans across server configuration, product deployment, SOC operations, and advanced troubleshooting techniques.</p>
+                <div class="section-header">
+                    <h2>About Me</h2>
+                </div>
+                <p>Hi, I'm Adir Shabtai. I specialize in cybersecurity with extensive experience in Trellix EPO implementation and management. This website serves as both my personal profile and a knowledge repository where I share insights from my professional experience.</p>
+                <p>My expertise includes endpoint security, threat intelligence, and security policy orchestration. I'm passionate about helping organizations strengthen their security posture through effective use of Trellix solutions.</p>
                 
                 <div class="skills-container">
                     <span class="skill-tag">Trellix EPO</span>
-                    <span class="skill-tag">Cybersecurity</span>
-                    <span class="skill-tag">Security Operations</span>
-                    <span class="skill-tag">Endpoint Protection</span>
-                    <span class="skill-tag">DXL</span>
+                    <span class="skill-tag">Endpoint Security</span>
                     <span class="skill-tag">Threat Intelligence</span>
+                    <span class="skill-tag">Security Policy</span>
+                    <span class="skill-tag">Cybersecurity</span>
                 </div>
             </div>
         </section>
@@ -59,321 +70,386 @@
         <!-- Knowledge Base section -->
         <section id="knowledge-base">
             <div class="container">
-                <h2>My Trellix EPO Knowledge Base</h2>
-                <p>This comprehensive knowledge base contains insights, guides, and best practices for Trellix EPO management and implementation based on my professional experience.</p>
-                
-                <!-- Knowledge Base Navigation -->
-                <div class="kb-navigation">
-                    <button class="kb-tab active" data-tab="all">ALL</button>
-                    <button class="kb-tab" data-tab="servers">Servers</button>
-                    <button class="kb-tab" data-tab="products">Products</button>
-                    <button class="kb-tab" data-tab="soc">SOC Operations</button>
-                    <button class="kb-tab" data-tab="operations">Operations & Maintenance</button>
-                    <button class="kb-tab" data-tab="troubleshooting">Troubleshooting</button>
+                <div class="section-header">
+                    <h2>My Knowledge Base</h2>
                 </div>
+                <p>Select an EDR platform to view detailed information, guides, and best practices based on my professional experience.</p>
+                
+                <!-- EDR Selection Buttons -->
+                <div class="edr-selection">
+                    <button class="edr-btn" data-edr="trellix">
+                        <i class="fas fa-shield-alt"></i> Trellix EPO
+                    </button>
+                    <button class="edr-btn" data-edr="elastic">
+                        <i class="fas fa-search"></i> Elastic EDR
+                    </button>
+                    <button class="edr-btn" data-edr="carbon">
+                        <i class="fas fa-lock"></i> Carbon Black EDR
+                    </button>
+                </div>
+                
+                <!-- Trellix EPO Content -->
+                <div id="trellix-content" class="edr-content">
+                    <h3>My Trellix EPO Knowledge Base</h3>
+                    <p>This comprehensive knowledge base contains insights, guides, and best practices for Trellix EPO management and implementation based on my professional experience.</p>
+                    
+                    <!-- Knowledge Base Navigation -->
+                    <div class="kb-navigation">
+                        <button class="kb-tab active" data-tab="all">ALL</button>
+                        <button class="kb-tab" data-tab="servers">Servers</button>
+                        <button class="kb-tab" data-tab="products">Products</button>
+                        <button class="kb-tab" data-tab="soc">SOC Operations</button>
+                        <button class="kb-tab" data-tab="operations">Operations & Maintenance</button>
+                        <button class="kb-tab" data-tab="troubleshooting">Troubleshooting</button>
+                    </div>
 
-                <!-- Knowledge Base Content Areas -->
-                <div class="kb-content">
-                    <!-- ALL Tab with category headers -->
-                    <div class="kb-tab-content active" id="all">
-                        <div class="kb-list-container">
-                            <ul class="kb-list">
-                                <!-- Servers Category -->
-                                <li class="kb-category-header">
-                                    <i class="fas fa-server"></i> Servers
-                                </li>
-                                <li class="kb-list-item" data-category="servers">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-database"></i></div>
-                                        <h4>EPO & DB</h4>
+                    <!-- Knowledge Base Content Areas -->
+                    <div class="kb-content">
+                        <!-- ALL Tab with category headers -->
+                        <div class="kb-tab-content active" id="all">
+                            <div class="kb-list-container">
+                                <ul class="kb-list">
+                                    <!-- Servers Category -->
+                                    <li class="kb-category-header">
+                                        <i class="fas fa-server"></i> Servers
+                                    </li>
+                                    <li class="kb-list-item" data-category="servers">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-database"></i></div>
+                                            <h4>EPO & DB</h4>
+                                        </div>
+                                        <p>Essential configuration and management of EPO servers and databases.</p>
+                                        <button class="read-more-btn" data-article="epo-db">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="servers">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-network-wired"></i></div>
+                                            <h4>Agent Handlers</h4>
+                                        </div>
+                                        <p>Setup and management of agent handlers for optimal communication.</p>
+                                        <button class="read-more-btn" data-article="agent-handlers">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="servers">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-exchange-alt"></i></div>
+                                            <h4>DXL</h4>
+                                        </div>
+                                        <p>Data Exchange Layer architecture and implementation guide.</p>
+                                        <button class="read-more-btn" data-article="dxl">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="servers">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-shield-alt"></i></div>
+                                            <h4>TIE</h4>
+                                        </div>
+                                        <p>Threat Intelligence Exchange server setup and management.</p>
+                                        <button class="read-more-btn" data-article="tie">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="servers">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-search"></i></div>
+                                            <h4>IVX</h4>
+                                        </div>
+                                        <p>Investigation Exchange server configuration and usage.</p>
+                                        <button class="read-more-btn" data-article="ivx">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="servers">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-desktop"></i></div>
+                                            <h4>HX</h4>
+                                        </div>
+                                        <p>Host Exchange server deployment and administration.</p>
+                                        <button class="read-more-btn" data-article="hx">Read More</button>
+                                    </li>
+                                    
+                                    <!-- Products Category -->
+                                    <li class="kb-category-header">
+                                        <i class="fas fa-box"></i> Products
+                                    </li>
+                                    <li class="kb-list-item" data-category="products">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-download"></i></div>
+                                            <h4>Agent</h4>
+                                        </div>
+                                        <p>Trellix agent deployment strategies and troubleshooting.</p>
+                                        <button class="read-more-btn" data-article="agent">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="products">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-shield-alt"></i></div>
+                                            <h4>ENS</h4>
+                                        </div>
+                                        <p>Endpoint Security installation, configuration and best practices.</p>
+                                        <button class="read-more-btn" data-article="ens">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="products">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-lock"></i></div>
+                                            <h4>Solidcore</h4>
+                                        </div>
+                                        <p>Application control and whitelisting with Solidcore.</p>
+                                        <button class="read-more-btn" data-article="solidcore">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="products">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-file-alt"></i></div>
+                                            <h4>DLP</h4>
+                                        </div>
+                                        <p>Data Loss Prevention setup and policy management.</p>
+                                        <button class="read-more-btn" data-article="dlp">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="products">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-chart-bar"></i></div>
+                                            <h4>SIR</h4>
+                                        </div>
+                                        <p>Security Information Reporting configuration and usage.</p>
+                                        <button class="read-more-btn" data-article="sir">Read More</button>
+                                    </li>
+                                    
+                                    <!-- SOC Operations Category -->
+                                    <li class="kb-category-header">
+                                        <i class="fas fa-shield-alt"></i> SOC Operations
+                                    </li>
+                                    <li class="kb-list-item" data-category="soc">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-bell"></i></div>
+                                            <h4>Alerts</h4>
+                                        </div>
+                                        <p>Alert management, tuning, and response procedures.</p>
+                                        <button class="read-more-btn" data-article="alerts">Read More</button>
+                                    </li>
+                                    
+                                    <!-- Operations & Maintenance Category -->
+                                    <li class="kb-category-header">
+                                        <i class="fas fa-cogs"></i> Operations & Maintenance
+                                    </li>
+                                    <li class="kb-list-item" data-category="operations">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-star"></i></div>
+                                            <h4>EPO Best Practices</h4>
+                                        </div>
+                                        <p>Recommendations for optimal EPO operation and maintenance.</p>
+                                        <button class="read-more-btn" data-article="epo-best-practices">Read More</button>
+                                    </li>
+                                    <li class="kb-list-item" data-category="operations">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-tasks"></i></div>
+                                            <h4>Client & Server Tasks</h4>
+                                        </div>
+                                        <p>Scheduling and managing automated tasks for clients and servers.</p>
+                                        <button class="read-more-btn" data-article="tasks">Read More</button>
+                                    </li>
+                                    
+                                    <!-- Troubleshooting Category -->
+                                    <li class="kb-category-header">
+                                        <i class="fas fa-tools"></i> Troubleshooting
+                                    </li>
+                                    <li class="kb-list-item" data-category="troubleshooting">
+                                        <div class="kb-list-item-header">
+                                            <div class="kb-list-icon"><i class="fas fa-wrench"></i></div>
+                                            <h4>Common Troubleshooting Tips</h4>
+                                        </div>
+                                        <p>Frequent issues and their solutions for Trellix EPO environment.</p>
+                                        <button class="read-more-btn" data-article="troubleshooting-tips">Read More</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Servers Tab -->
+                        <div class="kb-tab-content" id="servers">
+                            <div class="kb-cards">
+                                <div class="kb-card" data-article="epo-db">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-database"></i></div>
+                                        <h3>EPO & DB</h3>
                                     </div>
                                     <p>Essential configuration and management of EPO servers and databases.</p>
-                                    <button class="read-more-btn" data-article="epo-db">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="servers">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-network-wired"></i></div>
-                                        <h4>Agent Handlers</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="agent-handlers">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-network-wired"></i></div>
+                                        <h3>Agent Handlers</h3>
                                     </div>
                                     <p>Setup and management of agent handlers for optimal communication.</p>
-                                    <button class="read-more-btn" data-article="agent-handlers">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="servers">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-exchange-alt"></i></div>
-                                        <h4>DXL</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="dxl">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-exchange-alt"></i></div>
+                                        <h3>DXL</h3>
                                     </div>
                                     <p>Data Exchange Layer architecture and implementation guide.</p>
-                                    <button class="read-more-btn" data-article="dxl">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="servers">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-shield-alt"></i></div>
-                                        <h4>TIE</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="tie">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-shield-alt"></i></div>
+                                        <h3>TIE</h3>
                                     </div>
                                     <p>Threat Intelligence Exchange server setup and management.</p>
-                                    <button class="read-more-btn" data-article="tie">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="servers">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-search"></i></div>
-                                        <h4>IVX</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="ivx">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-search"></i></div>
+                                        <h3>IVX</h3>
                                     </div>
                                     <p>Investigation Exchange server configuration and usage.</p>
-                                    <button class="read-more-btn" data-article="ivx">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="servers">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-desktop"></i></div>
-                                        <h4>HX</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="hx">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-desktop"></i></div>
+                                        <h3>HX</h3>
                                     </div>
                                     <p>Host Exchange server deployment and administration.</p>
-                                    <button class="read-more-btn" data-article="hx">Read More</button>
-                                </li>
-                                
-                                <!-- Products Category -->
-                                <li class="kb-category-header">
-                                    <i class="fas fa-box"></i> Products
-                                </li>
-                                <li class="kb-list-item" data-category="products">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-download"></i></div>
-                                        <h4>Agent</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Products Tab -->
+                        <div class="kb-tab-content" id="products">
+                            <div class="kb-cards">
+                                <div class="kb-card" data-article="agent">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-download"></i></div>
+                                        <h3>Agent</h3>
                                     </div>
                                     <p>Trellix agent deployment strategies and troubleshooting.</p>
-                                    <button class="read-more-btn" data-article="agent">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="products">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-shield-alt"></i></div>
-                                        <h4>ENS</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="ens">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-shield-virus"></i></div>
+                                        <h3>ENS</h3>
                                     </div>
                                     <p>Endpoint Security installation, configuration and best practices.</p>
-                                    <button class="read-more-btn" data-article="ens">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="products">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-lock"></i></div>
-                                        <h4>Solidcore</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="solidcore">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-lock"></i></div>
+                                        <h3>Solidcore</h3>
                                     </div>
                                     <p>Application control and whitelisting with Solidcore.</p>
-                                    <button class="read-more-btn" data-article="solidcore">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="products">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-file-alt"></i></div>
-                                        <h4>DLP</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="dlp">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-file-shield"></i></div>
+                                        <h3>DLP</h3>
                                     </div>
                                     <p>Data Loss Prevention setup and policy management.</p>
-                                    <button class="read-more-btn" data-article="dlp">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="products">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-chart-bar"></i></div>
-                                        <h4>SIR</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="sir">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-chart-bar"></i></div>
+                                        <h3>SIR</h3>
                                     </div>
                                     <p>Security Information Reporting configuration and usage.</p>
-                                    <button class="read-more-btn" data-article="sir">Read More</button>
-                                </li>
-                                
-                                <!-- SOC Operations Category -->
-                                <li class="kb-category-header">
-                                    <i class="fas fa-shield-alt"></i> SOC Operations
-                                </li>
-                                <li class="kb-list-item" data-category="soc">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-bell"></i></div>
-                                        <h4>Alerts</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SOC Operations Tab -->
+                        <div class="kb-tab-content" id="soc">
+                            <div class="kb-cards">
+                                <div class="kb-card" data-article="alerts">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-bell"></i></div>
+                                        <h3>Alerts</h3>
                                     </div>
                                     <p>Alert management, tuning, and response procedures.</p>
-                                    <button class="read-more-btn" data-article="alerts">Read More</button>
-                                </li>
-                                
-                                <!-- Operations & Maintenance Category -->
-                                <li class="kb-category-header">
-                                    <i class="fas fa-cogs"></i> Operations & Maintenance
-                                </li>
-                                <li class="kb-list-item" data-category="operations">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-star"></i></div>
-                                        <h4>EPO Best Practices</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Operations & Maintenance Tab -->
+                        <div class="kb-tab-content" id="operations">
+                            <div class="kb-cards">
+                                <div class="kb-card" data-article="epo-best-practices">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-star"></i></div>
+                                        <h3>EPO Best Practices</h3>
                                     </div>
                                     <p>Recommendations for optimal EPO operation and maintenance.</p>
-                                    <button class="read-more-btn" data-article="epo-best-practices">Read More</button>
-                                </li>
-                                <li class="kb-list-item" data-category="operations">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-tasks"></i></div>
-                                        <h4>Client & Server Tasks</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                                <div class="kb-card" data-article="tasks">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-tasks"></i></div>
+                                        <h3>Client & Server Tasks</h3>
                                     </div>
                                     <p>Scheduling and managing automated tasks for clients and servers.</p>
-                                    <button class="read-more-btn" data-article="tasks">Read More</button>
-                                </li>
-                                
-                                <!-- Troubleshooting Category -->
-                                <li class="kb-category-header">
-                                    <i class="fas fa-tools"></i> Troubleshooting
-                                </li>
-                                <li class="kb-list-item" data-category="troubleshooting">
-                                    <div class="kb-list-item-header">
-                                        <div class="kb-list-icon"><i class="fas fa-wrench"></i></div>
-                                        <h4>Common Troubleshooting Tips</h4>
+                                    <button class="read-more-btn">Read More</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Troubleshooting Tab -->
+                        <div class="kb-tab-content" id="troubleshooting">
+                            <div class="kb-cards">
+                                <div class="kb-card" data-article="troubleshooting-tips">
+                                    <div class="kb-card-header">
+                                        <div class="kb-card-icon"><i class="fas fa-wrench"></i></div>
+                                        <h3>Common Troubleshooting Tips</h3>
                                     </div>
                                     <p>Frequent issues and their solutions for Trellix EPO environment.</p>
-                                    <button class="read-more-btn" data-article="troubleshooting-tips">Read More</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <!-- Servers Tab -->
-                    <div class="kb-tab-content" id="servers">
-                        <div class="kb-cards">
-                            <div class="kb-card" data-article="epo-db">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-database"></i></div>
-                                    <h3>EPO & DB</h3>
+                                    <button class="read-more-btn">Read More</button>
                                 </div>
-                                <p>Essential configuration and management of EPO servers and databases.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="agent-handlers">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-network-wired"></i></div>
-                                    <h3>Agent Handlers</h3>
-                                </div>
-                                <p>Setup and management of agent handlers for optimal communication.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="dxl">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-exchange-alt"></i></div>
-                                    <h3>DXL</h3>
-                                </div>
-                                <p>Data Exchange Layer architecture and implementation guide.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="tie">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-shield-alt"></i></div>
-                                    <h3>TIE</h3>
-                                </div>
-                                <p>Threat Intelligence Exchange server setup and management.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="ivx">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-search"></i></div>
-                                    <h3>IVX</h3>
-                                </div>
-                                <p>Investigation Exchange server configuration and usage.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="hx">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-desktop"></i></div>
-                                    <h3>HX</h3>
-                                </div>
-                                <p>Host Exchange server deployment and administration.</p>
-                                <button class="read-more-btn">Read More</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Elastic EDR Content -->
+                <div id="elastic-content" class="edr-content">
+                    <h3>Elastic EDR Knowledge Base</h3>
+                    <p>Resources and guidance for implementing and managing Elastic EDR solutions.</p>
                     
-                    <!-- Products Tab -->
-                    <div class="kb-tab-content" id="products">
-                        <div class="kb-cards">
-                            <div class="kb-card" data-article="agent">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-download"></i></div>
-                                    <h3>Agent</h3>
+                    <div class="kb-list-container">
+                        <ul class="kb-list">
+                            <li class="kb-category-header">
+                                <i class="fas fa-search"></i> Elastic EDR
+                            </li>
+                            <li class="kb-list-item">
+                                <div class="kb-list-item-header">
+                                    <div class="kb-list-icon"><i class="fas fa-code"></i></div>
+                                    <h4>TEST</h4>
                                 </div>
-                                <p>Trellix agent deployment strategies and troubleshooting.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="ens">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-shield-virus"></i></div>
-                                    <h3>ENS</h3>
-                                </div>
-                                <p>Endpoint Security installation, configuration and best practices.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="solidcore">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-lock"></i></div>
-                                    <h3>Solidcore</h3>
-                                </div>
-                                <p>Application control and whitelisting with Solidcore.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="dlp">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-file-shield"></i></div>
-                                    <h3>DLP</h3>
-                                </div>
-                                <p>Data Loss Prevention setup and policy management.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="sir">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-chart-bar"></i></div>
-                                    <h3>SIR</h3>
-                                </div>
-                                <p>Security Information Reporting configuration and usage.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                        </div>
+                                <p>This is a test entry for the Elastic EDR section.</p>
+                                <button class="read-more-btn" data-article="elastic-test">Read More</button>
+                            </li>
+                        </ul>
                     </div>
+                </div>
+                
+                <!-- Carbon Black EDR Content -->
+                <div id="carbon-content" class="edr-content">
+                    <h3>Carbon Black EDR Knowledge Base</h3>
+                    <p>Best practices and implementation guides for Carbon Black EDR solutions.</p>
                     
-                    <!-- SOC Operations Tab -->
-                    <div class="kb-tab-content" id="soc">
-                        <div class="kb-cards">
-                            <div class="kb-card" data-article="alerts">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-bell"></i></div>
-                                    <h3>Alerts</h3>
+                    <div class="kb-list-container">
+                        <ul class="kb-list">
+                            <li class="kb-category-header">
+                                <i class="fas fa-lock"></i> Carbon Black EDR
+                            </li>
+                            <li class="kb-list-item">
+                                <div class="kb-list-item-header">
+                                    <div class="kb-list-icon"><i class="fas fa-code"></i></div>
+                                    <h4>TEST</h4>
                                 </div>
-                                <p>Alert management, tuning, and response procedures.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Operations & Maintenance Tab -->
-                    <div class="kb-tab-content" id="operations">
-                        <div class="kb-cards">
-                            <div class="kb-card" data-article="epo-best-practices">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-star"></i></div>
-                                    <h3>EPO Best Practices</h3>
-                                </div>
-                                <p>Recommendations for optimal EPO operation and maintenance.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                            <div class="kb-card" data-article="tasks">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-tasks"></i></div>
-                                    <h3>Client & Server Tasks</h3>
-                                </div>
-                                <p>Scheduling and managing automated tasks for clients and servers.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Troubleshooting Tab -->
-                    <div class="kb-tab-content" id="troubleshooting">
-                        <div class="kb-cards">
-                            <div class="kb-card" data-article="troubleshooting-tips">
-                                <div class="kb-card-header">
-                                    <div class="kb-card-icon"><i class="fas fa-wrench"></i></div>
-                                    <h3>Common Troubleshooting Tips</h3>
-                                </div>
-                                <p>Frequent issues and their solutions for Trellix EPO environment.</p>
-                                <button class="read-more-btn">Read More</button>
-                            </div>
-                        </div>
+                                <p>This is a test entry for the Carbon Black EDR section.</p>
+                                <button class="read-more-btn" data-article="carbon-test">Read More</button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
