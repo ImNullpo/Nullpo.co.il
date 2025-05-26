@@ -106,9 +106,70 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show article container
         articleContainer.classList.remove('hidden');
         
+        // Initialize first section if it's the EPO-DB article
+        if (articleId === 'epo-db') {
+            // Make sure the first section is visible
+            const firstSection = document.getElementById('database-overview');
+            if (firstSection) {
+                firstSection.classList.add('active');
+            }
+        }
+        
+        // Mobile: Initialize navigation collapsible behavior
+        initMobileArticleNav();
+        
         // Scroll to top
         window.scrollTo(0, 0);
     }
+    
+    // Mobile Article Navigation Handler
+    function initMobileArticleNav() {
+        // Get all nav headers
+        const navHeaders = document.querySelectorAll('.nav-header');
+        
+        navHeaders.forEach(header => {
+            // Remove previous event listeners by cloning and replacing
+            const newHeader = header.cloneNode(true);
+            header.parentNode.replaceChild(newHeader, header);
+            
+            // Add click event to toggle nav items visibility
+            newHeader.addEventListener('click', function() {
+                // Toggle expanded class on header
+                this.classList.toggle('expanded');
+                
+                // Find the nav-items sibling
+                const navItems = this.nextElementSibling;
+                if (navItems && navItems.classList.contains('nav-items')) {
+                    navItems.classList.toggle('expanded');
+                }
+            });
+        });
+        
+        // Check if we're on mobile and auto-collapse the nav
+        if (window.innerWidth <= 768) {
+            // Just make sure the first section's items are visible by default
+            const firstNavHeader = document.querySelector('.nav-header');
+            const firstNavItems = document.querySelector('.nav-items');
+            
+            if (firstNavHeader && firstNavItems) {
+                firstNavHeader.classList.add('expanded');
+                firstNavItems.classList.add('expanded');
+            }
+        }
+    }
+    
+    // Handle window resize for responsive adjustments
+    window.addEventListener('resize', function() {
+        if (document.getElementById('article-container').classList.contains('hidden') === false) {
+            // Article is visible, check mobile nav state
+            if (window.innerWidth > 768) {
+                // On desktop/tablet, make sure nav is expanded
+                document.querySelectorAll('.nav-items').forEach(navItems => {
+                    navItems.classList.add('expanded');
+                });
+            }
+        }
+    });
     
     readMoreBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -507,319 +568,718 @@ document.addEventListener('DOMContentLoaded', function() {
         // Sample content for each article
         const articles = {
             'epo-db': `
-                <h1>EPO & DB</h1>
-                <h2>Essential configuration and management of EPO servers and databases</h2>
-                
-                <p>The Trellix ePO (ePolicy Orchestrator) server is the central management console for the entire Trellix ecosystem. This article covers essential configuration and management aspects of the EPO server and its database.</p>
-                
-                <h3>Server Setup and Configuration</h3>
-                <p>Setting up a Trellix EPO server involves configuring both the application server and the database that stores all management data. For production environments, it's recommended to use separate servers for the application and database components.</p>
-                
-                <h3>Database Management</h3>
-                <p>Trellix EPO supports Microsoft SQL Server and can be configured with various database options. Regular maintenance tasks like backups, index rebuilds, and performance tuning are essential for optimal operation.</p>
-                
-                <h3>Scaling and High Availability</h3>
-                <p>For large environments, implementing redundancy through database mirroring or clustering is recommended. The EPO application server can also be configured in a failover cluster for high availability.</p>
-                
-                <h3>Performance Optimization</h3>
-                <p>Optimizing EPO server performance requires regular monitoring and tuning of both the application server and database. Key metrics include response time, memory usage, and database query performance.</p>
-                
-                <h3>Security Best Practices</h3>
-                <p>Securing the EPO server infrastructure involves implementing proper authentication methods, network security, and database security measures. Regular security audits and updates are essential.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-star"></i> Advanced</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 45 minutes</span>
+                    </div>
+                    <h1>Database Configuration</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Database Configuration</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="database-overview"><a>Database Overview</a></li>
+                                <li data-section="prerequisites"><a>Pre-requisites</a></li>
+                                <li data-section="sql-setup"><a>Standard SQL Server Setup</a></li>
+                                <li data-section="performance"><a>Performance Optimization</a></li>
+                                <li data-section="next-steps"><a>Next Steps</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="database-overview" class="article-section active">
+                            <h2>Database Overview</h2>
+                            <p>The Trellix platform requires a properly configured Microsoft SQL Server database for optimal performance and data storage. This guide covers setting up SQL Server for Trellix, configuring replication, and optimizing performance for enterprise deployments.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This guide assumes you have administrative access to your SQL Server environment and the necessary permissions to create databases and configure server settings.</p>
+                            </div>
+
+                            <div class="server-requirement-card">
+                                <div class="requirement-header">
+                                    <div class="server-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <div class="server-info">
+                                        <h3>Microsoft SQL Server for Trellix</h3>
+                                        <div class="server-meta">
+                                            <span class="tag recommended">Recommended: SQL Server 2019</span>
+                                            <span class="tag critical">Critical for Trellix Platform</span>
+                                        </div>
+                                    </div>
+                                    <a class="doc-link">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        SQL Server Documentation
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="prerequisites" class="article-section">
+                            <h2>Pre-requisites</h2>
+                            <p>Work in progress - This section will contain pre-requisites for database configuration.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="sql-setup" class="article-section">
+                            <h2>Standard SQL Server Setup</h2>
+                            <p>Work in progress - This section will contain SQL Server setup instructions.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="performance" class="article-section">
+                            <h2>Performance Optimization</h2>
+                            <p>Work in progress - This section will contain performance optimization guidelines.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="next-steps" class="article-section">
+                            <h2>Next Steps</h2>
+                            <p>Work in progress - This section will contain next steps for database configuration.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'agent-handlers': `
-                <h1>Agent Handlers</h1>
-                <h2>Setup and management of agent handlers for optimal communication</h2>
-                
-                <p>Agent Handlers are a critical component in the Trellix EPO architecture, responsible for communication between the EPO server and endpoints. This article covers setup, configuration, and management best practices.</p>
-                
-                <h3>Agent Handler Architecture</h3>
-                <p>Agent Handlers serve as communication brokers between the EPO server and managed endpoints. They can be deployed in various configurations depending on network topology and requirements.</p>
-                
-                <h3>Deployment Strategies</h3>
-                <p>For optimal performance, Agent Handlers should be strategically placed across network segments. In distributed environments, multiple Agent Handlers can be deployed to balance load and optimize communication paths.</p>
-                
-                <h3>Configuration Best Practices</h3>
-                <p>Key configuration parameters include connection limits, communication protocols, and authentication methods. Proper configuration ensures reliable and secure communication with endpoints.</p>
-                
-                <h3>Monitoring and Maintenance</h3>
-                <p>Regular monitoring of Agent Handler performance is essential for identifying potential issues. Key metrics include connection counts, response times, and queue lengths.</p>
-                
-                <h3>Troubleshooting Common Issues</h3>
-                <p>Common issues with Agent Handlers include connection failures, authentication problems, and performance bottlenecks. Proper logging and monitoring can help identify and resolve these issues quickly.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-network-wired"></i> Intermediate</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 30 minutes</span>
+                    </div>
+                    <h1>Agent Handlers</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Agent Handlers</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="agent-overview"><a>Overview</a></li>
+                                <li data-section="agent-architecture"><a>Architecture</a></li>
+                                <li data-section="agent-deployment"><a>Deployment Strategies</a></li>
+                                <li data-section="agent-configuration"><a>Configuration</a></li>
+                                <li data-section="agent-monitoring"><a>Monitoring</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="agent-overview" class="article-section active">
+                            <h2>Agent Handlers Overview</h2>
+                            <p>Agent Handlers are a critical component in the Trellix EPO architecture, responsible for communication between the EPO server and endpoints. This article covers setup, configuration, and management best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Agent Handlers provide scalability and load balancing for endpoint communications.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-architecture" class="article-section">
+                            <h2>Agent Handler Architecture</h2>
+                            <p>Work in progress - This section will cover Agent Handler architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-deployment" class="article-section">
+                            <h2>Deployment Strategies</h2>
+                            <p>Work in progress - This section will cover deployment best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-configuration" class="article-section">
+                            <h2>Configuration</h2>
+                            <p>Work in progress - This section will cover configuration options.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-monitoring" class="article-section">
+                            <h2>Monitoring</h2>
+                            <p>Work in progress - This section will cover monitoring and maintenance.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'dxl': `
-                <h1>DXL</h1>
-                <h2>Data Exchange Layer architecture and implementation guide</h2>
-                
-                <p>The Data Exchange Layer (DXL) is a messaging fabric that allows different security products within the Trellix ecosystem to communicate with each other. This article provides an overview of DXL architecture and implementation guidelines.</p>
-                
-                <h3>DXL Architecture Overview</h3>
-                <p>DXL operates as a publish-subscribe messaging system that enables real-time information sharing between different security components. The architecture includes brokers, clients, and the messaging fabric itself.</p>
-                
-                <h3>Implementation Planning</h3>
-                <p>Implementing DXL requires careful planning of broker topology, network requirements, and integration with existing security infrastructure. Scalability and reliability considerations are essential for enterprise deployments.</p>
-                
-                <h3>Integration with EPO</h3>
-                <p>DXL can be integrated with EPO to enable automated responses to security events. This integration allows for policy-based actions to be triggered based on threat intelligence or security events.</p>
-                
-                <h3>Custom Integrations</h3>
-                <p>DXL provides APIs and SDKs for custom integrations with third-party security tools. This extensibility allows organizations to build comprehensive security solutions that leverage the entire security ecosystem.</p>
-                
-                <h3>Monitoring and Management</h3>
-                <p>Proper monitoring of DXL components ensures reliable operation. Key metrics include message throughput, broker health, and client connection status.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-exchange-alt"></i> Advanced</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 40 minutes</span>
+                    </div>
+                    <h1>Data Exchange Layer (DXL)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">DXL</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="dxl-overview"><a>Overview</a></li>
+                                <li data-section="dxl-architecture"><a>Architecture</a></li>
+                                <li data-section="dxl-implementation"><a>Implementation</a></li>
+                                <li data-section="dxl-integration"><a>EPO Integration</a></li>
+                                <li data-section="dxl-customization"><a>Custom Integrations</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="dxl-overview" class="article-section active">
+                            <h2>DXL Overview</h2>
+                            <p>The Data Exchange Layer (DXL) is a messaging fabric that allows different security products within the Trellix ecosystem to communicate with each other. This article provides an overview of DXL architecture and implementation guidelines.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>DXL facilitates real-time information sharing between different security components.</p>
+                            </div>
+                        </div>
+
+                        <div id="dxl-architecture" class="article-section">
+                            <h2>DXL Architecture</h2>
+                            <p>Work in progress - This section will cover DXL architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="dxl-implementation" class="article-section">
+                            <h2>Implementation</h2>
+                            <p>Work in progress - This section will cover implementation planning.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="dxl-integration" class="article-section">
+                            <h2>EPO Integration</h2>
+                            <p>Work in progress - This section will cover EPO integration details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="dxl-customization" class="article-section">
+                            <h2>Custom Integrations</h2>
+                            <p>Work in progress - This section will cover custom integration options.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'tie': `
-                <h1>TIE</h1>
-                <h2>Threat Intelligence Exchange server setup and management</h2>
-                
-                <p>Threat Intelligence Exchange (TIE) is a Trellix solution that enables sharing of threat information across the security infrastructure. This article covers setup, configuration, and management of TIE servers.</p>
-                
-                <h3>TIE Architecture</h3>
-                <p>TIE operates on the DXL messaging fabric and includes server components, client integrations, and reputation providers. The architecture allows for centralized management of file and certificate reputation data.</p>
-                
-                <h3>Installation and Configuration</h3>
-                <p>Installing TIE involves deploying server components, configuring DXL integration, and setting up reputation sources. Initial configuration includes defining reputation thresholds and policy settings.</p>
-                
-                <h3>Integration with Security Products</h3>
-                <p>TIE integrates with other Trellix products including ENS, Web Gateway, and Network Security Platform. These integrations enable coordinated security responses based on shared threat intelligence.</p>
-                
-                <h3>External Threat Feeds</h3>
-                <p>TIE can incorporate external threat intelligence feeds to enhance its reputation database. Configuration of these feeds requires proper validation and trust settings.</p>
-                
-                <h3>Operational Management</h3>
-                <p>Day-to-day management of TIE includes monitoring reputation data quality, managing false positives, and ensuring proper synchronization across the environment.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-shield-alt"></i> Advanced</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 35 minutes</span>
+                    </div>
+                    <h1>Threat Intelligence Exchange (TIE)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">TIE</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="tie-overview"><a>Overview</a></li>
+                                <li data-section="tie-architecture"><a>Architecture</a></li>
+                                <li data-section="tie-installation"><a>Installation</a></li>
+                                <li data-section="tie-integration"><a>Product Integration</a></li>
+                                <li data-section="tie-management"><a>Management</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="tie-overview" class="article-section active">
+                            <h2>TIE Overview</h2>
+                            <p>Threat Intelligence Exchange (TIE) is a Trellix solution that enables sharing of threat information across the security infrastructure. This article covers setup, configuration, and management of TIE servers.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>TIE enables centralized management of file and certificate reputation data.</p>
+                            </div>
+                        </div>
+
+                        <div id="tie-architecture" class="article-section">
+                            <h2>TIE Architecture</h2>
+                            <p>Work in progress - This section will cover TIE architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="tie-installation" class="article-section">
+                            <h2>Installation</h2>
+                            <p>Work in progress - This section will cover installation procedures.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="tie-integration" class="article-section">
+                            <h2>Product Integration</h2>
+                            <p>Work in progress - This section will cover integration with other Trellix products.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="tie-management" class="article-section">
+                            <h2>Management</h2>
+                            <p>Work in progress - This section will cover operational management.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'ivx': `
-                <h1>IVX</h1>
-                <h2>Investigation Exchange server configuration and usage</h2>
-                
-                <p>Investigation Exchange (IVX) provides advanced investigation capabilities within the Trellix ecosystem. This article covers configuration, usage scenarios, and best practices for IVX implementation.</p>
-                
-                <h3>IVX Architecture Overview</h3>
-                <p>The IVX architecture includes server components, integration with DXL, and client connections. It enables automated collection and analysis of security data from multiple sources.</p>
-                
-                <h3>Deployment Planning</h3>
-                <p>Planning an IVX deployment involves sizing server resources, configuring storage requirements, and planning integration with existing security tools. Performance considerations are critical for large environments.</p>
-                
-                <h3>Integration with Security Infrastructure</h3>
-                <p>IVX integrates with EPO, ENS, and other security components to collect and correlate investigation data. These integrations allow for comprehensive security investigations across the environment.</p>
-                
-                <h3>Investigation Workflows</h3>
-                <p>Configuring investigation workflows involves defining data collection parameters, analysis rules, and response actions. Proper configuration ensures efficient and effective security investigations.</p>
-                
-                <h3>Case Management</h3>
-                <p>IVX provides case management capabilities for tracking security investigations. Configuration of case workflows, assignment rules, and notification settings is essential for operational efficiency.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-search"></i> Advanced</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 40 minutes</span>
+                    </div>
+                    <h1>Investigation Exchange (IVX)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">IVX</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="ivx-overview"><a>Overview</a></li>
+                                <li data-section="ivx-architecture"><a>Architecture</a></li>
+                                <li data-section="ivx-deployment"><a>Deployment</a></li>
+                                <li data-section="ivx-integration"><a>Integration</a></li>
+                                <li data-section="ivx-workflows"><a>Investigation Workflows</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="ivx-overview" class="article-section active">
+                            <h2>IVX Overview</h2>
+                            <p>Investigation Exchange (IVX) provides advanced investigation capabilities within the Trellix ecosystem. This article covers configuration, usage scenarios, and best practices for IVX implementation.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>IVX enables automated collection and analysis of security data from multiple sources.</p>
+                            </div>
+                        </div>
+
+                        <div id="ivx-architecture" class="article-section">
+                            <h2>IVX Architecture</h2>
+                            <p>Work in progress - This section will cover architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="ivx-deployment" class="article-section">
+                            <h2>Deployment Planning</h2>
+                            <p>Work in progress - This section will cover deployment planning.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="ivx-integration" class="article-section">
+                            <h2>Integration</h2>
+                            <p>Work in progress - This section will cover integration with security infrastructure.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="ivx-workflows" class="article-section">
+                            <h2>Investigation Workflows</h2>
+                            <p>Work in progress - This section will cover workflow configuration.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'hx': `
-                <h1>HX</h1>
-                <h2>Host Exchange server deployment and administration</h2>
-                
-                <p>Host Exchange (HX) is an advanced endpoint detection and response solution within the Trellix ecosystem. This article covers deployment, configuration, and administration of HX servers.</p>
-                
-                <h3>HX Architecture</h3>
-                <p>The HX architecture includes server components, endpoint agents, and integration with the broader security infrastructure. It provides advanced endpoint monitoring and response capabilities.</p>
-                
-                <h3>Server Deployment</h3>
-                <p>Deploying HX servers involves sizing hardware resources, configuring database settings, and planning for scalability. High availability configurations are recommended for enterprise environments.</p>
-                
-                <h3>Agent Deployment</h3>
-                <p>HX agents can be deployed using EPO or standalone installation methods. Configuration of agent settings, data collection parameters, and communication settings is critical for effective operation.</p>
-                
-                <h3>Integration with Security Tools</h3>
-                <p>HX integrates with other Trellix products and third-party security tools through DXL and API connections. These integrations enable coordinated security monitoring and response.</p>
-                
-                <h3>Operational Procedures</h3>
-                <p>Day-to-day management of HX includes monitoring agent health, reviewing alerts, and conducting threat hunting activities. Regular maintenance ensures optimal performance and detection capabilities.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-desktop"></i> Advanced</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 45 minutes</span>
+                    </div>
+                    <h1>Host Exchange (HX)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">HX</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="hx-overview"><a>Overview</a></li>
+                                <li data-section="hx-architecture"><a>Architecture</a></li>
+                                <li data-section="hx-server-deployment"><a>Server Deployment</a></li>
+                                <li data-section="hx-agent-deployment"><a>Agent Deployment</a></li>
+                                <li data-section="hx-operations"><a>Operations</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="hx-overview" class="article-section active">
+                            <h2>HX Overview</h2>
+                            <p>Host Exchange (HX) is an advanced endpoint detection and response solution within the Trellix ecosystem. This article covers deployment, configuration, and administration of HX servers.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>HX provides advanced endpoint monitoring and response capabilities.</p>
+                            </div>
+                        </div>
+
+                        <div id="hx-architecture" class="article-section">
+                            <h2>HX Architecture</h2>
+                            <p>Work in progress - This section will cover architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="hx-server-deployment" class="article-section">
+                            <h2>Server Deployment</h2>
+                            <p>Work in progress - This section will cover server deployment.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="hx-agent-deployment" class="article-section">
+                            <h2>Agent Deployment</h2>
+                            <p>Work in progress - This section will cover agent deployment.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="hx-operations" class="article-section">
+                            <h2>Operations</h2>
+                            <p>Work in progress - This section will cover operational procedures.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'agent': `
-                <h1>Agent</h1>
-                <h2>Trellix agent deployment strategies and troubleshooting</h2>
-                
-                <p>The Trellix agent is the foundation of endpoint security in the Trellix ecosystem. This article covers deployment strategies, configuration best practices, and troubleshooting techniques.</p>
-                
-                <h3>Agent Architecture</h3>
-                <p>The Trellix agent includes core components and product-specific modules. Understanding the architecture is essential for proper deployment and troubleshooting.</p>
-                
-                <h3>Deployment Methods</h3>
-                <p>Agents can be deployed using various methods including EPO push installation, email deployment, and integration with system management tools. The choice of deployment method depends on network topology and organizational requirements.</p>
-                
-                <h3>Configuration Best Practices</h3>
-                <p>Proper agent configuration ensures optimal protection while minimizing performance impact. Key configuration parameters include communication settings, update settings, and product-specific options.</p>
-                
-                <h3>Common Troubleshooting Techniques</h3>
-                <p>Troubleshooting agent issues involves checking communication status, reviewing log files, and validating policy assignments. Common issues include installation failures, communication problems, and policy application errors.</p>
-                
-                <h3>Performance Optimization</h3>
-                <p>Optimizing agent performance involves balancing security requirements with system resource usage. Configuration adjustments can significantly impact both security effectiveness and endpoint performance.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-download"></i> Intermediate</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 30 minutes</span>
+                    </div>
+                    <h1>Trellix Agent</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Agent</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="agent-main-overview"><a>Overview</a></li>
+                                <li data-section="agent-architecture"><a>Architecture</a></li>
+                                <li data-section="agent-deployment-methods"><a>Deployment Methods</a></li>
+                                <li data-section="agent-configuration"><a>Configuration</a></li>
+                                <li data-section="agent-troubleshooting"><a>Troubleshooting</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="agent-main-overview" class="article-section active">
+                            <h2>Agent Overview</h2>
+                            <p>The Trellix agent is the foundation of endpoint security in the Trellix ecosystem. This article covers deployment strategies, configuration best practices, and troubleshooting techniques.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>The agent provides the communication channel between endpoints and the Trellix management infrastructure.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-architecture" class="article-section">
+                            <h2>Agent Architecture</h2>
+                            <p>Work in progress - This section will cover agent architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-deployment-methods" class="article-section">
+                            <h2>Deployment Methods</h2>
+                            <p>Work in progress - This section will cover deployment methods.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-configuration" class="article-section">
+                            <h2>Configuration</h2>
+                            <p>Work in progress - This section will cover configuration best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-troubleshooting" class="article-section">
+                            <h2>Troubleshooting</h2>
+                            <p>Work in progress - This section will cover troubleshooting techniques.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'ens': `
-                <h1>ENS</h1>
-                <h2>Endpoint Security installation, configuration and best practices</h2>
-                
-                <p>Endpoint Security (ENS) is Trellix's comprehensive endpoint protection platform. This article covers installation, configuration, and operational best practices for ENS deployment.</p>
-                
-                <h3>ENS Components</h3>
-                <p>ENS includes multiple modules such as Threat Prevention, Firewall, Web Control, and Adaptive Threat Protection. Understanding these components is essential for proper deployment and configuration.</p>
-                
-                <h3>Installation Planning</h3>
-                <p>Planning an ENS deployment involves selecting appropriate modules, defining security policies, and preparing the infrastructure for agent deployment. Pilot testing is recommended before full deployment.</p>
-                
-                <h3>Policy Configuration</h3>
-                <p>ENS policies define the security behavior of endpoints. Proper policy configuration involves balancing security requirements with operational needs. Policy inheritance and organization structure should be carefully planned.</p>
-                
-                <h3>Exclusion Management</h3>
-                <p>Managing exclusions is critical for avoiding false positives and ensuring compatibility with business applications. Proper exclusion testing and documentation is essential for security effectiveness.</p>
-                
-                <h3>Performance Tuning</h3>
-                <p>Tuning ENS performance involves adjusting scan settings, real-time protection options, and other configuration parameters. Regular performance monitoring helps identify opportunities for optimization.</p>
-            `,
-            'solidcore': `
-                <h1>Solidcore</h1>
-                <h2>Application control and whitelisting with Solidcore</h2>
-                
-                <p>Solidcore provides application control and whitelisting capabilities within the Trellix ecosystem. This article covers implementation strategies, operational procedures, and best practices for Solidcore deployment.</p>
-                
-                <h3>Solidcore Architecture</h3>
-                <p>Solidcore operates by controlling which applications can run on endpoints. Understanding its architecture and protection mechanisms is essential for proper implementation.</p>
-                
-                <h3>Implementation Strategies</h3>
-                <p>Implementing Solidcore requires careful planning and a phased approach. Initial deployment typically involves observation mode before enabling enforcement. Proper planning minimizes business disruption.</p>
-                
-                <h3>Whitelisting Approaches</h3>
-                <p>Solidcore supports various whitelisting strategies including publisher-based, path-based, and hash-based approaches. The choice of strategy depends on security requirements and operational constraints.</p>
-                
-                <h3>Change Control Integration</h3>
-                <p>Integrating Solidcore with change control processes ensures that authorized changes can be implemented without security disruption. Proper integration is essential for operational efficiency.</p>
-                
-                <h3>Ongoing Management</h3>
-                <p>Managing Solidcore involves handling change requests, updating whitelists, and monitoring for unauthorized application execution attempts. Regular reviews of whitelisting rules help maintain security effectiveness.</p>
-            `,
-            'dlp': `
-                <h1>DLP</h1>
-                <h2>Data Loss Prevention setup and policy management</h2>
-                
-                <p>Data Loss Prevention (DLP) protects sensitive data from unauthorized disclosure. This article covers setup, policy configuration, and operational procedures for DLP implementation.</p>
-                
-                <h3>DLP Architecture</h3>
-                <p>DLP includes endpoint and network components that work together to protect sensitive data. Understanding the architecture is essential for proper deployment and configuration.</p>
-                
-                <h3>Classification Strategy</h3>
-                <p>Developing a data classification strategy is a critical first step in DLP implementation. Classification can be based on content analysis, contextual information, or explicit tagging.</p>
-                
-                <h3>Policy Development</h3>
-                <p>DLP policies define what data is protected and how protection is enforced. Policy development should align with organizational data protection requirements and compliance obligations.</p>
-                
-                <h3>Incident Response Workflow</h3>
-                <p>Configuring incident response workflows involves defining alerting criteria, assignment rules, and remediation procedures. Effective workflows balance security with operational efficiency.</p>
-                
-                <h3>User Education</h3>
-                <p>User notifications and education are important components of a successful DLP implementation. Proper configuration of user interaction helps improve security awareness and reduce policy violations.</p>
-            `,
-            'sir': `
-                <h1>SIR</h1>
-                <h2>Security Information Reporting configuration and usage</h2>
-                
-                <p>Security Information Reporting (SIR) provides comprehensive reporting capabilities for the Trellix ecosystem. This article covers configuration, report development, and operational usage of SIR.</p>
-                
-                <h3>SIR Architecture</h3>
-                <p>SIR includes reporting server components, data collection mechanisms, and integration with EPO. Understanding the architecture is essential for proper deployment and usage.</p>
-                
-                <h3>Deployment Planning</h3>
-                <p>Planning a SIR deployment involves sizing server resources, configuring database settings, and defining data retention policies. Performance considerations are important for large environments.</p>
-                
-                <h3>Report Development</h3>
-                <p>Developing effective security reports involves selecting appropriate data sources, defining filtering criteria, and designing readable report layouts. Report scheduling ensures timely distribution of security information.</p>
-                
-                <h3>Dashboard Configuration</h3>
-                <p>SIR dashboards provide at-a-glance security visibility. Configuration involves selecting key metrics, designing widget layouts, and setting refresh intervals.</p>
-                
-                <h3>Compliance Reporting</h3>
-                <p>SIR can generate reports for regulatory compliance purposes. Configuration involves mapping security data to compliance requirements and designing appropriate report formats.</p>
-            `,
-            'alerts': `
-                <h1>Alerts</h1>
-                <h2>Alert management, tuning, and response procedures</h2>
-                
-                <p>Effective alert management is critical for security operations. This article covers alert configuration, tuning methodologies, and response procedures for the Trellix ecosystem.</p>
-                
-                <h3>Alert Configuration</h3>
-                <p>Configuring alerts involves defining detection criteria, severity levels, and notification methods. Proper configuration ensures that security personnel receive timely and relevant alerts.</p>
-                
-                <h3>Alert Tuning Methodology</h3>
-                <p>Alert tuning is an ongoing process that balances detection sensitivity with alert volume. A structured tuning methodology helps minimize false positives while maintaining detection effectiveness.</p>
-                
-                <h3>Response Procedures</h3>
-                <p>Defining alert response procedures ensures consistent and effective handling of security incidents. Procedures should include initial assessment, containment actions, and escalation criteria.</p>
-                
-                <h3>Alert Correlation</h3>
-                <p>Correlating alerts from multiple sources provides comprehensive security visibility. Configuration of correlation rules helps identify complex attack patterns that might not be evident from individual alerts.</p>
-                
-                <h3>Performance Metrics</h3>
-                <p>Measuring alert management performance involves tracking metrics such as false positive rates, response times, and resolution effectiveness. Regular review of these metrics helps improve security operations.</p>
-            `,
-            'epo-best-practices': `
-                <h1>EPO Best Practices</h1>
-                <h2>Recommendations for optimal EPO operation and maintenance</h2>
-                
-                <p>Following best practices for EPO operation ensures optimal performance and reliability. This article covers recommended practices for various aspects of EPO management.</p>
-                
-                <h3>System Architecture</h3>
-                <p>Recommended system architecture includes proper sizing of server resources, database configuration, and network topology. High availability configurations are recommended for critical environments.</p>
-                
-                <h3>Organizational Structure</h3>
-                <p>Designing an effective organizational structure in EPO involves creating appropriate groups, assigning permissions, and implementing policy inheritance. Proper structure simplifies management and ensures consistent security.</p>
-                
-                <h3>Policy Management</h3>
-                <p>Best practices for policy management include version control, testing procedures, and deployment strategies. Proper policy management helps maintain security effectiveness while minimizing operational disruption.</p>
-                
-                <h3>Database Maintenance</h3>
-                <p>Regular database maintenance is essential for EPO performance. Recommended practices include index rebuilding, statistics updates, and data purging. Maintenance should be scheduled during low-activity periods.</p>
-                
-                <h3>Upgrade Planning</h3>
-                <p>Planning EPO upgrades involves testing compatibility, creating backups, and scheduling appropriate maintenance windows. A phased approach to upgrades minimizes risk and ensures successful implementation.</p>
-            `,
-            'tasks': `
-                <h1>Client & Server Tasks</h1>
-                <h2>Scheduling and managing automated tasks for clients and servers</h2>
-                
-                <p>Automated tasks are essential for efficient management of the Trellix ecosystem. This article covers configuration and management of both client and server tasks in EPO.</p>
-                
-                <h3>Task Types</h3>
-                <p>EPO supports various task types including product deployment, policy enforcement, and data collection. Understanding these task types is essential for proper automation implementation.</p>
-                
-                <h3>Client Task Configuration</h3>
-                <p>Configuring client tasks involves defining execution parameters, scheduling options, and target systems. Proper configuration ensures reliable task execution while minimizing performance impact.</p>
-                
-                <h3>Server Task Management</h3>
-                <p>Server tasks handle backend operations such as report generation, data purging, and system maintenance. Configuration involves setting execution schedules, defining parameters, and monitoring execution status.</p>
-                
-                <h3>Task Scheduling Strategies</h3>
-                <p>Effective task scheduling involves balancing operational requirements with system load considerations. Staggered scheduling helps prevent resource contention and network congestion.</p>
-                
-                <h3>Performance Monitoring</h3>
-                <p>Monitoring task performance helps identify execution issues and optimization opportunities. Key metrics include completion rates, execution times, and resource usage during task execution.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-shield-alt"></i> Intermediate</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 50 minutes</span>
+                    </div>
+                    <h1>Endpoint Security (ENS)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">ENS</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="ens-overview"><a>Overview</a></li>
+                                <li data-section="ens-components"><a>Components</a></li>
+                                <li data-section="ens-installation"><a>Installation</a></li>
+                                <li data-section="ens-policies"><a>Policy Configuration</a></li>
+                                <li data-section="ens-tuning"><a>Performance Tuning</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="ens-overview" class="article-section active">
+                            <h2>ENS Overview</h2>
+                            <p>Endpoint Security (ENS) is Trellix's comprehensive endpoint protection platform. This article covers installation, configuration, and operational best practices for ENS deployment.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>ENS provides integrated protection against a wide range of threats targeting endpoints.</p>
+                            </div>
+                        </div>
+
+                        <div id="ens-components" class="article-section">
+                            <h2>ENS Components</h2>
+                            <p>Work in progress - This section will cover the various modules and components of ENS.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="ens-installation" class="article-section">
+                            <h2>Installation</h2>
+                            <p>Work in progress - This section will cover installation planning and procedures.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="ens-policies" class="article-section">
+                            <h2>Policy Configuration</h2>
+                            <p>Work in progress - This section will cover policy configuration best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="ens-tuning" class="article-section">
+                            <h2>Performance Tuning</h2>
+                            <p>Work in progress - This section will cover performance optimization techniques.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'troubleshooting-tips': `
-                <h1>Common Troubleshooting Tips</h1>
-                <h2>Frequent issues and their solutions for Trellix EPO environment</h2>
-                
-                <p>Troubleshooting is an essential skill for managing Trellix environments. This article provides guidance for diagnosing and resolving common issues across the Trellix ecosystem.</p>
-                
-                <h3>Agent Communication Issues</h3>
-                <p>Agent communication problems are among the most common issues in EPO environments. Troubleshooting involves checking network connectivity, validating authentication credentials, and reviewing server-side connections.</p>
-                
-                <h3>Policy Application Failures</h3>
-                <p>When policies fail to apply correctly, troubleshooting steps include checking policy assignment, validating policy content, and reviewing agent enforcement capabilities.</p>
-                
-                <h3>Database Performance Problems</h3>
-                <p>Database performance issues can impact overall EPO functionality. Troubleshooting involves checking query performance, validating index health, and reviewing database configuration settings.</p>
-                
-                <h3>Product Deployment Failures</h3>
-                <p>When product deployment fails, troubleshooting includes checking package availability, validating agent capabilities, and reviewing deployment task configuration.</p>
-                
-                <h3>Reporting and Dashboard Issues</h3>
-                <p>Troubleshooting reporting problems involves checking data sources, validating query parameters, and reviewing report execution logs. Common issues include missing data and performance degradation.</p>
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-wrench"></i> Essential</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 25 minutes</span>
+                    </div>
+                    <h1>Common Troubleshooting Tips</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Troubleshooting</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="troubleshooting-overview"><a>Overview</a></li>
+                                <li data-section="agent-issues"><a>Agent Issues</a></li>
+                                <li data-section="policy-issues"><a>Policy Issues</a></li>
+                                <li data-section="database-issues"><a>Database Issues</a></li>
+                                <li data-section="deployment-issues"><a>Deployment Issues</a></li>
+                                <li data-section="reporting-issues"><a>Reporting Issues</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="troubleshooting-overview" class="article-section active">
+                            <h2>Troubleshooting Overview</h2>
+                            <p>Troubleshooting is an essential skill for managing Trellix environments. This article provides guidance for diagnosing and resolving common issues across the Trellix ecosystem.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This guide includes solutions for the most commonly encountered issues in Trellix EPO environments.</p>
+                            </div>
+                        </div>
+
+                        <div id="agent-issues" class="article-section">
+                            <h2>Agent Communication Issues</h2>
+                            <p>Work in progress - This section will cover agent communication troubleshooting.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="policy-issues" class="article-section">
+                            <h2>Policy Application Failures</h2>
+                            <p>Work in progress - This section will cover policy application troubleshooting.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="database-issues" class="article-section">
+                            <h2>Database Performance Problems</h2>
+                            <p>Work in progress - This section will cover database troubleshooting.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="deployment-issues" class="article-section">
+                            <h2>Product Deployment Failures</h2>
+                            <p>Work in progress - This section will cover deployment troubleshooting.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="reporting-issues" class="article-section">
+                            <h2>Reporting and Dashboard Issues</h2>
+                            <p>Work in progress - This section will cover reporting troubleshooting.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             'elastic-test': `
                 <h1>Elastic EDR Test Article</h1>
@@ -838,6 +1298,462 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <h3>Sample Section</h3>
                 <p>This is where detailed information about Carbon Black EDR would go.</p>
+            `,
+            'solidcore': `
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-lock"></i> Advanced</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 35 minutes</span>
+                    </div>
+                    <h1>Solidcore</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Solidcore</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="solidcore-overview"><a>Overview</a></li>
+                                <li data-section="solidcore-architecture"><a>Architecture</a></li>
+                                <li data-section="solidcore-implementation"><a>Implementation</a></li>
+                                <li data-section="solidcore-whitelisting"><a>Whitelisting Strategies</a></li>
+                                <li data-section="solidcore-management"><a>Ongoing Management</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="solidcore-overview" class="article-section active">
+                            <h2>Solidcore Overview</h2>
+                            <p>Solidcore provides application control and whitelisting capabilities within the Trellix ecosystem. This article covers implementation strategies, operational procedures, and best practices for Solidcore deployment.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Solidcore offers robust protection against unauthorized applications and code execution.</p>
+                            </div>
+                        </div>
+
+                        <div id="solidcore-architecture" class="article-section">
+                            <h2>Solidcore Architecture</h2>
+                            <p>Work in progress - This section will cover architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="solidcore-implementation" class="article-section">
+                            <h2>Implementation</h2>
+                            <p>Work in progress - This section will cover implementation strategies.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="solidcore-whitelisting" class="article-section">
+                            <h2>Whitelisting Strategies</h2>
+                            <p>Work in progress - This section will cover whitelisting approaches.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="solidcore-management" class="article-section">
+                            <h2>Ongoing Management</h2>
+                            <p>Work in progress - This section will cover management practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'dlp': `
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-file-alt"></i> Intermediate</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 40 minutes</span>
+                    </div>
+                    <h1>Data Loss Prevention (DLP)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">DLP</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="dlp-overview"><a>Overview</a></li>
+                                <li data-section="dlp-architecture"><a>Architecture</a></li>
+                                <li data-section="dlp-classification"><a>Classification Strategy</a></li>
+                                <li data-section="dlp-policy"><a>Policy Development</a></li>
+                                <li data-section="dlp-incidents"><a>Incident Response</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="dlp-overview" class="article-section active">
+                            <h2>DLP Overview</h2>
+                            <p>Data Loss Prevention (DLP) protects sensitive data from unauthorized disclosure. This article covers setup, policy configuration, and operational procedures for DLP implementation.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>DLP helps organizations protect sensitive information across endpoints, networks, and cloud services.</p>
+                            </div>
+                        </div>
+
+                        <div id="dlp-architecture" class="article-section">
+                            <h2>DLP Architecture</h2>
+                            <p>Work in progress - This section will cover architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="dlp-classification" class="article-section">
+                            <h2>Classification Strategy</h2>
+                            <p>Work in progress - This section will cover data classification strategies.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="dlp-policy" class="article-section">
+                            <h2>Policy Development</h2>
+                            <p>Work in progress - This section will cover policy development best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="dlp-incidents" class="article-section">
+                            <h2>Incident Response</h2>
+                            <p>Work in progress - This section will cover incident response workflows.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'sir': `
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-chart-bar"></i> Intermediate</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 25 minutes</span>
+                    </div>
+                    <h1>Security Information Reporting (SIR)</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">SIR</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="sir-overview"><a>Overview</a></li>
+                                <li data-section="sir-architecture"><a>Architecture</a></li>
+                                <li data-section="sir-deployment"><a>Deployment</a></li>
+                                <li data-section="sir-reports"><a>Report Development</a></li>
+                                <li data-section="sir-dashboards"><a>Dashboards</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="sir-overview" class="article-section active">
+                            <h2>SIR Overview</h2>
+                            <p>Security Information Reporting (SIR) provides comprehensive reporting capabilities for the Trellix ecosystem. This article covers configuration, report development, and operational usage of SIR.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>SIR enables security teams to transform raw data into actionable security intelligence.</p>
+                            </div>
+                        </div>
+
+                        <div id="sir-architecture" class="article-section">
+                            <h2>SIR Architecture</h2>
+                            <p>Work in progress - This section will cover architecture details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="sir-deployment" class="article-section">
+                            <h2>Deployment</h2>
+                            <p>Work in progress - This section will cover deployment planning.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="sir-reports" class="article-section">
+                            <h2>Report Development</h2>
+                            <p>Work in progress - This section will cover report development.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="sir-dashboards" class="article-section">
+                            <h2>Dashboards</h2>
+                            <p>Work in progress - This section will cover dashboard configuration.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'alerts': `
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-bell"></i> Essential</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 30 minutes</span>
+                    </div>
+                    <h1>Alert Management</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Alerts</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="alerts-overview"><a>Overview</a></li>
+                                <li data-section="alerts-configuration"><a>Configuration</a></li>
+                                <li data-section="alerts-tuning"><a>Alert Tuning</a></li>
+                                <li data-section="alerts-response"><a>Response Procedures</a></li>
+                                <li data-section="alerts-correlation"><a>Alert Correlation</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="alerts-overview" class="article-section active">
+                            <h2>Alert Management Overview</h2>
+                            <p>Effective alert management is critical for security operations. This article covers alert configuration, tuning methodologies, and response procedures for the Trellix ecosystem.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Well-configured alerts help security teams focus on genuine threats while minimizing false positives.</p>
+                            </div>
+                        </div>
+
+                        <div id="alerts-configuration" class="article-section">
+                            <h2>Alert Configuration</h2>
+                            <p>Work in progress - This section will cover configuration details.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="alerts-tuning" class="article-section">
+                            <h2>Alert Tuning</h2>
+                            <p>Work in progress - This section will cover tuning methodologies.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="alerts-response" class="article-section">
+                            <h2>Response Procedures</h2>
+                            <p>Work in progress - This section will cover response procedures.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="alerts-correlation" class="article-section">
+                            <h2>Alert Correlation</h2>
+                            <p>Work in progress - This section will cover correlation techniques.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'epo-best-practices': `
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-star"></i> Essential</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 35 minutes</span>
+                    </div>
+                    <h1>EPO Best Practices</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Best Practices</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="best-practices-overview"><a>Overview</a></li>
+                                <li data-section="system-architecture"><a>System Architecture</a></li>
+                                <li data-section="org-structure"><a>Organizational Structure</a></li>
+                                <li data-section="policy-management"><a>Policy Management</a></li>
+                                <li data-section="database-maintenance"><a>Database Maintenance</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="best-practices-overview" class="article-section active">
+                            <h2>Best Practices Overview</h2>
+                            <p>Following best practices for EPO operation ensures optimal performance and reliability. This article covers recommended practices for various aspects of EPO management.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>These recommendations are based on real-world experience with enterprise EPO deployments.</p>
+                            </div>
+                        </div>
+
+                        <div id="system-architecture" class="article-section">
+                            <h2>System Architecture</h2>
+                            <p>Work in progress - This section will cover system architecture best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="org-structure" class="article-section">
+                            <h2>Organizational Structure</h2>
+                            <p>Work in progress - This section will cover organizational structure recommendations.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="policy-management" class="article-section">
+                            <h2>Policy Management</h2>
+                            <p>Work in progress - This section will cover policy management best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="database-maintenance" class="article-section">
+                            <h2>Database Maintenance</h2>
+                            <p>Work in progress - This section will cover database maintenance procedures.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'tasks': `
+                <div class="article-header">
+                    <div class="article-metadata">
+                        <span class="article-type"><i class="fas fa-tasks"></i> Intermediate</span>
+                        <span class="article-time"><i class="far fa-clock"></i> 30 minutes</span>
+                    </div>
+                    <h1>Client & Server Tasks</h1>
+                </div>
+
+                <div class="article-layout">
+                    <nav class="article-nav">
+                        <div class="nav-section active">
+                            <div class="nav-header">Tasks</div>
+                            <ul class="nav-items">
+                                <li class="active" data-section="tasks-overview"><a>Overview</a></li>
+                                <li data-section="task-types"><a>Task Types</a></li>
+                                <li data-section="client-tasks"><a>Client Tasks</a></li>
+                                <li data-section="server-tasks"><a>Server Tasks</a></li>
+                                <li data-section="task-scheduling"><a>Scheduling Strategies</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <div class="article-content">
+                        <div id="tasks-overview" class="article-section active">
+                            <h2>Tasks Overview</h2>
+                            <p>Automated tasks are essential for efficient management of the Trellix ecosystem. This article covers configuration and management of both client and server tasks in EPO.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Well-designed tasks automate routine operations and ensure consistent security posture across the environment.</p>
+                            </div>
+                        </div>
+
+                        <div id="task-types" class="article-section">
+                            <h2>Task Types</h2>
+                            <p>Work in progress - This section will cover different types of tasks.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="client-tasks" class="article-section">
+                            <h2>Client Tasks</h2>
+                            <p>Work in progress - This section will cover client task configuration.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="server-tasks" class="article-section">
+                            <h2>Server Tasks</h2>
+                            <p>Work in progress - This section will cover server task management.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <div id="task-scheduling" class="article-section">
+                            <h2>Scheduling Strategies</h2>
+                            <p>Work in progress - This section will cover scheduling best practices.</p>
+                            
+                            <div class="info-note">
+                                <i class="fas fa-info-circle"></i>
+                                <p>This section is currently under development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `
         };
         
@@ -895,5 +1811,41 @@ document.addEventListener('DOMContentLoaded', function() {
             const edrId = this.getAttribute('data-edr');
             document.getElementById(edrId + '-content').classList.add('active');
         });
+    });
+
+    // Add a global event delegation handler for article navigation
+    document.addEventListener('click', function(e) {
+        // Handle article nav clicks
+        if (e.target && (e.target.closest('.nav-items li') || e.target.closest('.nav-items a'))) {
+            const navItem = e.target.closest('.nav-items li');
+            if (navItem) {
+                // Get all li elements in this navigation
+                const navItems = navItem.parentElement.querySelectorAll('li');
+                
+                // Remove active class from all items
+                navItems.forEach(item => item.classList.remove('active'));
+                
+                // Add active class to clicked item
+                navItem.classList.add('active');
+                
+                // Get the target section ID
+                const sectionId = navItem.getAttribute('data-section');
+                
+                // Find the article-content container
+                const articleContent = navItem.closest('.article-layout').querySelector('.article-content');
+                
+                // Hide all sections
+                const sections = articleContent.querySelectorAll('.article-section');
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Show the target section
+                setTimeout(() => {
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                }, 50);
+            }
+        }
     });
 });
